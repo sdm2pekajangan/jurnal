@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Harian Shadow Teacher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f0f4f8; color: #333; line-height: 1.6; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 5px; font-size: 22px; }
+        p.subtitle { text-align: center; color: #7f8c8d; font-size: 13px; margin-bottom: 25px; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: #34495e; }
+        input[type="text"], select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 14px; background: #f9fbfd; }
+        textarea { resize: vertical; height: 80px; }
+        
+        /* Mood Selector (Radio Buttons as Emojis) */
+        .mood-container { display: flex; justify-content: space-between; gap: 10px; }
+        .mood-label { flex: 1; text-align: center; background: #f9fbfd; border: 1px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 24px; }
+        .mood-label input { display: none; }
+        .mood-label span { display: block; font-size: 12px; margin-top: 5px; font-weight: 600; color: #7f8c8d; }
+        .mood-label input:checked + span { color: #3498db; }
+        .mood-label:has(input:checked) { background: #e3f2fd; border-color: #3498db; transform: scale(1.05); box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2); }
+
+        /* Checkboxes */
+        .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+        .checkbox-item { display: flex; align-items: center; background: #f9fbfd; border: 1px solid #ddd; padding: 12px; border-radius: 8px; cursor: pointer; }
+        .checkbox-item input { margin-right: 12px; transform: scale(1.2); }
+        .checkbox-item span { font-size: 14px; color: #555; }
+
+        button { width: 100%; background: #27ae60; color: white; border: none; padding: 15px; font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; font-family: inherit; margin-top: 10px; transition: background 0.3s; }
+        button:hover { background: #2ecc71; }
+        
+        .footer { text-align: center; margin-top: 20px; font-size: 11px; color: #aaa; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Jurnal Pendampingan</h2>
+    <p class="subtitle">Catatan harian perkembangan siswa berkebutuhan khusus</p>
+
+    <form id="jurnalForm">
+        <div class="form-group">
+            <label for="namaGuru">Nama Guru Pendamping</label>
+            <select id="namaGuru" required>
+                <option value="">-- Pilih Nama --</option>
+                <option value="Guru A">Guru A</option>
+                <option value="Guru B">Guru B</option>
+                <option value="Guru C">Guru C</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="namaSiswa">Nama Siswa yang Didampingi</label>
+            <input type="text" id="namaSiswa" placeholder="Misal: Budi (ADHD)" required>
+        </div>
+
+        <div class="form-group">
+            <label>Mood Dominan Siswa Hari Ini</label>
+            <div class="mood-container">
+                <label class="mood-label">
+                    <input type="radio" name="mood" value="Tenang & Kooperatif" required>
+                    😊<span>Tenang</span>
+                </label>
+                <label class="mood-label">
+                    <input type="radio" name="mood" value="Gelisah / Sulit Fokus">
+                    🌪️<span>Gelisah</span>
+                </label>
+                <label class="mood-label">
+                    <input type="radio" name="mood" value="Tantrum / Menangis">
+                    🌋<span>Tantrum</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Pencapaian Hari Ini (Pilih yang sesuai)</label>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" name="pencapaian" value="Mampu duduk tenang > 10 menit"> <span>Mampu duduk tenang > 10 menit</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="pencapaian" value="Menyelesaikan instruksi 1 tahap"> <span>Menyelesaikan instruksi 1 tahap</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="pencapaian" value="Mengikuti BTQ Adaptif dengan baik"> <span>Mengikuti BTQ Adaptif dengan baik</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="pencapaian" value="Bermain tanpa mengganggu teman"> <span>Bermain tanpa mengganggu teman</span></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="trigger">Kendala / Pemicu Tantrum (Jika ada)</label>
+            <textarea id="trigger" placeholder="Misal: Suara terlalu bising, anak lapar, atau menolak menulis..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="tindakan">Tindakan Intervensi yang Dilakukan</label>
+            <textarea id="tindakan" placeholder="Misal: Memberikan brain break 5 menit, mengajak keliling lapangan..." required></textarea>
+        </div>
+
+        <button type="submit">Kirim Laporan ke Kepala Sekolah</button>
+    </form>
+    
+    <div class="footer">Sistem Informasi Inklusi &copy; 2026</div>
+</div>
+
+<script>
+    document.getElementById('jurnalForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Ambil data dari form
+        const guru = document.getElementById('namaGuru').value;
+        const siswa = document.getElementById('namaSiswa').value;
+        const mood = document.querySelector('input[name="mood"]:checked').value;
+        const trigger = document.getElementById('trigger').value || 'Tidak ada kendala berarti.';
+        const tindakan = document.getElementById('tindakan').value;
+        
+        // Ambil checkbox pencapaian
+        let pencapaianArray = [];
+        document.querySelectorAll('input[name="pencapaian"]:checked').forEach((checkbox) => {
+            pencapaianArray.push("- " + checkbox.value);
+        });
+        const pencapaian = pencapaianArray.length > 0 ? pencapaianArray.join("%0A") : "- Tidak ada pencapaian spesifik hari ini.";
+
+        // Format pesan untuk WhatsApp
+        // GANTI NOMOR DI BAWAH INI DENGAN NOMOR WA ANDA (Format: 628...)
+        const nomorWA = "6287818334381"; 
+        
+        const tanggal = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        const pesan = `*Laporan Harian Shadow Teacher*%0A📅 ${tanggal}%0A%0A*Guru:* ${guru}%0A*Siswa:* ${siswa}%0A*Mood:* ${mood}%0A%0A*Pencapaian:*%0A${pencapaian}%0A%0A*Kendala/Trigger:*%0A${trigger}%0A%0A*Tindakan Guru:*%0A${tindakan}`;
+
+        // Buka WhatsApp
+        const waURL = `https://wa.me/${nomorWA}?text=${pesan}`;
+        window.open(waURL, '_blank');
+        
+        // Reset form setelah dikirim
+        this.reset();
+    });
+</script>
+
+</body>
+</html>
