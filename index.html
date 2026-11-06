@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2E6B4E">
 <title>RPP Cepat</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232E6B4E'/%3E%3Crect x='9' y='7' width='14' height='18' rx='2' fill='%23fff'/%3E%3Crect x='12' y='11' width='8' height='2' fill='%23C9A24B'/%3E%3Crect x='12' y='15' width='8' height='2' fill='%232E6B4E'/%3E%3Crect x='12' y='19' width='5' height='2' fill='%232E6B4E'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,53 +12,191 @@
 <style id="pageSize">@page{size:A4;margin:15mm}</style>
 <style>
 :root{
-  --ink:#262B29; --muted:#667069; --line:#E1E6E0; --bg:#F3F6F2; --card:#fff;
+  --ink:#262B29; --muted:#5E6A63; --line:#E1E6E0; --bg:#F3F6F2; --card:#fff;
   --green:#2E6B4E; --green-d:#1F4D38; --green-l:#E3EFE8;
   --gold:#C9A24B; --gold-l:#F8EECF; --gold-d:#7E5F17;
   --red:#A63D2F; --red-l:#F9E7E4;
-  --r:10px;
+  --r:10px; --vp-narrow:375px; --vp-medium:768px; --vp-wide:1280px;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.5}
 button,input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
 :focus-visible{outline:2px solid var(--gold-d);outline-offset:2px}
+h1,h2,h3{margin:0;line-height:1.25}
+.serif{font-family:'Source Serif 4',Georgia,serif}
 
-/* topbar */
+/* ---------- tombol dan isian ---------- */
+.btn{border:1px solid var(--green);background:var(--green);color:#fff;border-radius:8px;padding:8px 16px;min-height:44px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--green-d)}
+.btn.sec{background:#fff;color:var(--green-d)}
+.btn.sec:hover{background:var(--green-l)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#2A2108}
+.btn.gold:hover{background:#B88F36}
+.btn.danger{background:#fff;border-color:#D9B0AA;color:var(--red)}
+.btn.danger:hover{background:var(--red-l)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn.txt{background:transparent;border-color:transparent;color:var(--green-d);padding:6px 8px}
+.btn.txt:hover{background:var(--green-l)}
+.btn[aria-busy=true]{opacity:.7;cursor:progress}
+input[type=text],input[type=date],input[type=number],input[type=password],select,textarea{width:100%;border:1px solid #BAC4BB;border-radius:8px;padding:9px 10px;background:#fff;min-width:0;min-height:44px}
+textarea{resize:vertical;line-height:1.5;min-height:0}
+input:focus,select:focus,textarea:focus{border-color:var(--green)}
+input[readonly]{background:var(--bg);color:var(--muted)}
+input[aria-invalid=true],select[aria-invalid=true]{border-color:var(--red);background:#FFFBFA}
+.field{display:flex;flex-direction:column;gap:4px;margin-top:14px;min-width:0}
+.field>label,.lbl{font-weight:600;font-size:13px}
+.hint{color:var(--muted);font-size:12.5px}
+.err{color:var(--red);font-size:12.5px;font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid #BAC4BB;background:#fff;border-radius:999px;padding:6px 12px;min-height:36px;font-size:13px;cursor:pointer}
+.chip:hover{border-color:var(--green)}
+.chip[aria-pressed=true]{background:var(--green-l);border-color:var(--green);color:var(--green-d);font-weight:600}
+.chip[aria-pressed=true]::before{content:"\2713\00a0"}
+@media (pointer:coarse){.chip{min-height:44px}}
+.checks{display:flex;flex-direction:column;gap:6px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:13.5px;min-height:44px}
+.check:has(input:checked){background:var(--green-l);border-color:#BBD5C6}
+.check input{margin-top:3px;accent-color:var(--green);width:18px;height:18px;flex:none}
+.addrow{display:flex;gap:8px;margin-top:8px}
+.cp-box{background:var(--gold-l);border-radius:8px;padding:10px 12px;font-size:13px;color:#4A3A0E}
+.cp-box textarea{background:transparent;border:0;padding:0;margin-top:2px}
+.note{background:var(--gold-l);color:#4A3A0E;border-radius:8px;padding:10px 12px;font-size:13px;margin-top:12px}
+.tag{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;background:var(--bg);color:var(--muted);white-space:nowrap}
+.tag.ok{background:var(--green-l);color:var(--green-d)}
+.tag.gold{background:var(--gold-l);color:var(--gold-d)}
+.tag.red{background:var(--red-l);color:var(--red)}
+.banner{border-radius:8px;padding:10px 12px;font-size:13.5px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.banner.err-b{background:var(--red-l);color:#6F2218}
+.banner.info{background:var(--gold-l);color:#4A3A0E}
+.banner .btn{margin-left:auto}
+.empty{background:#fff;border:1px dashed #BFC9BF;border-radius:var(--r);padding:28px 20px;text-align:center}
+.empty h2{font-size:16px;margin-bottom:4px}
+.empty p{margin:0 auto 14px;color:var(--muted);max-width:46ch}
+
+/* ---------- masuk ---------- */
+.auth{min-height:100vh;display:grid;place-items:center;padding:24px 16px;background:linear-gradient(180deg,#fff 0,var(--bg) 60%)}
+.auth-card{width:100%;max-width:400px}
+.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.logo{width:40px;height:40px;border-radius:10px;background:var(--green);position:relative;flex:none}
+.logo::after{content:"";position:absolute;left:11px;top:9px;width:18px;height:22px;border-radius:3px;background:#fff;box-shadow:inset 0 6px 0 -2px var(--gold)}
+.auth-brand b{display:block;font-size:17px;color:var(--green-d)}
+.auth-brand span{color:var(--muted);font-size:13px}
+.auth h1{font-size:26px;margin-bottom:4px}
+.auth form{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:16px}
+.auth .btn{width:100%;margin-top:18px}
+.show-pin{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;min-height:44px}
+.show-pin input{width:18px;height:18px;accent-color:var(--green)}
+
+/* ---------- rangka ---------- */
 .topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 0 var(--gold-l)}
-.topbar-in{max-width:1400px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;color:var(--green-d);letter-spacing:-.01em}
-.brand i{width:26px;height:26px;border-radius:7px;background:var(--green);position:relative;display:block}
-.brand i::after{content:"";position:absolute;left:7px;top:6px;width:12px;height:14px;border-radius:2px;background:#fff;box-shadow:inset 0 4px 0 -1px var(--gold)}
+.topbar-in{width:100%;padding:0 16px;display:flex;align-items:center;gap:16px;min-height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;color:var(--green-d)}
+.brand .logo{width:28px;height:28px;border-radius:7px}
+.brand .logo::after{left:7px;top:6px;width:12px;height:15px;border-radius:2px;box-shadow:inset 0 4px 0 -1px var(--gold)}
 .tabs{display:flex;gap:4px;margin-left:auto}
-.tab{border:0;background:transparent;padding:8px 14px;border-radius:8px;font-weight:600;color:var(--muted);cursor:pointer;position:relative}
+.tab{border:0;background:transparent;padding:8px 14px;min-height:44px;border-radius:8px;font-weight:600;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:14px}
 .tab:hover{background:var(--bg)}
 .tab[aria-selected=true]{color:var(--green-d);background:var(--green-l)}
-.tab .n{display:inline-block;min-width:18px;padding:0 5px;margin-left:6px;border-radius:9px;background:var(--gold);color:#fff;font-size:11px;line-height:18px;text-align:center}
-
-/* layout */
+.tab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.akun{position:relative}
+.akun-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px 4px 4px;min-height:44px;cursor:pointer;font-weight:600}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:14px}
+.akun-menu{position:absolute;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px;min-width:200px;box-shadow:0 8px 24px rgba(30,40,35,.14)}
+.akun-menu .who{padding:8px 10px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.akun-menu .who b{display:block}
+.akun-menu .who span{color:var(--muted);font-size:12.5px}
+.akun-menu button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px;border-radius:8px;min-height:44px;cursor:pointer;font-weight:500}
+.akun-menu button:hover{background:var(--bg)}
 .view{display:none}
 .view.on{display:block}
-.layout{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:minmax(400px,480px) 1fr;gap:20px;padding:20px 16px 60px;align-items:start}
+.page{width:100%;max-width:var(--vp-wide);margin-inline:auto;padding:20px 16px 40px}
+
+@media (max-width:767.98px){
+  .akun-nama{display:none}
+  .akun-btn{padding:4px}
+  .tabs{position:fixed;left:0;right:0;bottom:0;margin:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:0;padding:4px 4px calc(4px + env(safe-area-inset-bottom));z-index:30}
+  .tab{flex-direction:column;gap:2px;font-size:12px;padding:6px 4px;min-height:52px;border-radius:10px}
+  .topbar-in{justify-content:space-between}
+  .page{padding-bottom:96px}
+}
+
+/* ---------- hari ini ---------- */
+.sapa{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.sapa h1{font-size:28px;letter-spacing:-.01em}
+.sapa .tgl{color:var(--muted);margin-top:2px}
+.pekan{min-width:240px;flex:0 1 320px}
+.pekan .row{display:flex;justify-content:space-between;font-weight:600;font-size:13px;margin-bottom:6px;gap:12px}
+.bar{height:8px;border-radius:4px;background:#DCE3DC;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--green));transition:width .3s}
+.pekan small{display:block;margin-top:6px;color:var(--muted)}
+.hari{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-bottom:18px}
+.hari button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 2px;min-height:64px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+.hari button span{font-size:12px;color:var(--muted);font-weight:600}
+.hari button b{font-size:18px;line-height:1.2}
+.hari button small{font-size:12px;color:var(--muted)}
+.hari button[aria-pressed=true]{background:var(--green);border-color:var(--green);color:#fff}
+.hari button[aria-pressed=true] span,.hari button[aria-pressed=true] small{color:#E3EFE8}
+.hari button[aria-current=date]:not([aria-pressed=true]){border-color:var(--gold);box-shadow:inset 0 -3px 0 var(--gold)}
+.tugas{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-bottom:18px}
+.tugas>div{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:var(--r);padding:12px 14px}
+.tugas b{display:block;margin-bottom:2px}
+.tugas p{margin:0;color:var(--muted);font-size:13px}
+.tugas .btn{margin-top:8px}
+.lini{list-style:none;margin:0;padding:0}
+.lini>li{display:grid;grid-template-columns:56px 20px minmax(0,1fr);column-gap:10px}
+.lini .t{text-align:right;padding-top:14px;font-variant-numeric:tabular-nums}
+.lini .t b{display:block;font-size:15px}
+.lini .t span{font-size:12px;color:var(--muted)}
+.lini .rail{position:relative}
+.lini .rail::before{content:"";position:absolute;left:9px;top:0;bottom:0;width:2px;background:var(--line)}
+.lini .rail i{position:absolute;left:3px;top:18px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #AAB6AC}
+.lini li:first-child .rail::before{top:24px}
+.lini li:last-child .rail::before{bottom:calc(100% - 26px)}
+.lini .kartu{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
+.lini .kartu-atas{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:space-between}
+.lini .kartu h3{font-size:16px}
+.lini .meta{margin:2px 0 0;color:var(--muted);font-size:13px}
+.lini .aksi{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.lini .sedang{font-weight:700;color:var(--gold-d);font-size:13px}
+.lini .berlangsung .kartu{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-l)}
+.lini .berlangsung .rail i{background:var(--gold);border-color:var(--gold)}
+.lini .sudah .rail i{background:var(--green);border-color:var(--green)}
+.lini .lewat .kartu{background:#FAFBF9}
+.lini .jeda{color:var(--muted);font-size:12.5px;padding:0 0 12px}
+.lini .jeda .tx{grid-column:3;align-self:center}
+
+/* ---------- susun ---------- */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
 .form-col{display:flex;flex-direction:column;gap:12px;min-width:0}
-.preview-col{position:sticky;top:76px;height:calc(100vh - 96px);display:flex;flex-direction:column;min-width:0}
-.preview-bar{display:flex;align-items:center;gap:10px;padding:0 2px 10px}
+.preview-col{display:none;flex-direction:column;min-width:0}
+.layout.show-preview .form-col{display:none}
+.layout.show-preview .preview-col{display:flex}
+.seg{display:flex;background:#fff;border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;padding:8px;min-height:44px;border-radius:8px;font-weight:600;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--green);color:#fff}
+.preview-bar{display:flex;align-items:center;gap:10px;padding:0 2px 10px;flex-wrap:wrap}
 .preview-bar b{font-size:13px}
 .preview-bar .sp{flex:1}
-.preview-scroll{flex:1;overflow:auto;background:#DDE3DC;border-radius:var(--r);padding:12px}
-.seg{display:none}
-
-/* meter */
+.preview-scroll{background:#DDE3DC;border-radius:var(--r);padding:8px}
+@media (min-width:1280px){
+  .layout{grid-template-columns:minmax(400px,480px) minmax(0,1fr);gap:20px}
+  .seg{display:none}
+  .preview-col,.layout.show-preview .preview-col{display:flex;position:sticky;top:76px;height:calc(100vh - 96px)}
+  .layout.show-preview .form-col{display:flex}
+  .preview-scroll{flex:1;overflow:auto;padding:12px}
+}
+.konteks{background:#fff;border:1px solid var(--line);border-left:4px solid var(--green);border-radius:var(--r);padding:12px 14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.konteks b{display:block}
+.konteks span{color:var(--muted);font-size:13px}
 .meter{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
 .meter-top{display:flex;justify-content:space-between;font-weight:600;font-size:13px;margin-bottom:8px}
 .meter-top span:last-child{color:var(--green-d)}
-.bar{height:8px;border-radius:4px;background:var(--bg);overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--green));transition:width .3s}
 .meter small{display:block;margin-top:6px;color:var(--muted)}
-
-/* steps */
 .step{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.step-head{width:100%;display:flex;align-items:center;gap:12px;padding:14px;border:0;background:#fff;text-align:left;cursor:pointer}
+.step-head{width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;min-height:56px;border:0;background:#fff;text-align:left;cursor:pointer}
 .step-no{width:28px;height:28px;border-radius:50%;background:var(--bg);color:var(--muted);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
 .step.done .step-no{background:var(--green);color:#fff}
 .step.open .step-no{background:var(--gold);color:#fff}
@@ -67,44 +206,14 @@ button,input,select,textarea{font:inherit;color:inherit}
 .step.open .chev{transform:rotate(180deg)}
 .step-body{display:none;padding:2px 14px 16px;border-top:1px solid var(--line)}
 .step.open .step-body{display:block}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.field{display:flex;flex-direction:column;gap:4px;margin-top:12px;min-width:0}
-.field>label,.lbl{font-weight:600;font-size:13px}
-.hint{color:var(--muted);font-size:12px}
-input[type=text],input[type=date],input[type=number],input[type=url],select,textarea{width:100%;border:1px solid #CBD3CB;border-radius:8px;padding:8px 10px;background:#fff;min-width:0}
-textarea{resize:vertical;line-height:1.5}
-input:focus,select:focus,textarea:focus{border-color:var(--green)}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{border:1px solid #CBD3CB;background:#fff;border-radius:999px;padding:5px 11px;font-size:12.5px;cursor:pointer}
-.chip:hover{border-color:var(--green)}
-.chip[aria-pressed=true]{background:var(--green-l);border-color:var(--green);color:var(--green-d);font-weight:600}
-.chip[aria-pressed=true]::before{content:"\2713\00a0"}
-.checks{display:flex;flex-direction:column;gap:6px}
-.check{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:13px}
-.check:has(input:checked){background:var(--green-l);border-color:#BBD5C6}
-.check input{margin-top:3px;accent-color:var(--green)}
-.addrow{display:flex;gap:6px;margin-top:6px}
-.cp-box{background:var(--gold-l);border-radius:8px;padding:10px 12px;font-size:13px;color:#4A3A0E}
-.cp-box textarea{background:transparent;border:0;padding:0;margin-top:2px}
-.note{background:var(--gold-l);color:#4A3A0E;border-radius:8px;padding:8px 10px;font-size:12.5px;margin-top:10px}
-
-/* buttons */
-.btn{border:1px solid var(--green);background:var(--green);color:#fff;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer;white-space:nowrap}
-.btn:hover{background:var(--green-d)}
-.btn.sec{background:#fff;color:var(--green-d)}
-.btn.sec:hover{background:var(--green-l)}
-.btn.gold{background:var(--gold);border-color:var(--gold);color:#2A2108}
-.btn.gold:hover{background:#B88F36}
-.btn.sm{padding:5px 10px;font-size:12.5px}
-.btn.danger{background:#fff;border-color:#D9B0AA;color:var(--red)}
-.btn.danger:hover{background:var(--red-l)}
-.btn[disabled]{opacity:.5;cursor:not-allowed}
+.next{margin-top:16px;display:flex;justify-content:flex-end}
+.profil-ro{margin-top:12px;background:var(--bg);border-radius:8px;padding:10px 12px;font-size:13px}
+.profil-ro b{font-weight:600}
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.next{margin-top:14px;display:flex;justify-content:flex-end}
+.simpan-info{color:var(--muted);font-size:13px;margin-top:8px}
 
-/* paper */
-.paper{width:210mm;margin:0 auto;background:#fff;padding:16mm 16mm 18mm;box-shadow:0 2px 12px rgba(30,40,35,.18);font-family:'Source Serif 4','Times New Roman',serif;font-size:11pt;line-height:1.45;color:#111;transform-origin:top left}
-.paper h1{font-size:14pt;text-align:center;margin:0;line-height:1.3}
+.paper{width:210mm;margin:0 auto;background:#fff;padding:16mm 16mm 18mm;box-shadow:0 2px 12px rgba(30,40,35,.18);font-family:'Source Serif 4','Times New Roman',serif;font-size:11pt;line-height:1.45;color:#111}
+.paper h1{font-size:14pt;text-align:center;line-height:1.3}
 .paper .sub{text-align:center;margin:2px 0 10px}
 .paper .school{text-align:center;font-weight:700;font-size:12pt;margin:0 0 4px}
 .paper hr.dbl{border:0;border-top:3px double #111;margin:6px 0 10px}
@@ -118,65 +227,55 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
 .paper .bd td,.paper .bd th{border:1px solid #333;padding:4px 6px}
 .paper .bd th{background:#EEF1EC;text-align:left}
 .paper tr{break-inside:avoid}
-.paper .ph{color:#9AA39C}
+.paper .ph{color:#8C968E}
 .paper .sign{margin-top:22px;break-inside:avoid}
-.paper .sign td{width:50%;text-align:center;padding-top:0}
+.paper .sign td{width:50%;text-align:center}
 .paper .sign .gap{height:62px}
 .paper .tm{font-weight:400;font-style:italic}
-.paper .refl li{margin-bottom:2px}
 
-/* jurnal */
-.wrap{max-width:1000px;margin:0 auto;padding:20px 16px 60px}
-.wrap h2{margin:0 0 4px;font-size:20px;letter-spacing:-.01em}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
-.stat{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
-.stat b{font-size:22px;display:block;color:var(--green-d)}
-.stat span{color:var(--muted);font-size:12.5px}
-.entry{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:10px;display:grid;grid-template-columns:1fr auto;gap:10px 16px}
-.entry h4{margin:0;font-size:15px}
-.entry .meta{color:var(--muted);font-size:12.5px;margin-top:2px}
-.entry .row{grid-column:1/-1;display:grid;grid-template-columns:170px 1fr;gap:8px}
+/* ---------- jurnal, rekap ---------- */
+.judul{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
+.judul h1{font-size:24px}
+.judul p{margin:2px 0 0;color:var(--muted)}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.entry{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:10px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px}
+.entry h3{font-size:15px}
+.entry .meta{color:var(--muted);font-size:13px;margin-top:2px}
 .entry .btns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:flex-start}
-.tag{display:inline-block;border-radius:999px;padding:1px 9px;font-size:11.5px;font-weight:600;background:var(--bg);color:var(--muted)}
-.tag.ok{background:var(--green-l);color:var(--green-d)}
-.tag.gold{background:var(--gold-l);color:var(--gold-d)}
-.empty{background:#fff;border:1px dashed #BFC9BF;border-radius:var(--r);padding:28px;text-align:center;color:var(--muted)}
-.empty b{display:block;color:var(--ink);margin-bottom:4px}
-.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-top:14px}
-.panel h3{margin:0 0 6px;font-size:15px}
-pre.code{background:#262B29;color:#E9EEE8;border-radius:8px;padding:12px;overflow:auto;font-size:12px;line-height:1.5;max-height:320px;margin:8px 0}
-ol.how{padding-left:18px;margin:6px 0}
-ol.how li{margin-bottom:4px}
+.entry .row{grid-column:1/-1;display:grid;grid-template-columns:180px minmax(0,1fr);gap:8px}
+@media (max-width:767.98px){.entry{grid-template-columns:minmax(0,1fr)}.entry .btns{justify-content:flex-start}.entry .row{grid-template-columns:minmax(0,1fr)}}
+.ubin{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.ubin>div{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.ubin b{font-size:24px;display:block;color:var(--green-d);line-height:1.2}
+.ubin span{color:var(--muted);font-size:13px}
+.rek{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.rek>div{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.rek .top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:8px}
+.rek h3{font-size:15px}
+.rek small{color:var(--muted)}
+.rek .angka{display:flex;gap:16px;margin-top:8px;font-size:13px;color:var(--muted)}
+.rek .angka b{color:var(--ink)}
+.rek details{margin-top:8px;font-size:13px}
+.rek summary{cursor:pointer;min-height:36px;display:flex;align-items:center;color:var(--green-d);font-weight:600}
+.rek ul{margin:4px 0 0;padding-left:18px;color:var(--muted)}
 
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:90vw}
-.toast.on{opacity:1;transform:translateX(-50%)}
+dialog{border:0;border-radius:12px;padding:20px;width:min(440px,calc(100vw - 32px));box-shadow:0 16px 48px rgba(30,40,35,.3);color:var(--ink)}
+dialog::backdrop{background:rgba(30,40,35,.45)}
+dialog h2{font-size:18px;margin-bottom:6px}
+dialog p{margin:0 0 4px;color:var(--muted)}
+.dlg-aksi{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
 
-@media (max-width:980px){
-  .layout{grid-template-columns:1fr}
-  .preview-col{position:static;height:auto;display:none}
-  .layout.show-preview .form-col{display:none}
-  .layout.show-preview .preview-col{display:flex}
-  .preview-scroll{max-height:none;overflow:visible;padding:8px}
-  .seg{display:flex;background:#fff;border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
-  .seg button{flex:1;border:0;background:transparent;padding:8px;border-radius:8px;font-weight:600;color:var(--muted);cursor:pointer}
-  .seg button[aria-pressed=true]{background:var(--green);color:#fff}
-  .tab{padding:8px 10px}
-  .entry{grid-template-columns:1fr}
-  .entry .btns{justify-content:flex-start}
-  .entry .row{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr 1fr 1fr}
-}
-@media (max-width:520px){
-  .grid2{grid-template-columns:1fr}
-  .brand span{display:none}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:calc(100vw - 32px);display:flex;gap:12px;align-items:center}
+.toast.on{opacity:1;transform:translateX(-50%);pointer-events:auto}
+.toast button{background:transparent;border:1px solid #fff;color:#fff;border-radius:6px;padding:4px 10px;min-height:36px;cursor:pointer;font-weight:600}
+@media (max-width:767.98px){.toast{bottom:84px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 @media print{
   html,body{background:#fff}
-  .topbar,.form-col,.seg,.preview-bar,.toast,#view-jurnal,#view-pengaturan{display:none!important}
-  #view-susun{display:block!important}
-  .layout{display:block;padding:0;max-width:none}
+  .topbar,.form-col,.seg,.preview-bar,.toast,#login,dialog,.konteks{display:none!important}
+  #shell,#view-susun,.layout{display:block!important}
+  .page{padding:0;max-width:none}
   .preview-col{display:block!important;position:static;height:auto}
   .preview-scroll{overflow:visible;background:#fff;padding:0;border-radius:0}
   .paper{zoom:1!important;width:auto;margin:0;padding:0;box-shadow:none}
@@ -186,199 +285,539 @@ ol.how li{margin-bottom:4px}
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-in">
-    <div class="brand"><i></i><span>RPP Cepat</span></div>
-    <nav class="tabs" role="tablist" aria-label="Menu utama">
-      <button class="tab" role="tab" data-view="susun" aria-selected="true">Susun RPP</button>
-      <button class="tab" role="tab" data-view="jurnal" aria-selected="false">Jurnal<span class="n" id="jCount">0</span></button>
-      <button class="tab" role="tab" data-view="pengaturan" aria-selected="false">Pengaturan</button>
-    </nav>
+<!-- ================= MASUK ================= -->
+<section class="auth" id="login" hidden>
+  <div class="auth-card">
+    <div class="auth-brand"><span class="logo"></span><div><b>RPP Cepat</b><span id="lg-sekolah">SD Muhammadiyah 2 Pekajangan</span></div></div>
+    <h1 class="serif">Masuk</h1>
+    <p class="hint" style="margin:0">Pilih nama Anda, lalu isi PIN.</p>
+    <div class="banner info" id="lg-demo" style="margin-top:14px" hidden>Mode contoh: jadwal asli sekolah, tetapi RPP hanya tersimpan di perangkat ini. PIN semua akun adalah 1234.</div>
+    <div class="banner err-b" id="lg-banner" role="alert" style="margin-top:14px" hidden></div>
+    <form id="frmLogin" novalidate>
+      <div class="field" style="margin-top:0"><label for="lg-id">Nama</label>
+        <select id="lg-id" autocomplete="username" aria-describedby="err-lg-id"><option value="">Memuat daftar nama...</option></select>
+        <span class="err" id="err-lg-id" role="alert" hidden></span></div>
+      <div class="field"><label for="lg-pin">PIN</label>
+        <input type="password" id="lg-pin" inputmode="numeric" autocomplete="current-password" maxlength="8" aria-describedby="err-lg-pin">
+        <span class="err" id="err-lg-pin" role="alert" hidden></span></div>
+      <label class="show-pin"><input type="checkbox" id="lg-show"> Tampilkan PIN</label>
+      <button class="btn" type="submit" id="lg-btn">Masuk</button>
+      <p class="hint" style="margin:12px 0 0">Lupa PIN? Minta admin mengatur ulang PIN Anda.</p>
+    </form>
   </div>
-</header>
+</section>
 
-<!-- ================= SUSUN ================= -->
-<main id="view-susun" class="view on">
-  <div class="layout" id="layout">
-    <div class="seg" style="grid-column:1/-1" id="seg">
-      <button aria-pressed="true" data-seg="form">Isi formulir</button>
-      <button aria-pressed="false" data-seg="preview">Lihat RPP</button>
-    </div>
-
-    <section class="form-col" id="formCol">
-      <div class="meter">
-        <div class="meter-top"><span>Kelengkapan RPP</span><span id="pct">0%</span></div>
-        <div class="bar"><i id="pctBar"></i></div>
-        <small id="pctHint">Mulai dari identitas dan pilih kelas.</small>
+<!-- ================= RANGKA ================= -->
+<div id="shell" hidden>
+  <header class="topbar">
+    <div class="topbar-in">
+      <div class="brand"><span class="logo"></span><span>RPP Cepat</span></div>
+      <nav class="tabs" id="nav" aria-label="Menu utama">
+        <button class="tab" data-view="beranda" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Hari ini</span></button>
+        <button class="tab" data-view="susun" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h4"/></svg><span>Susun RPP</span></button>
+        <button class="tab" data-view="jurnal" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M5 18a2 2 0 0 1 2-2h12"/></svg><span>Jurnal</span></button>
+        <button class="tab" data-view="rekap" aria-selected="false" id="tabRekap" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Rekap</span></button>
+      </nav>
+      <div class="akun">
+        <button class="akun-btn" id="akunBtn" aria-haspopup="true" aria-expanded="false" aria-controls="akunMenu"><span class="avatar" id="avatar">M</span><span class="akun-nama" id="akunNama"></span></button>
+        <div class="akun-menu" id="akunMenu" hidden>
+          <div class="who"><b id="akunLengkap"></b><span id="akunJabatan"></span></div>
+          <button type="button" id="btnGantiPin">Ganti PIN</button>
+          <button type="button" id="btnKeluar">Keluar</button>
+        </div>
       </div>
+    </div>
+  </header>
 
-      <!-- Step 1 -->
-      <div class="step open" data-step="1">
-        <button class="step-head" aria-expanded="true"><span class="step-no">1</span><span><b>Identitas</b><small id="s1sum">Guru, kelas, mapel, waktu</small></span><span class="chev">&#9662;</span></button>
-        <div class="step-body">
-          <div class="grid2">
-            <div class="field"><label for="f-guru">Nama guru</label><input type="text" id="f-guru" data-k="guru" autocomplete="name"></div>
-            <div class="field"><label for="f-nip">NIP / NUPTK <span class="hint">(opsional)</span></label><input type="text" id="f-nip" data-k="nip"></div>
-            <div class="field"><label for="f-sekolah">Sekolah</label><input type="text" id="f-sekolah" data-k="sekolah"></div>
-            <div class="field"><label for="f-kota">Kota penandatanganan</label><input type="text" id="f-kota" data-k="kota"></div>
-            <div class="field"><label for="f-kepsek">Kepala sekolah</label><input type="text" id="f-kepsek" data-k="kepsek"></div>
-            <div class="field"><label for="f-nipk">NIP kepala sekolah</label><input type="text" id="f-nipk" data-k="nipKepsek"></div>
-          </div>
-          <div class="grid2">
-            <div class="field"><label for="f-kelas">Kelas</label>
-              <select id="f-kelas" data-k="kelas"><option value="1">Kelas 1 (Fase A)</option><option value="2">Kelas 2 (Fase A)</option><option value="3">Kelas 3 (Fase B)</option><option value="4">Kelas 4 (Fase B)</option><option value="5">Kelas 5 (Fase C)</option><option value="6">Kelas 6 (Fase C)</option></select></div>
-            <div class="field"><label for="f-sem">Semester</label>
-              <select id="f-sem" data-k="semester"><option value="1">Semester 1 (Ganjil)</option><option value="2">Semester 2 (Genap)</option></select></div>
+  <!-- HARI INI -->
+  <main id="view-beranda" class="view on page"><div id="berandaBody"></div></main>
+
+  <!-- SUSUN -->
+  <main id="view-susun" class="view page">
+    <div class="layout" id="layout">
+      <div class="seg" style="grid-column:1/-1" id="seg">
+        <button type="button" aria-pressed="true" data-seg="form">Isi formulir</button>
+        <button type="button" aria-pressed="false" data-seg="preview">Lihat RPP</button>
+      </div>
+      <section class="form-col" id="formCol">
+        <div class="konteks" id="konteks"></div>
+        <div class="meter">
+          <div class="meter-top"><span>Kelengkapan RPP</span><span id="pct">0%</span></div>
+          <div class="bar"><i id="pctBar"></i></div>
+          <small id="pctHint"></small>
+        </div>
+
+        <div class="step open" data-step="1">
+          <button type="button" class="step-head" aria-expanded="true"><span class="step-no">1</span><span><b>Kelas dan waktu</b><small id="s1sum"></small></span><span class="chev">&#9662;</span></button>
+          <div class="step-body">
+            <div class="profil-ro" id="profilRo"></div>
+            <div class="grid2">
+              <div class="field"><label for="f-kelas">Kelas</label>
+                <select id="f-kelas" data-k="kelas"><option value="1">Kelas 1 (Fase A)</option><option value="2">Kelas 2 (Fase A)</option><option value="3">Kelas 3 (Fase B)</option><option value="4">Kelas 4 (Fase B)</option><option value="5">Kelas 5 (Fase C)</option><option value="6">Kelas 6 (Fase C)</option></select></div>
+              <div class="field"><label for="f-semester">Semester</label>
+                <select id="f-semester" data-k="semester"><option value="1">Semester 1 (Ganjil)</option><option value="2">Semester 2 (Genap)</option></select></div>
+            </div>
             <div class="field"><label for="f-mapel">Mata pelajaran</label><select id="f-mapel" data-k="mapel"></select></div>
-            <div class="field" id="mapelLainBox" hidden><label for="f-mapelLain">Nama mata pelajaran</label><input type="text" id="f-mapelLain" data-k="mapelLain" placeholder="mis. Al-Islam, PJOK"></div>
-            <div class="field"><label for="f-ta">Tahun pelajaran</label><input type="text" id="f-ta" data-k="ta"></div>
-            <div class="field"><label for="f-tgl">Tanggal mengajar</label><input type="date" id="f-tgl" data-k="tanggal"></div>
-            <div class="field"><label for="f-jp">Jumlah JP</label><input type="number" id="f-jp" data-k="jp" min="1" max="12"></div>
-            <div class="field"><label for="f-menit">Menit per JP</label><input type="number" id="f-menit" data-k="menit" min="20" max="60"></div>
-            <div class="field"><label for="f-pert">Pertemuan ke</label><input type="number" id="f-pert" data-k="pertemuan" min="1" max="40"></div>
+            <div class="field" id="mapelLainBox" hidden><label for="f-mapelLain">Nama mata pelajaran</label><input type="text" id="f-mapelLain" data-k="mapelLain" aria-describedby="e-mapelLain"><span class="hint">Mapel ini belum ada di pemetaan dinas. Tulis CP dan TP sendiri di langkah berikutnya.</span><span class="err" id="e-mapelLain" role="alert" hidden></span></div>
+            <div class="grid2">
+              <div class="field"><label for="f-tanggal">Tanggal mengajar</label><input type="date" id="f-tanggal" data-k="tanggal" aria-describedby="e-tanggal"><span class="hint" id="h-tanggal" hidden>Tanggal mengikuti jadwal.</span><span class="err" id="e-tanggal" role="alert" hidden></span></div>
+              <div class="field"><label for="f-ta">Tahun pelajaran</label><input type="text" id="f-ta" data-k="ta" aria-describedby="e-ta"><span class="err" id="e-ta" role="alert" hidden></span></div>
+              <div class="field"><label for="f-jp">Jumlah JP</label><input type="number" id="f-jp" data-k="jp" inputmode="numeric" aria-describedby="e-jp"><span class="err" id="e-jp" role="alert" hidden></span></div>
+              <div class="field"><label for="f-menit">Menit per JP</label><input type="number" id="f-menit" data-k="menit" inputmode="numeric" aria-describedby="e-menit"><span class="err" id="e-menit" role="alert" hidden></span></div>
+              <div class="field"><label for="f-pertemuan">Pertemuan ke</label><input type="number" id="f-pertemuan" data-k="pertemuan" inputmode="numeric" aria-describedby="e-pertemuan"><span class="err" id="e-pertemuan" role="alert" hidden></span></div>
+            </div>
+            <div class="next"><button type="button" class="btn" data-go="2">Lanjut ke capaian</button></div>
           </div>
-          <div class="next"><button class="btn" data-go="2">Lanjut ke capaian</button></div>
         </div>
-      </div>
 
-      <!-- Step 2 -->
-      <div class="step" data-step="2">
-        <button class="step-head" aria-expanded="false"><span class="step-no">2</span><span><b>Capaian dan tujuan</b><small id="s2sum">Pilih bahasan, CP, TP, ATP</small></span><span class="chev">&#9662;</span></button>
-        <div class="step-body">
-          <div class="field"><label for="f-unit">Bahasan dari pemetaan dinas</label><select id="f-unit" data-k="unit"></select>
-            <span class="hint" id="unitHint"></span></div>
-          <div class="field"><span class="lbl">Capaian Pembelajaran (CP)</span>
-            <div class="cp-box"><textarea id="f-cp" data-k="cp" rows="4" aria-label="Capaian Pembelajaran"></textarea></div></div>
-          <div class="field"><span class="lbl">Tujuan Pembelajaran (TP) yang dipakai hari ini</span>
-            <div class="checks" id="tpList"></div>
-            <div class="addrow"><input type="text" id="tpNew" placeholder="Tambah TP sendiri" aria-label="Tambah TP sendiri"><button class="btn sec sm" id="tpAdd">Tambah</button></div></div>
-          <div class="field"><span class="lbl">Alur Tujuan Pembelajaran (ATP)</span>
-            <div class="checks" id="atpList"></div>
-            <div class="addrow"><input type="text" id="atpNew" placeholder="Tambah ATP sendiri" aria-label="Tambah ATP sendiri"><button class="btn sec sm" id="atpAdd">Tambah</button></div></div>
-          <div class="field"><label for="f-materi">Materi pokok</label><textarea id="f-materi" data-k="materi" rows="3"></textarea></div>
-          <div class="field"><label for="f-tujuan">Rumusan tujuan di RPP</label><textarea id="f-tujuan" data-k="tujuan" rows="4"></textarea>
-            <span class="hint">Terisi otomatis dari TP yang dicentang. Boleh disunting.</span></div>
-          <div class="next"><button class="btn" data-go="3">Lanjut ke rancangan</button></div>
-        </div>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="step" data-step="3">
-        <button class="step-head" aria-expanded="false"><span class="step-no">3</span><span><b>Rancangan pembelajaran</b><small id="s3sum">Model, metode, profil, asesmen</small></span><span class="chev">&#9662;</span></button>
-        <div class="step-body">
-          <div class="field"><label for="f-model">Model pembelajaran</label><select id="f-model" data-k="model"></select>
-            <span class="hint" id="modelHint"></span></div>
-          <div class="field"><span class="lbl">Metode</span><div class="chips" id="c-metode"></div></div>
-          <div class="field"><span class="lbl">Dimensi Profil Lulusan</span><div class="chips" id="c-dpl"></div></div>
-          <div class="field"><span class="lbl">Prinsip pembelajaran mendalam</span><div class="chips" id="c-prinsip"></div></div>
-          <div class="field"><span class="lbl">Media dan sumber belajar</span><div class="chips" id="c-media"></div></div>
-          <div class="field"><span class="lbl">Teknik asesmen</span><div class="chips" id="c-asesmen"></div></div>
-          <div class="field"><label for="f-kem">Kemitraan pembelajaran</label><input type="text" id="f-kem" data-k="kemitraan" placeholder="mis. orang tua, tokoh masyarakat"></div>
-          <div class="field"><label for="f-lingk">Lingkungan belajar</label><input type="text" id="f-lingk" data-k="lingkungan"></div>
-          <div class="field"><label for="f-dig">Pemanfaatan digital</label><input type="text" id="f-dig" data-k="digital"></div>
-          <div class="actions"><button class="btn gold" id="genBtn">Susun kegiatan otomatis</button></div>
-          <div class="field"><label for="f-awal" id="lAwal">Kegiatan awal</label><textarea id="f-awal" data-k="awal" rows="5"></textarea></div>
-          <div class="field"><label for="f-inti" id="lInti">Kegiatan inti</label><textarea id="f-inti" data-k="inti" rows="9"></textarea></div>
-          <div class="field"><label for="f-penutup" id="lPenutup">Kegiatan penutup</label><textarea id="f-penutup" data-k="penutup" rows="5"></textarea></div>
-          <div class="next"><button class="btn" data-go="4">Lanjut ke cetak</button></div>
-        </div>
-      </div>
-
-      <!-- Step 4 -->
-      <div class="step" data-step="4">
-        <button class="step-head" aria-expanded="false"><span class="step-no">4</span><span><b>Cetak dan simpan</b><small>PDF, jurnal, Google Sheets</small></span><span class="chev">&#9662;</span></button>
-        <div class="step-body">
-          <div class="grid2">
-            <div class="field"><label for="f-kertas">Ukuran kertas</label>
-              <select id="f-kertas"><option value="A4">A4 (210 x 297 mm)</option><option value="F4">F4 (215 x 330 mm)</option><option value="Letter">Letter</option></select></div>
-            <div class="field"><label for="f-status">Status di jurnal</label>
-              <select id="f-status" data-k="status"><option>Direncanakan</option><option>Terlaksana</option><option>Ditunda</option></select></div>
+        <div class="step" data-step="2">
+          <button type="button" class="step-head" aria-expanded="false"><span class="step-no">2</span><span><b>Capaian dan tujuan</b><small id="s2sum"></small></span><span class="chev">&#9662;</span></button>
+          <div class="step-body">
+            <div class="field"><label for="f-unit">Bahasan dari pemetaan dinas</label><select id="f-unit" data-k="unit"></select><span class="hint" id="unitHint"></span></div>
+            <div class="field"><span class="lbl">Capaian Pembelajaran (CP)</span><div class="cp-box"><textarea id="f-cp" data-k="cp" rows="4" aria-label="Capaian Pembelajaran"></textarea></div></div>
+            <div class="field" id="tpField"><span class="lbl">Tujuan Pembelajaran (TP) yang dipakai hari ini</span>
+              <div class="checks" id="tpList"></div>
+              <div class="addrow"><input type="text" id="tpNew" aria-label="Tambah TP sendiri" placeholder="Tulis TP sendiri"><button type="button" class="btn sec" id="tpAdd">Tambah TP</button></div>
+              <span class="err" id="e-tp" role="alert" hidden></span></div>
+            <div class="field"><span class="lbl">Alur Tujuan Pembelajaran (ATP)</span>
+              <div class="checks" id="atpList"></div>
+              <div class="addrow"><input type="text" id="atpNew" aria-label="Tambah ATP sendiri" placeholder="Tulis ATP sendiri"><button type="button" class="btn sec" id="atpAdd">Tambah ATP</button></div></div>
+            <div class="field"><label for="f-materi">Materi pokok</label><textarea id="f-materi" data-k="materi" rows="3"></textarea></div>
+            <div class="field"><label for="f-tujuan">Rumusan tujuan di RPP</label><textarea id="f-tujuan" data-k="tujuan" rows="4"></textarea><span class="hint">Terisi dari TP yang dicentang. Boleh disunting.</span></div>
+            <div class="next"><button type="button" class="btn" data-go="3">Lanjut ke rancangan</button></div>
           </div>
-          <div class="field"><label for="f-catatan">Catatan jurnal <span class="hint">(opsional)</span></label><textarea id="f-catatan" data-k="catatan" rows="2" placeholder="Hasil singkat, murid yang perlu pendampingan, tindak lanjut"></textarea></div>
-          <div class="actions">
-            <button class="btn" id="btnPrint">Cetak / simpan PDF</button>
-            <button class="btn sec" id="btnSave">Simpan ke jurnal</button>
-            <button class="btn sec" id="btnSend">Simpan dan kirim ke Sheets</button>
-          </div>
-          <div class="note">Di jendela cetak, pilih <b>Simpan sebagai PDF</b> sebagai printer untuk mendapat berkas PDF. Matikan opsi "Header dan footer" agar bersih.</div>
-          <div class="actions"><button class="btn danger sm" id="btnReset">Mulai RPP baru</button></div>
         </div>
-      </div>
-    </section>
 
-    <section class="preview-col" id="previewCol" aria-label="Pratinjau RPP">
-      <div class="preview-bar"><b>Pratinjau RPP</b><span class="hint">Terisi langsung saat Anda memilih</span><span class="sp"></span><button class="btn sm" id="btnPrint2">Cetak / PDF</button></div>
-      <div class="preview-scroll" id="previewScroll"><article class="paper" id="paper"></article></div>
-    </section>
-  </div>
-</main>
+        <div class="step" data-step="3">
+          <button type="button" class="step-head" aria-expanded="false"><span class="step-no">3</span><span><b>Rancangan pembelajaran</b><small id="s3sum"></small></span><span class="chev">&#9662;</span></button>
+          <div class="step-body">
+            <div class="field"><label for="f-model">Model pembelajaran</label><select id="f-model" data-k="model"></select><span class="hint" id="modelHint"></span></div>
+            <div class="field"><span class="lbl">Metode</span><div class="chips" id="c-metode"></div></div>
+            <div class="field"><span class="lbl">Dimensi Profil Lulusan</span><div class="chips" id="c-dpl"></div></div>
+            <div class="field"><span class="lbl">Prinsip pembelajaran mendalam</span><div class="chips" id="c-prinsip"></div></div>
+            <div class="field"><span class="lbl">Media dan sumber belajar</span><div class="chips" id="c-media"></div></div>
+            <div class="field"><span class="lbl">Teknik asesmen</span><div class="chips" id="c-asesmen"></div></div>
+            <div class="field"><label for="f-kemitraan">Kemitraan pembelajaran</label><input type="text" id="f-kemitraan" data-k="kemitraan" placeholder="Misalnya orang tua atau tokoh masyarakat"></div>
+            <div class="field"><label for="f-lingkungan">Lingkungan belajar</label><input type="text" id="f-lingkungan" data-k="lingkungan"></div>
+            <div class="field"><label for="f-digital">Pemanfaatan digital</label><input type="text" id="f-digital" data-k="digital"></div>
+            <div class="actions"><button type="button" class="btn gold" id="genBtn">Susun kegiatan otomatis</button></div>
+            <div class="field"><label for="f-awal" id="lAwal">Kegiatan awal</label><textarea id="f-awal" data-k="awal" rows="5"></textarea></div>
+            <div class="field"><label for="f-inti" id="lInti">Kegiatan inti</label><textarea id="f-inti" data-k="inti" rows="9"></textarea></div>
+            <div class="field"><label for="f-penutup" id="lPenutup">Kegiatan penutup</label><textarea id="f-penutup" data-k="penutup" rows="5"></textarea></div>
+            <div class="next"><button type="button" class="btn" data-go="4">Lanjut ke cetak</button></div>
+          </div>
+        </div>
 
-<!-- ================= JURNAL ================= -->
-<main id="view-jurnal" class="view">
-  <div class="wrap">
-    <h2>Jurnal mengajar</h2>
-    <p class="hint" style="margin:0">Setiap RPP yang disimpan menjadi satu baris jurnal. Kirim ke Google Sheets untuk rekap bersama.</p>
-    <div class="stats">
-      <div class="stat"><b id="stTotal">0</b><span>RPP tersimpan</span></div>
-      <div class="stat"><b id="stDone">0</b><span>Sudah terlaksana</span></div>
-      <div class="stat"><b id="stSent">0</b><span>Terkirim ke Sheets</span></div>
+        <div class="step" data-step="4">
+          <button type="button" class="step-head" aria-expanded="false"><span class="step-no">4</span><span><b>Simpan dan cetak</b><small>PDF dan jurnal</small></span><span class="chev">&#9662;</span></button>
+          <div class="step-body">
+            <div class="grid2">
+              <div class="field"><label for="f-kertas">Ukuran kertas</label><select id="f-kertas"><option value="A4">A4 (210 x 297 mm)</option><option value="F4">F4 (215 x 330 mm)</option><option value="Letter">Letter</option></select></div>
+              <div class="field"><label for="f-status">Status di jurnal</label><select id="f-status" data-k="status"><option>Direncanakan</option><option>Terlaksana</option><option>Ditunda</option></select></div>
+            </div>
+            <div class="field"><label for="f-catatan">Catatan jurnal</label><textarea id="f-catatan" data-k="catatan" rows="2" placeholder="Hasil singkat, murid yang perlu pendampingan, tindak lanjut"></textarea></div>
+            <div class="actions">
+              <button type="button" class="btn" id="btnSimpan">Simpan ke jurnal</button>
+              <button type="button" class="btn sec" id="btnPrint">Cetak atau simpan PDF</button>
+            </div>
+            <p class="simpan-info" id="simpanInfo" role="status"></p>
+            <div class="note">Di jendela cetak, pilih <b>Simpan sebagai PDF</b> sebagai printer. Matikan opsi "Header dan footer" supaya halaman bersih.</div>
+            <div class="actions"><button type="button" class="btn danger sm" id="btnReset">Kosongkan formulir</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="preview-col" id="previewCol" aria-label="Pratinjau RPP">
+        <div class="preview-bar"><b>Pratinjau RPP</b><span class="hint">Terisi langsung saat Anda memilih</span><span class="sp"></span><button type="button" class="btn sm" id="btnPrint2">Cetak atau simpan PDF</button></div>
+        <div class="preview-scroll" id="previewScroll"><article class="paper" id="paper"></article></div>
+      </section>
     </div>
+  </main>
+
+  <!-- JURNAL -->
+  <main id="view-jurnal" class="view page">
+    <div class="judul"><div><h1 class="serif">Jurnal mengajar</h1><p>Setiap RPP yang disimpan menjadi satu baris di Google Sheets.</p></div></div>
+    <div class="ubin" id="jStat"></div>
+    <div class="filter" id="jFilter" role="group" aria-label="Saring menurut status"></div>
     <div id="jList"></div>
-  </div>
-</main>
+  </main>
 
-<!-- ================= PENGATURAN ================= -->
-<main id="view-pengaturan" class="view">
-  <div class="wrap" style="max-width:760px">
-    <h2>Pengaturan</h2>
-    <div class="panel">
-      <h3>Hubungkan Google Sheets</h3>
-      <p class="hint" style="margin:0 0 6px">Jurnal dikirim lewat Google Apps Script milik Anda. Data tidak lewat server lain.</p>
-      <div class="field" style="margin-top:6px"><label for="f-url">Alamat Web App Apps Script</label><input type="url" id="f-url" placeholder="https://script.google.com/macros/s/.../exec"></div>
-      <div class="actions"><button class="btn" id="saveUrl">Simpan alamat</button><button class="btn sec" id="testUrl">Uji sambungan</button></div>
-      <h3 style="margin-top:18px">Cara memasang</h3>
-      <ol class="how">
-        <li>Buat Google Sheet baru, lalu buka <b>Ekstensi &gt; Apps Script</b>.</li>
-        <li>Hapus isi bawaan, tempel kode di bawah, simpan.</li>
-        <li>Pilih <b>Terapkan &gt; Deployment baru &gt; Aplikasi web</b>. Akses: <b>Siapa saja</b>.</li>
-        <li>Salin alamat <b>/exec</b> ke kolom di atas.</li>
-      </ol>
-      <pre class="code" id="gas"></pre>
-      <button class="btn sec sm" id="copyGas">Salin kode</button>
-    </div>
-    <div class="panel">
-      <h3>Cadangan data</h3>
-      <p class="hint" style="margin:0">Data jurnal tersimpan di peramban perangkat ini. Unduh cadangan sebelum ganti perangkat.</p>
-      <div class="actions"><button class="btn sec" id="exportJ">Unduh cadangan (JSON)</button><label class="btn sec" style="display:inline-block">Pulihkan<input type="file" id="importJ" accept=".json" hidden></label></div>
-    </div>
-  </div>
-</main>
+  <!-- REKAP -->
+  <main id="view-rekap" class="view page">
+    <div class="judul"><div><h1 class="serif">Rekap RPP guru</h1><p id="rekapPekan"></p></div>
+      <div class="actions" style="margin:0"><button type="button" class="btn sec sm" id="rkPrev">Pekan sebelumnya</button><button type="button" class="btn sec sm" id="rkNow">Pekan ini</button></div></div>
+    <div id="rekapBody"></div>
+  </main>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlgJudul"><form method="dialog"><h2 id="dlgJudul"></h2><p id="dlgIsi"></p><div class="dlg-aksi"><button class="btn sec" value="batal">Batal</button><button class="btn danger" value="ya" id="dlgYa"></button></div></form></dialog>
+
+<dialog id="dlgPin" aria-labelledby="pinJudul"><form id="frmPin" novalidate>
+  <h2 id="pinJudul">Ganti PIN</h2>
+  <div class="field"><label for="pn-lama">PIN lama</label><input type="password" id="pn-lama" inputmode="numeric" autocomplete="current-password" maxlength="8"><span class="err" id="err-pn-lama" role="alert" hidden></span></div>
+  <div class="field"><label for="pn-baru">PIN baru</label><input type="password" id="pn-baru" inputmode="numeric" autocomplete="new-password" maxlength="8"><span class="hint">4 sampai 8 angka.</span><span class="err" id="err-pn-baru" role="alert" hidden></span></div>
+  <div class="field"><label for="pn-ulang">Ulangi PIN baru</label><input type="password" id="pn-ulang" inputmode="numeric" autocomplete="new-password" maxlength="8"><span class="err" id="err-pn-ulang" role="alert" hidden></span></div>
+  <div class="dlg-aksi"><button type="button" class="btn sec" id="pnBatal">Batal</button><button type="submit" class="btn" id="pnSimpan">Simpan PIN baru</button></div>
+</form></dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
+'use strict';
+/* =====================================================================
+   PENGATURAN: isi SCRIPT_URL dengan alamat /exec dari Apps Script (Code.gs).
+   Selama kosong, aplikasi berjalan dalam mode contoh (data tersimpan di perangkat ini).
+   Setelah SCRIPT_URL terisi, blok DEMO di bawah boleh dihapus (ganti isinya dengan null)
+   agar nama guru dan jadwal tidak ikut tampil di repositori publik.
+   ===================================================================== */
+const CONFIG = {
+  SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzVCNMFCAXcqueLD1hFr5-m5ug6-as_tEJUj6hyqGvsW0eUJszVdxTUV75DJdEkqJg4gA/exec',
+  SEKOLAH: 'SD Muhammadiyah 2 Pekajangan',
+  KOTA: 'Pekalongan',
+  LINK_BTQ: 'https://sdm2pekajangan.github.io/btq-tracker'
+};
 const DATA = {"kurikulum_sd":[{"kelas":1,"mata_pelajaran":[{"nama":"Seni Rupa","pemetaan":[{"semester":1,"elemen":"Mengalami (Experiencing)","cp":"Mengenali dan menyebutkan unsur-unsur rupa dalam benda-benda di sekitar/karya seni rupa.","tp":"Mengenali unsur rupa dalam benda-benda di sekitar/karya seni rupa; Menyebutkan unsur rupa dalam benda-benda di sekitar/karya seni rupa.","atp":"Mengenali unsur rupa dalam benda-benda di sekitar/ karya seni rupa; Menyebutkan unsur rupa dalam benda-benda di sekitar/karya seni rupa.","materi_pokok":"Unsur rupa: mengenal unsur garis, bentuk, dan warna melalui pengamatan benda dan karya seni sederhana."},{"semester":1,"elemen":"Merefleksikan (Reflecting)","cp":"Murid mampu merefleksikan dan mengapresiasi karya diri sendiri.","tp":"Menceritakan pengalaman dan perasaan mengenai gagasan dan proses berkaryanya.","atp":"Menceritakan pengalaman dan perasaan mengenai gagasan dan proses berkaryanya.","materi_pokok":"Refleksi karya seni: menceritakan pengalaman, gagasan, proses, dan perasaan selama berkarya."},{"semester":2,"elemen":"Berpikir dan Bekerja Artistik","cp":"Murid mampu mengenali dan menguji coba alat dan/atau bahan yang dimiliki.","tp":"Mengenali alat dan/atau bahan yang dimiliki.","atp":"Mengenali alat dan/atau bahan yang dimiliki.","materi_pokok":"Pengenalan dasar alat dan bahan (pensil, krayon, spidol, cat air, kuas, kertas, gunting, lem, serta cara merawat alat)."},{"semester":2,"elemen":"Menciptakan (Creating)","cp":"Murid mampu membuat karya seni rupa berdasarkan pengalaman dan hasil pengamatan terhadap lingkungan sekitar.","tp":"Meniru karya seni rupa berdasarkan pengamatannya terhadap lingkungan sekitar.","atp":"Meniru karya seni rupa berdasarkan pengamatannya terhadap lingkungan sekitar.","materi_pokok":"Berkarya berdasarkan hasil pengamatan: meniru objek di lingkungan sekitar melalui kegiatan menggambar, menyusun, melipat, memotong, dan menempel."},{"semester":2,"elemen":"Berdampak (Impacting)","cp":"Murid mampu berkarya seni rupa yang berdampak pada perasaan dirinya.","tp":"Menjelaskan dampak suatu karya untuk dirinya.","atp":"Menjelaskan dampak suatu karya untuk dirinya.","materi_pokok":"Apresiasi karya seni: Menjelaskan manfaat berkarya seni, mengungkapkan rasa senang, dan menghargai karya."}]},{"nama":"Pendidikan Pancasila","pemetaan":[{"semester":1,"elemen":"Bhineka Tunggal Ika","cp":"Mengenal semboyan Bhinneka Tunggal Ika; mengidentifikasi dan menghargai identitas dirinya sesuai dengan jenis kelamin, hobi, bahasa, serta agama di lingkungan sekitar.","tp":"Murid dapat mengenal dan Menerima Identitas diri; mengenali perbedaan jenis kelamin; menyebutkan identitas diri sesuai kesukaan/hobi.","atp":"Mengidentifikasi dan menghargai identitas dirinya sesuai dengan jenis kelamin dan hobi di lingkungan sekitar.","materi_pokok":"Mengenal Identitas diri, Mengenal Jenis Kelamin, Menerima perbedaan ciri fisik dan agama."},{"semester":1,"elemen":"UUD Negara Republik Indonesia 1945","cp":"Mengenal aturan di lingkungan keluarga; menunjukkan dan menceritakan sikap mematuhi aturan di lingkungan keluarga.","tp":"Mengenal aturan di lingkungan keluarga dan bermain; menunjukkan perilaku mematuhi aturan; menceritakan contoh sikap mematuhi aturan.","atp":"Mengenal aturan di lingkungan keluarga; Mengidentifikasi aturan di lingkungan keluarga; Mematuhi Aturan di Keluarga.","materi_pokok":"Aturan dalam keluarga, Peduli terhadap Lingkungan Tempat Tinggal."},{"semester":2,"elemen":"Pancasila","cp":"Mengenal bendera negara, lagu kebangsaan, simbol dan sila-sila Pancasila dalam lambang negara Garuda Pancasila, dan menerapkan nilai-nilai Pancasila di lingkungan keluarga.","tp":"Mengenali bendera negara dan lagu kebangsaan; menyebutkan simbol dalam Lambang Garuda; mengurutkan simbol dan sila-sila Pancasila.","atp":"Mengenal bendera negara, Lagu Kebangsaan Indonesia Raya, Lambang Negara, dan Simbol pada Lambang Garuda Pancasila.","materi_pokok":"Bendera Negara, Lagu Kebangsaan, Lambang Garuda Pancasila, Simbol Pancasila."},{"semester":2,"elemen":"Negara Kesatuan Republik Indonesia","cp":"Mengenal karakteristik lingkungan tempat tinggal dan sekolah; menceritakan dan mempraktikkan bekerja sama menjaga lingkungan sekitar dalam keberagaman.","tp":"Mengenali karakteristik lingkungan tempat tinggal dan sekolah; menunjukkan sikap peduli; mempraktikkan menjaga lingkungan; mengidentifikasi bentuk kerja sama.","atp":"Menceritakan perilaku kerja sama dalam keberagaman di lingkungan tempat tinggal dan sekolah; Gotong royong.","materi_pokok":"Lingkungan Tempat Tinggal, Kerja sama dalam keberagaman, Gotong royong."}]},{"nama":"Bahasa Indonesia","pemetaan":[{"semester":1,"elemen":"Menyimak","cp":"Memahami informasi dari teks nonsastra teks aural berupa percakapan yang berkaitan dengan diri, keluarga; memahami pesan teks sastra.","tp":"Memahami informasi dari teks nonsastra berbentuk teks aural berupa percakapan yang berkaitan dengan diri dan keluarga.","atp":"Memahami informasi dari teks nonsastra berbentuk teks aural berupa percakapan yang berkaitan dengan diri dan keluarga.","materi_pokok":"Isi informasi teks aural; Menyimak cerita, memperkenalkan diri, mengenal bunyi; kosakata tentang diri."},{"semester":1,"elemen":"Membaca","cp":"Membaca kata-kata sederhana dengan fasih dari bacaan tentang diri, keluarga, kesehatan; memahami isi bacaan.","tp":"Membaca kata-kata sederhana dengan fasih dari bacaan/tayangan tentang diri dan keluarga.","atp":"Membaca kata-kata sederhana dengan fasih dari bacaan/tayangan tentang diri dan keluarga.","materi_pokok":"Membaca kata sederhana dan mengenal huruf, Pengenalan alfabet, membaca suku kata dan kata sederhana, mencocokkan bunyi dan huruf."},{"semester":1,"elemen":"Menulis","cp":"Menulis permulaan dengan benar; mengembangkan tulisan tangan; menulis berbagai tipe teks sederhana.","tp":"Menulis permulaan dengan benar di atas kertas dan/atau media digital.","atp":"Menulis permulaan dengan benar di atas kertas dan/atau media digital.","materi_pokok":"Menulis permulaan menyalin kata, menulis nama sendiri."},{"semester":2,"elemen":"Berbicara dan Mempresentasikan","cp":"Merespons dengan bertanya, menjawab, menanggapi komentar dengan baik dan santun; mengungkapkan perasaan; menceritakan kembali isi teks.","tp":"Merespons dengan bertanya, menjawab, menanggapi komentar orang lain dengan santun tentang diri dan keluarga; Menceritakan kembali isi berbagai tipe teks.","atp":"Merespons dengan bertanya, menjawab, dan menanggapi komentar; Menceritakan kembali isi teks yang dibaca atau didengar.","materi_pokok":"Percakapan dan komunikasi santun (Kalimat tanya, jawaban, berbicara bergantian); Menceritakan kembali isi cerita, mengurutkan peristiwa."},{"semester":2,"elemen":"Menulis","cp":"Menulis permulaan dengan benar; mengembangkan tulisan tangan; menulis teks sederhana tentang diri dan lingkungan.","tp":"Mengembangkan tulisan tangan yang semakin baik; Menulis teks sederhana tentang diri dan keluarga.","atp":"Mengembangkan tulisan tangan yang semakin baik; Menulis teks sederhana tentang diri dan keluarga.","materi_pokok":"Menulis kalimat sederhana (kerapian tulisan, penggunaan spasi); Menulis deskripsi dan pengalaman sederhana (kosakata tepat, huruf kapital, tanda titik)."}]},{"nama":"Matematika","pemetaan":[{"semester":1,"elemen":"Bilangan","cp":"Memiliki intuisi bilangan (number sense) cacah sampai 200; membaca, menulis, nilai tempat, membandingkan, komposisi/dekomposisi; penjumlahan dan pengurangan sampai 20.","tp":"Menghitung banyak benda sampai 20; Mengenal bilangan 0; Membaca dan menulis lambang bilangan; Menunjukkan konsep sama banyak/lebih banyak; Menghitung maju/mundur.","atp":"Menghitung benda, Mengenal bilangan 0, Membaca dan menulis bilangan sampai 20, Membandingkan banyak benda, Menghitung maju dan mundur, Menyusun dan mengurai bilangan, Nilai tempat.","materi_pokok":"Membilang sampai dengan 20, Menghitung, Membaca, dan Menulis Bilangan, Membandingkan Banyak Benda."},{"semester":1,"elemen":"Aljabar","cp":"Memahami simbol matematika '=' dalam penjumlahan dan pengurangan sampai 20; mengenali dan melanjutkan pola bukan bilangan.","tp":"Menunjukkan konsep penjumlahan dan pengurangan sampai 20; Menuliskan operasi hitung; Menggunakan strategi penjumlahan/pengurangan; Menentukan bilangan yang belum diketahui.","atp":"Menunjukkan konsep penjumlahan dan pengurangan sampai 20 dengan benda konkret/cerita; Menyelesaikan masalah terkait; Menentukan pola bukan bilangan.","materi_pokok":"Penjumlahan dan pengurangan sampai 20, Hubungan penjumlahan dan pengurangan, Kalimat matematika, Nilai tempat."},{"semester":1,"elemen":"Pengukuran","cp":"Membandingkan panjang dan berat benda secara langsung, membandingkan durasi waktu; mengukur/mengestimasi panjang dengan satuan tidak baku.","tp":"Membandingkan panjang dua benda; Mengurutkan benda; Mengestimasi panjang; Mengukur panjang dengan satuan tidak baku.","atp":"Membandingkan panjang dua benda; Mengurutkan benda berdasarkan panjang; Mengukur panjang benda menggunakan objek lain dalam satuan tidak baku.","materi_pokok":"Mengukur Panjang Benda, Membandingkan dan Mengurutkan Panjang Benda."},{"semester":1,"elemen":"Geometri","cp":"Mengenal bangun datar dan bangun ruang; melakukan komposisi/dekomposisi bangun datar; menentukan posisi benda (kanan, kiri, depan, belakang, atas, bawah).","tp":"Mendeskripsikan benda; Mengenal bentuk dasar (segitiga, segi empat, bentuk lengkung); Mengelompokkan benda; Menyusun dan mengurai bentuk bangun.","atp":"Mendeskripsikan benda berdasarkan bentuknya; Mengenal dan memberi nama bentuk dasar; Mengelompokkan benda; Menyusun dan mengurai bentuk bangun.","materi_pokok":"Mengenal Bentuk, Mendeskripsikan Benda berdasarkan Bentuk, Mengelompokkan Benda, Menyusun dan Mengurai Bentuk Bangun."},{"semester":2,"elemen":"Bilangan","cp":"Menunjukkan pemahaman pecahan sebagai bagian dari keseluruhan (setengah dan seperempat).","tp":"Membaca dan menulis bilangan sampai 20; Komposisi dan dekomposisi; Menyatakan pecahan setengah dan seperempat ke bentuk simbol.","atp":"Membaca dan menulis bilangan sampai 20; Komposisi dan dekomposisi; Menyatakan pecahan setengah dan seperempat ke bentuk simbol.","materi_pokok":"Bilangan sampai 20, Nilai tempat, Pecahan setengah dan seperempat."},{"semester":2,"elemen":"Aljabar","cp":"Mengenali, meniru, dan melanjutkan pola bukan bilangan (gambar, warna, bunyi).","tp":"Menentukan pola bukan bilangan; Melanjutkan pola non bilangan.","atp":"Menentukan pola bukan bilangan (Gambar warna suara); Melanjutkan pola non bilangan.","materi_pokok":"Pola bilangan dan pola non bilangan."},{"semester":2,"elemen":"Analisis Data dan Peluang","cp":"Mengurutkan, menyortir, mengelompokkan, membandingkan, dan menyajikan data menggunakan turus dan piktogram paling banyak 4 kategori.","tp":"Mengurutkan data dari banyak benda; Mengelompokkan benda dari benda-benda acak.","atp":"Mengurutkan data dari banyak benda; Mengelompokkan benda dari benda-benda acak.","materi_pokok":"Diagram gambar (Piktogram)."}]},{"nama":"Bahasa Jawa","pemetaan":[{"semester":1,"elemen":"Menyimak","cp":"Bersikap menjadi penyimak bunyi huruf, suku kata, nama benda, anggota tubuh (ngoko/krama); memahami pesan audio/tembang dolanan/dongeng.","tp":"Menyimak bunyi huruf, suku kata, dan kata (ngoko/krama); Memahami pesan lisan tembang dolanan; Memahami informasi bacaan tembang.","atp":"Menyimak bunyi huruf dan kata ngoko/krama; Memahami informasi dan pesan dari tembang dolanan.","materi_pokok":"Bunyi huruf, suku kata, nama benda bahasa Jawa ngoko-krama; Pengertian tembang dolanan, isi/pesan; Tokoh, peristiwa, amanat dongeng."},{"semester":1,"elemen":"Membaca","cp":"Mengeja huruf, suku kata (ngoko/krama); memahami informasi bacaan tembang/dongeng; menambah kosakata baru.","tp":"Mengeja huruf dan suku kata (ngoko/krama); Memahami informasi bacaan tembang dolanan dan dongeng (fabel).","atp":"Mengeja huruf dan suku kata ngoko/krama; Memahami informasi tembang dolanan dan dongeng fabel.","materi_pokok":"Mengeja huruf/kata sederhana ngoko-krama; Isi tembang, kosakata; Tokoh, watak, latar, amanat dongeng."},{"semester":2,"elemen":"Menyimak","cp":"Memahami pesan lisan dan informasi tembang dolanan, dongeng, dan instruksi lisan.","tp":"Memahami pengertian tembang dolanan; Memahami dongeng; Mengidentifikasi nama bagian tubuh (ngoko/krama).","atp":"Memahami pengertian tembang dolanan; Memahami dongeng; Mengidentifikasi nama bagian tubuh (ngoko/krama).","materi_pokok":"Pengertian/ciri tembang dolanan; Pengertian dongeng; Nama anggota tubuh ngoko dan krama."},{"semester":2,"elemen":"Berbicara","cp":"Melafalkan huruf, kata (ngoko/krama) dengan santun, bertanya/menjawab, menceritakan kembali isi teks.","tp":"Menyanyikan tembang dolanan; Menceritakan isi dongeng dan memeragakannya; Menulis dan menjelaskan kegunaan anggota tubuh (ngoko/krama).","atp":"Menyanyikan tembang dolanan; Menceritakan isi dongeng dan memeragakannya; Menjelaskan kegunaan anggota tubuh ngoko dan krama.","materi_pokok":"Melagukan tembang dolanan (lafal, irama, ekspresi); Menceritakan dongeng (dialog, gerak); Fungsi anggota tubuh (ngoko/krama)."}]}]},{"kelas":2,"mata_pelajaran":[{"nama":"Pendidikan Pancasila","pemetaan":[{"semester":1,"elemen":"Pancasila","cp":"Mengenal bendera negara, lagu kebangsaan, simbol dan sila-sila Pancasila; menerapkan nilai-nilai Pancasila di keluarga.","tp":"Mengenal simbol Pancasila, menjelaskan makna hubungan simbol dengan sila; Menerapkan nilai Pancasila dalam keluarga.","atp":"Mengenal dan menyebutkan sila-sila serta makna sederhana; Menjelaskan hubungan simbol Burung Garuda dengan sila; Menerapkan sikap saling menghormati di keluarga.","materi_pokok":"Simbol Pancasila, Sila-sila Pancasila, Arti lambang Pancasila, Penerapan nilai Pancasila dalam kehidupan sehari-hari."},{"semester":1,"elemen":"UUD 1945","cp":"Mengenal aturan di lingkungan keluarga; menunjukkan sikap mematuhi aturan.","tp":"Mengenal aturan di lingkungan keluarga; Menunjukkan dan menceritakan sikap mematuhi aturan.","atp":"Mengenal pengertian aturan dalam keluarga; Mengidentifikasi contoh sikap mematuhi aturan di rumah dan bersikap disiplin.","materi_pokok":"Aturan di lingkungan keluarga, Hak dan kewajiban di rumah dan sekolah."},{"semester":2,"elemen":"Bhinneka Tunggal Ika","cp":"Mengenal semboyan Bhinneka Tunggal Ika; mengidentifikasi dan menghargai identitas dirinya sesuai jenis kelamin, hobi, agama.","tp":"Mengenal semboyan Bhinneka Tunggal Ika; Mengidentifikasi dan menghargai identitas dirinya (jenis kelamin, hobi, agama).","atp":"Mengenal semboyan; Mengenal identitas diri; Menunjukkan sikap menerima dan menghargai perbedaan identitas orang lain.","materi_pokok":"Semboyan Bhinneka Tunggal Ika, Mengenal dan menghargai keberagaman identitas."},{"semester":2,"elemen":"NKRI","cp":"Mengenal karakteristik lingkungan tempat tinggal dan sekolah; menceritakan dan mempraktikkan bekerja sama menjaga lingkungan.","tp":"Mengenal karakteristik lingkungan tempat tinggal dan sekolah; Menceritakan dan mempraktikkan bekerja sama menjaga lingkungan.","atp":"Mengidentifikasi ciri lingkungan tempat tinggal dan sekolah; Mengenal kegiatan bersama menjaga lingkungan; Bekerja sama dalam keberagaman.","materi_pokok":"Mengenal lingkungan keluarga, sekolah, dan masyarakat; Gotong royong menjaga lingkungan sekolah."}]},{"nama":"Seni Rupa","pemetaan":[{"semester":1,"elemen":"Mengalami (Experiencing)","cp":"Mengenali dan menyebutkan unsur-unsur rupa dalam benda-benda di sekitar/karya seni rupa.","tp":"Mengenal dan mempraktikkan pencampuran warna primer menjadi sekunder; Membuat pola geometris dan organik berulang.","atp":"Mengidentifikasi unsur warna dan bentuk; Melakukan eksperimen pencampuran warna; Menyusun dan menggambar pola geometris/organik berulang.","materi_pokok":"Warna Primer dan Sekunder, Pencampuran warna dan pengulangan pola."},{"semester":1,"elemen":"Merefleksikan & Menciptakan","cp":"Merefleksikan karya diri sendiri; Membuat karya berdasarkan pengamatan lingkungan.","tp":"Menggambar figur/wajah dengan ekspresi emosi; Menggabungkan teknik warna, garis, dan cetak menjadi komposisi karya.","atp":"Menggambar wajah dengan ekspresi (senang, sedih); Mengamati objek lingkungan dan membuat karya paduan warna, ekspresi, tekstur.","materi_pokok":"Gambar ilustrasi ekspresi, Karya Seni Terpadu / Komposisi Gambar Kreatif."},{"semester":2,"elemen":"Mengalami & Bekerja Artistik","cp":"Mengenali unsur rupa tekstur; Menguji coba alat dan bahan limbah.","tp":"Mengidentifikasi ragam tekstur bahan lingkungan; Memanfaatkan limbah kardus untuk membuat model bangunan 3D.","atp":"Menyebutkan perbedaan tekstur kasar/halus; Mempraktikkan teknik mengelem pada bangun ruang kardus bekas.","materi_pokok":"Komposisi bahan dan tekstur buatan, Rekayasa dan rancang bangun sederhana."},{"semester":2,"elemen":"Menciptakan (Creating)","cp":"Membuat karya seni rupa berdasarkan pengamatan lingkungan.","tp":"Menggabungkan tekstur bahan menjadi karya kolase; Menggambar ulang motif hias lokal.","atp":"Merancang dan menyusun potongan bahan menjadi kolase; Menggambar ulang motif hias lokal pada kertas/benda bekas.","materi_pokok":"Komposisi bahan, kolase, dan motif hias lokal."}]},{"nama":"Bahasa Jawa","pemetaan":[{"semester":1,"elemen":"Menyimak","cp":"Memahami pesan lisan dari media audio, teks aural, dongeng, dan instruksi lisan.","tp":"Mengenal watak dan ciri fisik tokoh Pandawa Lima; Menceritakan kembali kisah/silsilah Pandawa Lima.","atp":"Menyimak informasi Pandawa Lima (nama, watak, ciri); Mengurutkan informasi dan menceritakan kembali.","materi_pokok":"Tokoh Pandawa Lima (watak, ciri fisik, silsilah)."},{"semester":1,"elemen":"Membaca & Berbicara","cp":"Memahami informasi bacaan tembang; Berbicara santun dengan unggah-ungguh basa.","tp":"Menyanyikan tembang dolanan bertema nasihat; Menerapkan basa krama saat berbicara (pamitan, minta maaf, terima kasih).","atp":"Membaca/menyanyikan tembang (Jaranan, Padhang Bulan) dan mencari kata sulit; Mengenali dan praktik ungkapan basa krama dengan orang tua/guru.","materi_pokok":"Tembang dolanan bermakna nasihat, Unggah-Ungguh Basa (Basa Ngoko dan Krama)."},{"semester":2,"elemen":"Menyimak & Membaca","cp":"Memahami teks petunjuk dan dongeng fabel.","tp":"Memahami isi teks petunjuk cara merawat hewan/tumbuhan; Mengidentifikasi pesan moral dalam dongeng fabel.","atp":"Menyimak urutan langkah petunjuk dan melakukan tindakan; Membaca dongeng, menemukan amanat/budi pekerti dan menjelaskan hikmahnya.","materi_pokok":"Teks petunjuk melakukan sesuatu, Cerita rakyat lokal/dongeng (Fabel)."},{"semester":2,"elemen":"Berbicara","cp":"Berbicara santun, menceritakan kembali, bertanya jawab.","tp":"Mengucapkan salam Bahasa Jawa sesuai waktu; Melakukan percakapan sederhana dengan santun.","atp":"Mempraktikkan salam kepada guru/teman; Menyusun percakapan sederhana dan mempraktikkannya dengan unggah-ungguh basa tepat.","materi_pokok":"Teks sastra, Tembang dolanan, Ragam basa ngoko/krama (Kawruh basa)."}]},{"nama":"Bahasa Indonesia","pemetaan":[{"semester":1,"elemen":"Menyimak & Membaca","cp":"Memahami informasi teks nonsastra aural; Membaca kata sederhana dan memahami bacaan.","tp":"Mengidentifikasi emosi dari gambar/teks; Menemukan informasi penting bacaan; Melafalkan kosakata baru.","atp":"Membaca puisi anak; Mengidentifikasi emosi; Membaca teks dan menjawab pertanyaan (huruf kapital, tanda baca).","materi_pokok":"Teks aural (nonsastra), Kosakata perasaan, Teks bacaan, Huruf kapital, Tanda baca, Kalimat tanya."},{"semester":1,"elemen":"Berbicara & Menulis","cp":"Merespons pertanyaan, menceritakan kembali; Menulis permulaan berbagai tipe teks.","tp":"Membedakan kalimat perintah/larangan; Menuliskan silsilah keluarga; Mengidentifikasi kata kerja.","atp":"Mempraktikkan kalimat perintah/larangan; Menyunting huruf kapital; Menulis silsilah keluarga dan hobi.","materi_pokok":"Teks instruksi, Rambu lalu lintas, Kalimat perintah/larangan, Silsilah keluarga, Kata kerja (aktivitas)."},{"semester":2,"elemen":"Menyimak & Berbicara","cp":"Memahami pesan fabel/puisi; Merespons komentar dan menceritakan kembali.","tp":"Menyimpulkan pesan moral fabel; Menggunakan kata depan di, ke, dari; Mencocokkan sinonim/antonim; Mengungkapkan pendapat.","atp":"Menyimak fabel dan identifikasi moral; Penggunaan di, ke, dari; Menanggapi komentar dengan santun.","materi_pokok":"Teks sastra (Fabel, Puisi: Pesan moral), Kata depan, Sinonim dan Antonim, Teks percakapan."},{"semester":2,"elemen":"Menulis","cp":"Menulis teks sederhana tentang diri dan lingkungan.","tp":"Menulis kalimat perintah, kata benda, sifat, lawan kata; Menulis kalimat pola SPO; Menulis puisi bebas.","atp":"Menulis kalimat berpola SPO dengan benar; Membuat poster sederhana keluarga; Menggunakan kata hubung (dan, tetapi).","materi_pokok":"Teks sederhana, Kalimat perintah, Kata ulang, Kalimat ajakan, Kalimat berpola SPOK."}]},{"nama":"Matematika","pemetaan":[{"semester":1,"elemen":"Bilangan & Aljabar","cp":"Intuisi bilangan cacah sampai 100; pola bukan bilangan.","tp":"Membaca, menulis, membandingkan bilangan sampai 50; Penjumlahan (menyimpan) dan pengurangan (meminjam); Mengenali pola gambar/bunyi.","atp":"Membilang 21-100; Nilai tempat puluhan/satuan; Membandingkan (<, >, =); Penjumlahan/pengurangan bersusun; Melanjutkan pola bukan bilangan.","materi_pokok":"Bilangan 21-100, Nilai tempat, Penjumlahan & pengurangan bersusun, Pola bukan bilangan."},{"semester":1,"elemen":"Pengukuran & Geometri","cp":"Membandingkan panjang/berat benda (langsung), durasi waktu; Mengenal bangun datar & ruang.","tp":"Membandingkan/mengurutkan panjang & berat (langsung); Mengukur dengan satuan tidak baku; Menyusun/mengurai bangun datar; Mengenal bangun ruang.","atp":"Mengukur panjang nyata dengan jengkal/depa; Mengukur berat dengan timbangan kelereng; Mendeskripsikan bangun datar/ruang.","materi_pokok":"Pengukuran Panjang/Berat (Satuan Tidak Baku), Bangun datar (segitiga, dll), Bangun ruang (kubus, balok, kerucut)."},{"semester":2,"elemen":"Bilangan & Pengukuran","cp":"Memahami pecahan setengah, seperempat; Mengukur durasi waktu.","tp":"Menyelesaikan masalah penjumlahan/pengurangan sampai 20; Memahami konsep pecahan 1/2 dan 1/4; Membandingkan durasi waktu.","atp":"Menunjukkan/menulis/mengarsir pecahan 1/2 dan 1/4 dari benda utuh; Membandingkan durasi aktivitas (lama/sebentar).","materi_pokok":"Penjumlahan/pengurangan sampai 20, Pengenalan pecahan 1/2 dan 1/4, Durasi Waktu."},{"semester":2,"elemen":"Geometri & Analisis Data","cp":"Mengenal bangun ruang; Mengelompokkan/menyajikan data (turus, piktogram).","tp":"Mengelompokkan bangun ruang berdasarkan sifatnya; Mengurutkan/menyortir data benda acak.","atp":"Mengklarifikasi benda bangun ruang berdasarkan sifat/warna/ukuran; Mengurutkan data ke turus dan diagram gambar.","materi_pokok":"Sifat Bangun ruang, Diagram gambar/piktogram, Data Turus."}]}]},{"kelas":3,"mata_pelajaran":[{"nama":"Pendidikan Pancasila","pemetaan":[{"semester":1,"elemen":"Bhinneka Tunggal Ika & NKRI","cp":"Menghargai identitas budaya, suku, agama teman di lingkungan sekitar; Mengidentifikasi lingkungan tempat tinggal sebagai bagian NKRI.","tp":"Mengidentifikasi identitas keluarga dan teman; Mengenal lingkungan tempat tinggal (RT, RW, Desa, Kecamatan).","atp":"Membedakan dan menghargai identitas keluarga/teman; Mengidentifikasi wilayah tempat tinggal sebagai bagian NKRI.","materi_pokok":"Identitas keluarga/teman (budaya, suku, agama), Lingkungan tempat tinggal sebagai wilayah NKRI."},{"semester":2,"elemen":"UUD 1945 & Pancasila","cp":"Mempraktikkan musyawarah, hak dan kewajiban; Memahami sejarah kelahiran Pancasila, makna sila dan lambang negara.","tp":"Memahami aturan, hak dan kewajiban di keluarga/sekolah; Menunjukkan makna sila-sila Pancasila dan karakter perumusnya.","atp":"Mengidentifikasi, membuat, dan menerapkan aturan/hak/kewajiban; Menerapkan makna sila Pancasila dan meneladani perumus Pancasila.","materi_pokok":"Aturan keluarga/sekolah, Makna Sila Pancasila, Bendera, Lagu Kebangsaan, Garuda Pancasila."}]},{"nama":"IPAS","pemetaan":[{"semester":1,"elemen":"Pemahaman IPAS","cp":"Menjelaskan panca indra, siklus makhluk hidup, perubahan wujud zat, sejarah masyarakat, peran dan interaksi sosial.","tp":"Menjelaskan bentuk pancaindra; Menganalisis siklus hidup; Menjelaskan sejarah keluarga; Mengidentifikasi perubahan sosial budaya.","atp":"Menjelaskan bentuk/fungsi pancaindra; Menganalisis siklus makhluk hidup; Menjelaskan peran/tanggung jawab sosial.","materi_pokok":"Bentuk dan fungsi pancaindra, Siklus hidup makhluk hidup, Sejarah keluarga/masyarakat, Interaksi sosial, Perubahan budaya."},{"semester":2,"elemen":"Pemahaman IPAS","cp":"Menjelaskan energi, nilai mata uang, peta/denah wilayah, ragam bentang alam.","tp":"Menjelaskan sumber/bentuk energi; Merelasikan nilai mata uang; Membuat denah; Menganalisis perubahan wujud zat.","atp":"Menjelaskan proses perubahan energi; Mengelola keuangan bijak; Membuat denah letak lokasi; Menganalisis wujud zat.","materi_pokok":"Nilai mata uang (alat tukar), Mengelola keuangan, Arah mata angin/denah, Konsep perubahan wujud zat, Perubahan energi."}]},{"nama":"Matematika","pemetaan":[{"semester":1,"elemen":"Bilangan & Aljabar","cp":"Pemahaman bilangan cacah sampai 10.000; operasi tambah/kurang/kali/bagi; pola bilangan.","tp":"Membaca, menulis, nilai tempat sampai 10.000; Operasi campuran sampai 1.000; Mengisi kalimat matematika (aljabar); Mengidentifikasi pola bilangan/gambar.","atp":"Membaca/menulis 10.000; Penjumlahan/pengurangan sampai 1000; Perkalian/pembagian sampai 100; Masalah uang (ribuan); Pola gambar/bilangan membesar mengecil.","materi_pokok":"Bilangan cacah sampai 10.000, Nilai tempat, Operasi hitung, Uang, Penjumlahan bilangan, Pola bilangan/gambar."},{"semester":2,"elemen":"Pengukuran, Geometri, Data","cp":"Mengukur panjang (cm, m), berat (g, kg); Ciri bangun datar; Analisis data tabel/diagram.","tp":"Mengukur satuan baku panjang/berat; Mengenal unsur bangun datar; Menyajikan data dalam tabel/piktogram/diagram batang.","atp":"Mengukur panjang/berat dan hubungan antarsatuan; Membedakan garis, sudut, tegak lurus, sejajar; Mengurutkan dan menyajikan data.","materi_pokok":"Pengukuran baku (Panjang, Berat), Unsur bangun datar (Sisi, garis, sudut), Data: Tabel, Diagram gambar/batang."}]},{"nama":"Bahasa Indonesia","pemetaan":[{"semester":1,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Memahami ide pokok teks aural/sastra; Membaca dengan fasih; Menceritakan kembali; Menulis tipe teks sederhana.","tp":"Mengidentifikasi ide pokok/pendukung teks argumentasi; Memahami tokoh/latar cerita inspiratif; Menceritakan kembali isi teks eksposisi.","atp":"Menemukan ide pokok/pendukung; Menggunakan kosa kata baru, tanda baca (titik, koma); Menyampaikan pendapat lisan secara santun.","materi_pokok":"Teks eksposisi/argumentasi, Cerita inspiratif, Kosa kata, Ide pokok/pendukung, Kalimat perintah, Tanda baca, Huruf kapital."},{"semester":2,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Memahami pesan dongeng/fabel; Membedakan informasi utama/rincian; Menulis dengan kosakata denotatif.","tp":"Menyebutkan alur/tokoh dongeng; Membaca teks dengan intonasi; Menulis paragraf pendek kalimat runtut.","atp":"Menjawab pertanyaan isi dongeng; Menulis pesan moral dari dongeng/puisi anak; Menggunakan kosakata denotatif pada paragraf pendek.","materi_pokok":"Isi cerita teks (Dongeng, fabel, puisi anak), Teks petunjuk, Kalimat beragam, Kaidah kebahasaan."}]},{"nama":"Bahasa Jawa","pemetaan":[{"semester":1,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Memahami teks narasi/wayang; Membaca nyaring; Berbicara dengan unggah-ungguh; Menulis aksara Jawa legena.","tp":"Memahami cerita wayang Pandawa dan Pahlawan Nasional; Membaca Aksara Jawa 'ha-la'; Menulis isi pesan cerita wayang.","atp":"Mengartikan kata sulit dari teks Pandawa; Melagukan tembang dolanan; Mengucapkan/Menulis aksara Jawa legena 'ha' sampai 'la'.","materi_pokok":"Paraga Pandhawa, Pahlawan Nasional, Tembang Dolanan, Ngenal Aksara Jawa Legena."},{"semester":2,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Memahami teks tembang Macapat Pocung, pengalaman pribadi; Menulis aksara Jawa 'ha-nga'.","tp":"Memahami tembang Pocung; Membaca teks peristiwa alam; Menulis tembang Pocung dengan kata sendiri; Menulis aksara Jawa 'ha' sampai 'nga'.","atp":"Mengartikan kata sulit tembang Pocung; Menceritakan pengalaman pribadi; Menulis dan membaca aksara Jawa 'ha' sampai 'nga' berurutan.","materi_pokok":"Tembang Pocung, Crita Pengalaman Pribadi, Prastawa Alam, Aksara jawa legena (ha-nga) dan tegak bersambung."}]},{"nama":"Seni Rupa","pemetaan":[{"semester":1,"elemen":"Mengalami & Menciptakan","cp":"Mengidentifikasi garis, bentuk, warna primer/sekunder; Membuat karya kolase/gambar cerita.","tp":"Mengidentifikasi garis lurus/lengkung/bentuk geometris; Bereksperimen pencampuran warna sekunder; Menciptakan karya kolase ekspresif.","atp":"Mencampur warna; Membuat kolase keseimbangan simetris/asimetris/radial; Menerapkan teknik gosok (rubbing) tekstur nyata.","materi_pokok":"Warna primer/sekunder, Komposisi garis/bentuk, Kolase, Keseimbangan, Tekstur semu/nyata, Sketsa tokoh/latar."},{"semester":2,"elemen":"Menciptakan & Berdampak","cp":"Membuat karya berdasarkan pengalaman; Menghasilkan karya berdampak (diorama, patung kertas).","tp":"Menjelaskan konsep latar depan/tengah/belakang; Membuat stempel pola geometris; Membuat patung kertas satwa langka.","atp":"Membuat kartu pop-up kedalaman ruang; Membuat diorama kota/bangunan 3D kardus; Pameran apresiasi akhir tahun.","materi_pokok":"Konsep ruang/garis horizon, Desain stempel, Konstruksi model 3D/diorama, Patung kertas satwa langka, Pameran kelas."}]}]},{"kelas":4,"mata_pelajaran":[{"nama":"Pendidikan Pancasila","pemetaan":[{"semester":1,"elemen":"Bhinneka Tunggal Ika & NKRI","cp":"Membedakan dan menghargai identitas budaya; Mengidentifikasi lingkungan tempat tinggal sebagai bagian NKRI.","tp":"Mengidentifikasi identitas keluarga/teman sesuai suku, agama; Mengenal lingkungan desa/kelurahan/kecamatan.","atp":"Menerapkan sikap menghargai keberagaman budaya/suku; Mempraktikkan perilaku kerja sama di lingkungan tempat tinggal (NKRI).","materi_pokok":"Keberagaman budaya, suku bangsa, bahasa daerah, agama; Lingkungan desa/kecamatan; Kerja sama dalam keberagaman."},{"semester":2,"elemen":"UUD 1945 & Pancasila","cp":"Mengidentifikasi hak/kewajiban; Menunjukkan makna sila Pancasila dan meneladani perumusnya.","tp":"Mengidentifikasi hak/kewajiban keluarga dan warga sekolah; Mengidentifikasi makna sila Pancasila; Meneladani perumus Pancasila.","atp":"Menerapkan hak dan kewajiban anggota keluarga/warga sekolah; Menerapkan makna sila Pancasila dalam kehidupan sehari-hari.","materi_pokok":"Hak dan kewajiban keluarga/sekolah, Makna Sila Pancasila, Meneladani perumus Pancasila."}]},{"nama":"IPAS","pemetaan":[{"semester":1,"elemen":"Pemahaman IPAS","cp":"Menyimpulkan proses perubahan bentuk energi; Membedakan jenis gaya; Mengenali letak wilayah.","tp":"Memahami perubahan bentuk energi; Membedakan jenis gaya (otot, gravitasi, gesek, magnet, pegas); Mengenali letak provinsi melalui peta.","atp":"Mendeskripsikan manfaat perubahan energi; Melakukan percobaan gaya; Menelaah masalah perubahan iklim dan letak geografis.","materi_pokok":"Konsep perubahan bentuk energi, Jenis-jenis Gaya (pengaruh ke gerak/bentuk), Letak geografis via peta, Masalah iklim."},{"semester":2,"elemen":"Pemahaman IPAS","cp":"Mengklasifikasikan ragam bentang alam, pelestarian SDA, interaksi sosial.","tp":"Mengklasifikasikan bentang alam dengan profesi masyarakat; Menghasilkan solusi pelestarian SDA.","atp":"Mengklasifikasikan bentang alam/budaya; Berkontribusi melestarikan kearifan lokal; Menerapkan peran/tanggung jawab sosial di tempat tinggal.","materi_pokok":"Ragam bentang alam/profesi, Pelestarian SDA (mitigasi iklim), Pelestarian budaya/kearifan lokal, Interaksi sosial/tanggung jawab."}]},{"nama":"Matematika","pemetaan":[{"semester":1,"elemen":"Bilangan & Aljabar","cp":"Pemahaman bilangan sampai 10.000, kelipatan, faktor, pecahan senilai/desimal; Nilai yang belum diketahui pada operasi hitung.","tp":"Membaca, menulis, nilai tempat bilangan 10.000; Perkalian/pembagian bilangan sampai 100; Menentukan faktor/kelipatan.","atp":"Melakukan komposisi/dekomposisi bilangan; Operasi campuran; Membandingkan pecahan desimal/persen; Mengisi nilai matematika terbuka; Pola gambar.","materi_pokok":"Bilangan sampai 10.000, Operasi campuran, Kelipatan dan faktor, Pecahan (desimal, senilai, persen), Aljabar pola bilangan."},{"semester":2,"elemen":"Pengukuran, Geometri, Data","cp":"Mengukur panjang, berat, luas, volume; Ciri bangun datar (komposisi/dekomposisi); Analisis data piktogram/diagram.","tp":"Mengukur panjang/berat satuan baku (cm, m, g, kg); Mendeskripsikan bangun datar segi banyak; Menyajikan data dalam tabel dan diagram.","atp":"Mengukur/estimasi luas dan volume; Menyusun/mengurai bangun datar segi banyak; Menginterpretasi data tabel dan diagram batang.","materi_pokok":"Pengukuran Panjang/Berat/Luas/Volume, Bangun datar dan gabungannya, Data (tabel, piktogram, diagram batang)."}]},{"nama":"Seni Rupa","pemetaan":[{"semester":1,"elemen":"Mengalami & Menciptakan","cp":"Mengidentifikasi unsur rupa pada karya; Menguji alat/bahan; Membuat karya berdasar pengamatan.","tp":"Menggambar sketsa pakaian formal/kasual; Membedakan karakteristik alat/bahan 2D dan 3D; Menggambar/membuat diorama rumah adat.","atp":"Menggambar set pakaian impian; Membuat jurnal visual bahan pewarna/kering/basah; Membuat diorama rumah adat dengan prinsip keseimbangan.","materi_pokok":"Tahapan sketsa pakaian, Karakteristik alat/bahan pewarna, Aplikasi unsur rupa/keseimbangan, Diorama rumah adat."},{"semester":2,"elemen":"Menciptakan & Berdampak","cp":"Membuat karya berdampak; Umpan balik karya.","tp":"Mengkreasikan miniatur istana/bangunan impian dari benda sekitar; Memberikan umpan balik dampak karya; Membuat karya 2D/3D bertema lingkungan.","atp":"Miniatur bangunan dengan prinsip keseimbangan; Umpan balik (jurnal visual, koper hitam); Presentasi karya seni 2D/3D muatan positif.","materi_pokok":"Miniatur bangunan, Dampak karya/Nilai karya (Jurnal visual), Berkarya muatan positif (isu lingkungan)."}]},{"nama":"Bahasa Indonesia","pemetaan":[{"semester":1,"elemen":"Menyimak, Membaca, Menulis","cp":"Memahami ide pokok teks aural; Membaca dengan fasih teks sastra/nonsastra; Menulis rangkaian kalimat beragam (denotatif).","tp":"Menemukan isi teks sastra lisan; Mengidentifikasi unsur intrinsik teks sastra; Menulis berbagai tipe teks sederhana.","atp":"Menyimpulkan isi teks aural (fakta/opini); Menemukan ide pendukung; Membedakan kalimat transitif/intransitif; Menulis teks argumentasi/eksposisi.","materi_pokok":"Ide pokok/pendukung, Kalimat transitif/intransitif, Fakta/opini, Teks eksposisi/argumentasi/laporan perjalanan, Kata berimbuhan me-."},{"semester":2,"elemen":"Menyimak, Berbicara, Menulis","cp":"Membedakan informasi utama dan rincian; Menyajikan pendapat/diskusi; Menulis teks sastra dengan awalan.","tp":"Membedakan informasi utama/rincian teks laporan wawancara; Menjelaskan amanat teks sastra (dongeng, pantun); Menanggapi pendapat.","atp":"Membaca teks sastra (majas); Menceritakan kembali isi dongeng/cerita rakyat; Menulis teks sastra/pantun menggunakan awalan ber-.","materi_pokok":"Teks argumentasi/wawancara, Dongeng, Pantun, Puisi, Drama, Majas, Unsur intrinsik, Kata berawalan ber-."}]},{"nama":"Bahasa Jawa","pemetaan":[{"semester":1,"elemen":"Menyimak, Membaca, Berbicara","cp":"Memahami ide pokok teks aural/informasi; Membaca teks geguritan/cerita rakyat; Berbicara ngoko/krama santun.","tp":"Memahami isi teks geguritan (tembung saroja); Mengidentifikasi unsur intrinsik cerita rakyat; Menjelaskan silsilah wayang Bima.","atp":"Deklamasi geguritan; Menceritakan kembali cerita rakyat ngoko/krama; Menganalisis nilai tokoh Bima.","materi_pokok":"Teks geguritan, Tembung saroja, Cerita rakyat, Tokoh wayang Bima/Werkudara, Unggah-ungguh basa."},{"semester":2,"elemen":"Berbicara, Membaca, Menulis","cp":"Memahami pacelathon, tembang dolanan; Menulis 20 aksara Jawa (nglegena), sandhangan swara.","tp":"Menggunakan krama alus dalam pacelathon; Menyanyikan tembang dolanan (Lir-ilir); Membaca/menulis aksara Jawa nglegena & sandhangan swara.","atp":"Praktik pacelathon tata krama; Mengaitkan pesan tembang dolanan; Menulis kalimat sederhana aksara Jawa dengan sandhangan swara.","materi_pokok":"Teks pacelathon (Krama Alus), Tembang dolanan, Aksara Nglegena (20), Sandhangan swara (wulu, suku, taling, pepet, taling tarung)."}]}]},{"kelas":5,"mata_pelajaran":[{"nama":"Pendidikan Pancasila","pemetaan":[{"semester":1,"elemen":"Pancasila & UUD 1945","cp":"Memahami sejarah kelahiran Pancasila, makna nilai; Mengimplementasikan norma, hak, dan kewajiban.","tp":"Menguraikan makna nilai Pancasila dan meneladani perumus; Mengidentifikasi norma, hak, kewajiban warga negara.","atp":"Membiasakan perilaku Pancasila (komitmen); Mempraktikkan musyawarah untuk kesepakatan keluarga/sekolah.","materi_pokok":"Sejarah kelahiran Pancasila, Norma, Hak, Kewajiban di keluarga/sekolah, Musyawarah mufakat."},{"semester":2,"elemen":"Bhinneka Tunggal Ika & NKRI","cp":"Melestarikan keberagaman budaya; Mengenal wilayah kabupaten/kota/provinsi; Gotong royong bela negara.","tp":"Menunjukkan sikap menghormati budaya; Mengidentifikasi wilayah kabupaten/kota dan provinsi sebagai NKRI.","atp":"Mengidentifikasi cara pelestarian budaya daerah; Mempraktikkan gotong royong menjaga persatuan sekolah sebagai wujud bela negara.","materi_pokok":"Keberagaman budaya sekitar, Wilayah kabupaten/kota provinsi, Praktik gotong-royong."}]},{"nama":"IPAS","pemetaan":[{"semester":1,"elemen":"Pemahaman IPAS","cp":"Merefleksikan sistem organ tubuh; Menerapkan kegiatan ekonomi; Menganalisis ekosistem.","tp":"Mengidentifikasi organ tubuh (rangka, peredaran darah); Fase pubertas; Menganalisis kegiatan ekonomi (produksi, distribusi, konsumsi); Ekosistem (biotik/abiotik).","atp":"Cara menjaga kesehatan sistem organ, pubertas; Proyek simulasi ekonomi masyarakat; Penyelidikan siklus air dan ekosistem.","materi_pokok":"Rangka, peredaran darah, pubertas, Jenis-jenis kegiatan ekonomi, Ekosistem (biotik, abiotik, siklus air)."},{"semester":2,"elemen":"Pemahaman IPAS","cp":"Menjelaskan gelombang bunyi/cahaya; Letak geografis Indonesia; Sejarah pahlawan lingkungan sekitar.","tp":"Melakukan percobaan bunyi/cahaya; Membaca peta geografis Indonesia; Mengumpulkan sejarah perjuangan pahlawan lokal.","atp":"Sifat-sifat bunyi/cahaya (rambat/pantul); Menjelaskan letak geografis kaitannya dengan masyarakat; Mengkomunikasikan hasil sejarah pahlawan.","materi_pokok":"Gelombang bunyi dan cahaya, Letak dan kondisi geografis Indonesia, Sejarah perjuangan pahlawan sekitar."}]},{"nama":"Matematika","pemetaan":[{"semester":1,"elemen":"Bilangan & Aljabar","cp":"Bilangan sampai 100.000, FPB/KPK, pecahan campuran; Menemukan nilai aljabar; Pola bilangan perkalian.","tp":"Membaca, nilai tempat bilangan 100.000; FPB & KPK; Operasi hitung bilangan/pecahan beda penyebut; Sifat operasi (komutatif, asosiatif, distributif).","atp":"Menyelesaikan masalah uang; Mencari KPK/FPB dari 2/3 bilangan; Penjumlahan/pengurangan pecahan beda penyebut; Mengidentifikasi pola perkalian.","materi_pokok":"Bilangan cacah sampai 100.000, FPB, KPK, Uang, Pecahan, Sifat bilangan dan aljabar pola."},{"semester":2,"elemen":"Bilangan, Pengukuran, Data","cp":"Bilangan sampai 1.000.000; Keliling dan luas gabungan bangun datar; Sudut; Analisis data piktogram/batang.","tp":"Nilai tempat sampai 1.000.000; Mengukur sudut bangun datar; Menganalisis data dari diagram.","atp":"Komposisi/dekomposisi bilangan jutaan; Melukis sudut segitiga/segiempat; Mengumpulkan data, membuat, dan membaca diagram piktogram/batang.","materi_pokok":"Bilangan cacah 1.000.000, Keliling & luas gabungan bangun datar, Sudut segitiga/segiempat, Pengumpulan data, piktogram, diagram batang."}]},{"nama":"Bahasa Indonesia","pemetaan":[{"semester":1,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Menganalisis teks eksplanasi/wawancara; Mempresentasikan gagasan; Menulis teks prosedur.","tp":"Menganalisis teks nonsastra aural (eksplanasi); Membaca teks laporan observasi; Menulis teks denotatif/konotatif.","atp":"Menganalisis teks wawancara/eksplanasi; Mempresentasikan gagasan dengan kalimat efektif; Menulis teks prosedur pengumuman kreatif.","materi_pokok":"Teks eksplanasi, wawancara, teks prosedur, observasi, Kalimat efektif, Makna denotatif/konotatif."},{"semester":2,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Menganalisis isi teks sastra (pantun, puisi, drama); Menemukan nilai pesan moral; Menulis teks sastra kompleks.","tp":"Menganalisis nilai-nilai teks sastra aural/visual; Menyampaikan perasaan berdasarkan fakta/imajinasi; Menulis puisi/cerita rakyat.","atp":"Menyimpulkan pesan/amanat teks visual sastra; Bercerita sastra lisan menarik; Menulis naskah drama anak atau puisi.","materi_pokok":"Teks sastra (Pantun, Puisi, Drama anak, Cerita rakyat), Nilai-nilai/amanat, Fakta/imajinasi."}]},{"nama":"Seni Rupa","pemetaan":[{"semester":1,"elemen":"Mengalami & Menciptakan","cp":"Menjelaskan unsur rupa/prinsip desain; Teknik gambar; Membuat karya bertema.","tp":"Mengamati unsur rupa (garis, bentuk, tekstur); Mencoba teknik arsir/gradasi; Menggambar ekspresif.","atp":"Mengidentifikasi dan apresiasi karya gambar; Menerapkan teknik arsir, gradasi, blok warna pada gambar ekspresif bertema lingkungan.","materi_pokok":"Unsur rupa (garis, bentuk, warna, tekstur), Apresiasi karya gambar, Teknik menggambar (arsir, gradasi, blok)."},{"semester":2,"elemen":"Bekerja Artistik & Berdampak","cp":"Menjelaskan prinsip desain; Membuat karya kolase/makrame/limbah; Pameran.","tp":"Mengidentifikasi prinsip keseimbangan/proporsi; Membuat simpul makrame/anyaman; Merancang karya dari bahan limbah plastik.","atp":"Apresiasi kolase/mozaik bahan daur ulang; Membuat gelang makrame/cendramata anyaman; Pameran produk kreatif limbah botol.","materi_pokok":"Prinsip desain, Kolase/Mozaik daur ulang, Makrame (simpul), Anyaman, Karya seni limbah plastik."}]},{"nama":"Bahasa Jawa","pemetaan":[{"semester":1,"elemen":"Menyimak, Membaca, Menulis","cp":"Teks informasional tradisi; Tembang Maskumambang; Aksara Jawa sandhangan.","tp":"Menyimak teks tradisi budaya Jawa; Membaca aksara Jawa nglegena-pasangan-sandhangan; Menulis teks deskripsi budaya.","atp":"Menyimak dan memahami Tembang Maskumambang; Praktik pacelathon (sapa aruh, tamu); Menulis kata/kalimat pasangan aksara Jawa.","materi_pokok":"Teks informasional tradisi (ngoko-krama), Tembang Maskumambang, Aksara Jawa (nglegena, pasangan, sandhangan swara), Pacelathon."},{"semester":2,"elemen":"Menyimak, Berbicara, Menulis","cp":"Mengevaluasi tembang Maskumambang; Cerita Legenda, Paribasan; Aksara Jawa panyigeg wanda.","tp":"Mengevaluasi nilai Tembang Maskumambang; Membaca geguritan/legenda; Menggunakan paribasan/bebasan; Menulis aksara Jawa panyigeg wanda.","atp":"Menjelaskan paugeran Maskumambang; Presentasi cerita legenda lisan; Menulis geguritan sederhana; Menulis aksara Jawa panyigeg wanda.","materi_pokok":"Tembang Maskumambang (guru gatra, lagu, wilangan), Cerita legenda, Geguritan, Paribasan/bebasan, Aksara Jawa panyigeg wanda."}]}]},{"kelas":6,"mata_pelajaran":[{"nama":"Pendidikan Pancasila","pemetaan":[{"semester":1,"elemen":"Pancasila & UUD 1945","cp":"Sejarah kelahiran Pancasila; Makna Pembukaan UUD 1945; Norma, hak, dan kewajiban.","tp":"Menjelaskan kronologi sejarah kelahiran Pancasila; Menjelaskan makna Pembukaan UUD 1945; Menerapkan bentuk norma/hak/kewajiban.","atp":"Meneladani sikap perumus Pancasila di lingkungan; Menyajikan identifikasi norma sebagai warga negara.","materi_pokok":"Kronologi sejarah Pancasila, Pembukaan UUD 1945, Norma, hak, kewajiban warga negara."},{"semester":2,"elemen":"Bhinneka Tunggal Ika & NKRI (Proyek Kewarganegaraan)","cp":"Keragaman budaya; Wilayah NKRI (provinsi, kabupaten); Praktik gotong royong dan musyawarah.","tp":"Menyajikan kegiatan pelestarian budaya daerah; Menggambarkan wilayah provinsi/kabupaten; Merancang proyek kewarganegaraan musyawarah.","atp":"Pentas/pameran budaya daerah; Mempraktikkan aksi gotong royong sekolah wujud bela negara; Proyek pemilihan ketua kelas/demokrasi.","materi_pokok":"Keragaman budaya daerah/agama, Wilayah provinsi/kabupaten, Gotong-royong, Proyek Kewarganegaraan (Musyawarah, Pelestarian budaya)."}]},{"nama":"IPAS","pemetaan":[{"semester":1,"elemen":"Pemahaman IPAS","cp":"Sistem organ pernapasan/pencernaan; Penghematan energi dan energi alternatif; Tokoh pahlawan.","tp":"Mengidentifikasi struktur organ tubuh; Menyelidiki penggunaan energi alternatif mitigasi iklim; Mengenal tokoh pahlawan.","atp":"Merefleksikan cara menjaga kesehatan organ tubuh; Menghasilkan upaya penghematan energi; Meneladani nilai kepahlawanan.","materi_pokok":"Organ pencernaan/pernapasan, Penghematan energi & energi terbarukan, Tokoh-tokoh pahlawan."},{"semester":2,"elemen":"Pemahaman IPAS","cp":"Keragaman budaya nasional; Sistem tata surya (rotasi & revolusi bumi).","tp":"Mengidentifikasi keragaman kearifan lokal wilayah; Mengumpulkan data sistem tata surya.","atp":"Mengomunikasikan keragaman budaya (pakaian, alat musik, adat); Menjelaskan kaitan tata surya dengan rotasi dan revolusi bumi.","materi_pokok":"Keragaman budaya nasional (Pakaian, alat musik, rumah adat), Sistem tata surya, Rotasi dan revolusi bumi."}]},{"nama":"Matematika","pemetaan":[{"semester":1,"elemen":"Bilangan & Aljabar","cp":"Operasi campuran pecahan (biasa, campuran, desimal); Konsep rasio, perbandingan, dan skala.","tp":"Melakukan perkalian/pembagian pecahan; Mengubah antar bentuk pecahan; Menentukan rasio satuan dan proporsi.","atp":"Mengubah desimal/persen ke pecahan; Menyelesaikan masalah rasio dan skala sehari-hari.","materi_pokok":"Perkalian/pembagian pecahan, Operasi campuran pecahan, Mengubah bentuk pecahan, Desimal, Rasio, Perbandingan, Skala."},{"semester":2,"elemen":"Geometri, Pengukuran, Data","cp":"Bangun ruang (jaring-jaring, visualisasi 3D); Titik koordinat; Satuan waktu durasi; Besar sudut; Analisis data acak.","tp":"Mengkonstruksi jaring-jaring bangun ruang; Menentukan titik koordinat peta; Menghitung durasi waktu; Mengukur sudut bangun datar; Menganalisis kemungkinan percobaan acak.","atp":"Mengenali visualisasi depan/atas/samping bangun ruang; Mencari sudut yang belum diketahui; Menganalisis peluang kejadian (mungkin/tidak mungkin) pada percobaan acak.","materi_pokok":"Jaring-jaring bangun ruang, Titik koordinat, Posisi lokasi, Satuan waktu (durasi), Sudut bangun datar, Peluang percobaan acak, Pengelolaan data pengukuran."}]},{"nama":"Bahasa Indonesia","pemetaan":[{"semester":1,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Menganalisis teks eksplanasi, wawancara, pidato; Mempresentasikan lisan; Menulis laporan pengamatan.","tp":"Menganalisis nilai teks aural (pidato/wawancara); Mengidentifikasi sudut pandang; Menulis teks laporan observasi/pengamatan kompleks.","atp":"Menyimpulkan isi laporan; Membedakan kata penghubung/umum-khusus; Menyampaikan pidato indah; Menulis teks menggunakan makna konotatif/denotatif.","materi_pokok":"Teks eksplanasi, Pidato, Hasil wawancara, Teks observasi, Kata penghubung, Makna konotatif/denotatif, Keterangan waktu/suasana."},{"semester":2,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Menganalisis pantun, cerita rakyat, drama anak; Membedakan kalimat langsung/tidak langsung.","tp":"Menyimpulkan unsur intrinsik cerita rakyat/drama; Membedakan fakta/opini & ide pokok; Mempresentasikan pantun.","atp":"Menganalisis amanat dari pantun dan teks sastra lisan; Mengubah kalimat langsung ke tidak langsung; Menulis naskah drama menggunakan kata sapaan/ganti.","materi_pokok":"Pantun, Drama anak, Cerita rakyat, Unsur intrinsik/ekstrinsik, Fakta & Opini, Kalimat langsung/tidak langsung, Kata sapaan/ganti, Tanda petik."}]},{"nama":"Seni Rupa","pemetaan":[{"semester":1,"elemen":"Mengalami & Menciptakan","cp":"Unsur rupa relief/3D; Apresiasi perbandingan 2D-3D; Teknik cetak dan membentuk.","tp":"Mengidentifikasi prinsip desain karya 3 dimensi; Berdiskusi membandingkan karya 2D/3D; Menguji coba teknik cetak dan membentuk.","atp":"Menyusun deskripsi ulasan perbandingan 2D-3D; Membuat prototipe/sketsa; Membentuk dan menyelesaikan (finishing) patung/relief.","materi_pokok":"Unsur rupa karya 3 dimensi (relief), Apresiasi 2D-3D, Teknik cetak sederhana, Teknik membentuk 3D, Purwarupa/sketsa."},{"semester":2,"elemen":"Merefleksikan, Bekerja Artistik, Berdampak","cp":"Karya bertema sosial/lingkungan; Kombinasi teknik; Pameran kelas akhir tahun.","tp":"Menganalisis unsur karya tema sosial; Menguji kombinasi teknik seni; Menyiapkan proyek pameran seni rupa.","atp":"Mengamati pameran dan menulis laporan; Menyusun diorama lingkungan; Mempresentasikan karya diorama pada pameran pengunjung.","materi_pokok":"Analisis karya sosial-budaya, Apresiasi pameran, Kombinasi teknik seni rupa, Proyek diorama lingkungan, Pameran akhir tahun."}]},{"nama":"Bahasa Jawa","pemetaan":[{"semester":1,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Cerita wayang Pandawa; Teks informasional ngoko-krama; Ungkapan Jawa; Menulis kalimat aksara Jawa.","tp":"Menganalisis nilai keteladanan Pandawa; Mengidentifikasi ide pokok narasi kepahlawanan; Menggunakan paribasan/tembung entar.","atp":"Menyimak cerita Pandawa; Membaca teks kepahlawanan; Presentasi lisan cerita wayang; Menulis deskripsi tokoh dengan aksara Jawa sederhana.","materi_pokok":"Cerita wayang Pandawa, Teks prosedur ngoko-krama, Ide pokok narasi kepahlawanan, Tembang Macapat Mijil, Paribasan/Tembung Entar, Aksara Jawa."},{"semester":2,"elemen":"Menyimak, Membaca, Berbicara, Menulis","cp":"Cerita wayang Punakawan; Legenda; Tembang Mijil; Sesorah/Pidato; Menulis Aksara Jawa majemuk.","tp":"Mengevaluasi moral wayang Punakawan; Membaca legenda (makna tersurat-tersirat); Menyampaikan pidato (sesorah); Menulis prosa.","atp":"Menyimak dan mengevaluasi tokoh Punakawan; Menjelaskan paugeran Mijil; Menceritakan legenda; Menulis kalimat majemuk aksara Jawa.","materi_pokok":"Cerita wayang Punakawan, Tembang Macapat Mijil, Cerita legenda, Teks Sesorah/Pidato, Prosa/geguritan kreatif, Aksara Jawa majemuk."}]}]}]};
+const DEMO = /*DEMO*/null;
+const DEMO_MODE = !CONFIG.SCRIPT_URL;
 
-/* ---------- util ---------- */
+/* ---------- pembantu umum ---------- */
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pad = n => String(n).padStart(2, '0');
-const todayStr = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
 const store = {
   get(k, f) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch (e) { return f; } },
-  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem(k); } catch (e) {} }
 };
-let toastT;
-function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2800); }
 const splitList = s => String(s || '').split(/;\s*/).map(x => x.trim()).filter(Boolean);
+let toastT;
+function toast(msg, act) {
+  const t = $('#toast');
+  t.innerHTML = '<span>' + esc(msg) + '</span>' + (act ? '<button type="button">' + esc(act.label) + '</button>' : '');
+  if (act) t.querySelector('button').onclick = () => { t.classList.remove('on'); act.fn(); };
+  t.classList.add('on'); clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('on'), act ? 9000 : 3400);
+}
 
-/* ---------- referensi ---------- */
+/* ---------- tanggal dan waktu ---------- */
+const HARI = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+const HARI_PENDEK = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+const NAMA_HARI = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+const BULAN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+const iso = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const fromIso = s => { const [y, m, d] = String(s).split('-').map(Number); return new Date(y, m - 1, d); };
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const startOfDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+const weekStart = d => { const x = startOfDay(d), g = x.getDay(); return g === 0 ? addDays(x, 1) : addDays(x, -(g - 1)); };
+const tglPanjang = d => NAMA_HARI[d.getDay()] + ', ' + d.getDate() + ' ' + BULAN[d.getMonth()] + ' ' + d.getFullYear();
+const tglSingkat = d => d.getDate() + ' ' + BULAN[d.getMonth()].slice(0, 3);
+const mnt = s => { const m = /^(\d{1,2})[:.](\d{2})/.exec(s || ''); return m ? (+m[1]) * 60 + (+m[2]) : NaN; };
+const hhmm = n => pad(Math.floor(n / 60)) + '.' + pad(n % 60);
+const semesterOf = d => (d.getMonth() >= 6 ? '1' : '2');
+const tahunAjar = d => (d.getMonth() >= 6 ? d.getFullYear() + '/' + (d.getFullYear() + 1) : (d.getFullYear() - 1) + '/' + d.getFullYear());
+const faseOf = k => (+k <= 2 ? 'A' : +k <= 4 ? 'B' : 'C');
+
+/* ---------- pemetaan mapel jadwal ke pemetaan dinas ---------- */
+const MAPEL_MAP = { 'PKn': 'Pendidikan Pancasila', 'Bahasa Indonesia': 'Bahasa Indonesia', 'Matematika': 'Matematika', 'IPAS': 'IPAS', 'SBdP': 'Seni Rupa', 'Bahasa Jawa': 'Bahasa Jawa' };
+const dinas = n => MAPEL_MAP[n] || null;
+
+/* ---------- blok jadwal ---------- */
+function waktu(s) {
+  let a = mnt(s.mulai), b = mnt(s.selesai);
+  if (isNaN(a)) { const j = (SES.jam.find(x => x[0] === s.hari && +x[1] === +s.jam) || []); a = mnt(j[2]); b = mnt(j[3]); }
+  if (isNaN(a)) a = 0;
+  if (!(b > a)) b = a + 35;
+  return [a, b];
+}
+function bangunBlok(slots) {
+  const unit = new Map();
+  slots.forEach(s => {
+    const [a, b] = waktu(s), k = s.hari + '|' + s.jam + '|' + s.mapel;
+    if (!unit.has(k)) unit.set(k, { hari: s.hari, jam: +s.jam, mapel: s.mapel, kelas: [], a, b });
+    unit.get(k).kelas.push(+s.kelas);
+  });
+  const per = {};
+  unit.forEach(u => { (per[u.hari] = per[u.hari] || []).push(u); });
+  const out = [];
+  Object.keys(per).forEach(h => {
+    let cur = null;
+    per[h].sort((x, y) => x.jam - y.jam).forEach(u => {
+      u.kelas.sort((x, y) => x - y);
+      const ks = u.kelas.join(',');
+      if (cur && cur.mapel === u.mapel && cur.kelasKey === ks && u.jam === cur.jamAkhir + 1 && u.a - cur.selesai <= 5) { cur.jamAkhir = u.jam; cur.selesai = u.b; cur.jp++; }
+      else { cur = { hari: h, jamAwal: u.jam, jamAkhir: u.jam, jp: 1, mapel: u.mapel, kelas: u.kelas, kelasKey: ks, mulai: u.a, selesai: u.b, key: h + '|' + u.jam }; out.push(cur); }
+    });
+  });
+  return out;
+}
+const kelasLabel = b => b.kelas.length > 1 ? 'Kelas ' + b.kelas.join(' dan ') + ' (digabung)' : 'Kelas ' + b.kelas[0];
+const menitJp = b => Math.max(20, Math.round((b.selesai - b.mulai) / b.jp));
+
+/* ---------- sesi dan API ---------- */
+const SES = { token: null, me: null, kepsek: {}, sekolah: { nama: CONFIG.SEKOLAH, kota: CONFIG.KOTA }, jam: [], slot: [], piket: [], btq: [], admin: false, link: { btq: CONFIG.LINK_BTQ } };
+let JURNAL = [], S = null, UI = { hari: null, filter: 'Semua', pekan: 0 }, REKAP = null;
+
+function tokenData(t) { try { return JSON.parse(atob(String(t).split('.')[0].replace(/-/g, '+').replace(/_/g, '/'))); } catch (e) { return {}; } }
+async function api(aksi, data) {
+  const body = Object.assign({ aksi }, data || {});
+  if (SES.token && aksi !== 'daftar' && aksi !== 'login') body.token = SES.token;
+  let res;
+  if (DEMO_MODE) res = await demoApi(aksi, body);
+  else {
+    try {
+      const r = await fetch(CONFIG.SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
+      res = await r.json();
+    } catch (e) { throw { kode: 'JARINGAN', pesan: 'Tidak bisa terhubung ke Google Sheets. Periksa internet Anda lalu coba lagi.' }; }
+  }
+  if (!res.ok) {
+    if ((res.kode === 'TOKEN' || res.kode === 'KEDALUWARSA') && SES.token) keluar('Sesi berakhir. Masuk lagi untuk melanjutkan. Isian yang belum disimpan tetap ada di perangkat ini.');
+    throw res;
+  }
+  return res;
+}
+
+/* ================= MODE CONTOH ================= */
+let demoSalah = {}, demoKunci = {};
+const demoJam = () => { const o = []; HARI.forEach(h => { const n = (h === 'Jumat' || h === 'Sabtu') ? 4 : 8; for (let j = 1; j <= n; j++) o.push([h, j, DEMO.jam[j][0], DEMO.jam[j][1]]); }); return o; };
+const demoSlot = s => ({ hari: s[0], jam: s[1], kelas: s[2], id_guru: s[3], mapel: s[4], ket: s[5] || '', mulai: DEMO.jam[s[1]][0], selesai: DEMO.jam[s[1]][1] });
+function demoJurnal() {
+  let j = store.get('rpp_demo_jurnal2', null);
+  if (j) return j;
+  j = []; const today = startOfDay(new Date()), ws = weekStart(today);
+  const plan = { G02: 100, G03: 50, G06: 35, G07: 60 };
+  Object.keys(plan).forEach(id => {
+    bangunBlok(DEMO.slot.filter(s => s[3] === id).map(demoSlot)).forEach(b => {
+      const d = addDays(ws, HARI.indexOf(b.hari)); if (d >= today) return;
+      let h = 0; for (const c of id + b.key) h = (h * 31 + c.charCodeAt(0)) % 100;
+      if (h >= plan[id]) return;
+      const t = iso(d), kl = String(b.kelas[0]), dn = dinas(b.mapel), mp = dn && mapelList(kl).find(m => m.nama === dn);
+      let isi = { mapel: '__lain', mapelLain: b.mapel };
+      if (mp) {
+        isi = { mapel: dn, mapelLain: '' };
+        const u = mp.pemetaan.filter(p => String(p.semester) === String(semesterOf(d)))[0];
+        if (u) { const tp = splitList(u.tp), atp = splitList(u.atp); Object.assign(isi, { unit: '0', elemen: u.elemen, cp: u.cp, tpList: tp, tpSel: tp.map((_, i) => i), atpList: atp, atpSel: atp.map((_, i) => i), materi: u.materi_pokok, tujuan: tp.join('\n') }); }
+      }
+      j.push({ id: t + '|' + id + '|' + b.key, id_guru: id, tanggal: t, slot: b.key, status: 'Terlaksana', catatan: '', kelas: kl, mapel: b.mapel, saved: t + ' 07:00',
+        state: Object.assign({ tanggal: t, kelas: kl, jp: String(b.jp), menit: String(menitJp(b)), status: 'Terlaksana', slot: b.key, sumber: 'jadwal' }, isi) });
+    });
+  });
+  store.set('rpp_demo_jurnal2', j); return j;
+}
+async function demoApi(aksi, req) {
+  await new Promise(r => setTimeout(r, 140));
+  const G = id => DEMO.guru.find(g => g.id === id);
+  const sah = () => { const d = tokenData(req.token); if (!d.id || !G(d.id)) return null; return d.id; };
+  const galat = (kode, pesan, x) => Object.assign({ ok: false, kode, pesan }, x || {});
+  if (aksi === 'daftar') return { ok: true, sekolah: { nama: CONFIG.SEKOLAH, kota: CONFIG.KOTA }, guru: DEMO.guru.filter(g => g.login).map(g => ({ id: g.id, nama: g.nama, panggilan: g.panggilan, jabatan: g.jabatan })) };
+  if (aksi === 'login') {
+    const id = req.id;
+    if (demoKunci[id] && demoKunci[id] > Date.now()) return galat('TERKUNCI', 'Akun dikunci sementara. Coba lagi dalam 15 menit, atau minta admin mengatur ulang PIN.', { menit: 15 });
+    if (!G(id) || req.pin !== '1234') {
+      demoSalah[id] = (demoSalah[id] || 0) + 1;
+      if (demoSalah[id] >= 5) { demoKunci[id] = Date.now() + 9e5; demoSalah[id] = 0; return galat('TERKUNCI', 'PIN tidak cocok 5 kali. Akun dikunci 15 menit, atau minta admin mengatur ulang PIN.', { menit: 15 }); }
+      return galat('PIN_SALAH', 'PIN tidak cocok. Periksa lagi PIN Anda.', { sisa: 5 - demoSalah[id] });
+    }
+    demoSalah[id] = 0;
+    return { ok: true, token: btoa(JSON.stringify({ id, exp: Date.now() + 12 * 3600e3 })) + '.demo', nama: G(id).nama, panggilan: G(id).panggilan };
+  }
+  const id = sah(); if (!id) return galat('TOKEN', 'Sesi tidak dikenali. Silakan masuk lagi.');
+  const g = G(id), kep = DEMO.guru.find(x => /kepala sekolah/i.test(x.jabatan));
+  const pang = x => (G(x) || {}).panggilan || '';
+  if (aksi === 'saya') return { ok: true, me: { id, nama: g.nama, panggilan: g.panggilan, jabatan: g.jabatan, peran: g.peran, nbm: g.nbm, mapel: g.mapel }, admin: g.peran === 'admin' || g.peran === 'kepsek',
+    kepsek: { nama: kep.nama, nbm: kep.nbm }, sekolah: { nama: CONFIG.SEKOLAH, kota: CONFIG.KOTA }, link: { btq: CONFIG.LINK_BTQ }, jam: demoJam(),
+    slot: DEMO.slot.filter(s => s[3] === id).map(demoSlot),
+    piket: DEMO.piket.map(p => ({ hari: p[0], urut: p[1], id_guru: p[2], nama: (G(p[2]) || {}).nama, panggilan: pang(p[2]) })),
+    btq: DEMO.btq.map(b => ({ hari: b[0], kelas: b[1], jenis: b[2], id_guru: b[3], nama: (G(b[3]) || {}).nama || '', panggilan: pang(b[3]) })) };
+  if (aksi === 'jurnalSaya') return { ok: true, data: demoJurnal().filter(j => j.id_guru === id) };
+  if (aksi === 'simpan') {
+    const e = req.entry || {}, all = demoJurnal(), i = all.findIndex(j => j.id === e.id), t = new Date();
+    if (i >= 0 && all[i].id_guru !== id) return galat('DITOLAK', 'RPP ini milik guru lain.');
+    const row = { id: e.id, id_guru: id, tanggal: e.tanggal, slot: e.slot || '', status: e.status, catatan: e.catatan || '', kelas: e.kelas, mapel: e.mapel, saved: iso(t) + ' ' + pad(t.getHours()) + ':' + pad(t.getMinutes()), state: e.state };
+    if (i >= 0) all[i] = row; else all.unshift(row);
+    store.set('rpp_demo_jurnal2', all); return { ok: true, id: e.id, saved: row.saved };
+  }
+  if (aksi === 'hapus') { const all = demoJurnal(), i = all.findIndex(j => j.id === req.id && j.id_guru === id); if (i >= 0) all.splice(i, 1); store.set('rpp_demo_jurnal2', all); return { ok: true }; }
+  if (aksi === 'gantiPin') return req.lama === '1234' ? { ok: true, demo: true } : galat('PIN_SALAH', 'PIN lama tidak cocok.');
+  if (aksi === 'rekap') {
+    if (!(g.peran === 'admin' || g.peran === 'kepsek')) return galat('DITOLAK', 'Rekap hanya untuk admin dan kepala sekolah.');
+    const gur = DEMO.guru.filter(x => x.peran === 'guru').map(x => ({ id: x.id, nama: x.nama, panggilan: x.panggilan, jabatan: x.jabatan })), ada = {}; gur.forEach(x => ada[x.id] = 1);
+    return { ok: true, guru: gur, slot: DEMO.slot.filter(s => ada[s[3]]).map(demoSlot), jurnal: demoJurnal().map(j => ({ id_guru: j.id_guru, tanggal: j.tanggal, slot: j.slot, status: j.status, kelas: j.kelas, mapel: j.mapel })) };
+  }
+  return galat('AKSI', 'Permintaan tidak dikenal.');
+}
+
+/* ================= MASUK DAN KELUAR ================= */
+function setErr(id, msg) { const e = $('#err-' + id); e.textContent = msg; e.hidden = !msg; $('#' + id).setAttribute('aria-invalid', msg ? 'true' : 'false'); }
+function banner(msg, act) {
+  const b = $('#lg-banner'); b.hidden = !msg; if (!msg) return;
+  b.innerHTML = '<span>' + esc(msg) + '</span>' + (act ? '<button type="button" class="btn sec sm">' + esc(act.label) + '</button>' : '');
+  if (act) b.querySelector('button').onclick = act.fn;
+}
+let daftarMuat = false;
+async function bukaLogin(pesan) {
+  $('#shell').hidden = true; $('#login').hidden = false; $('#lg-demo').hidden = !DEMO_MODE;
+  banner(pesan || '');
+  if (!daftarMuat) await muatDaftar();
+  setTimeout(() => ($('#lg-id').value ? $('#lg-pin') : $('#lg-id')).focus(), 50);
+}
+async function muatDaftar() {
+  banner('');
+  try {
+    const d = await api('daftar');
+    $('#lg-sekolah').textContent = d.sekolah.nama;
+    $('#lg-id').innerHTML = '<option value="">Pilih nama Anda</option>' + d.guru.map(g => '<option value="' + esc(g.id) + '">' + esc(g.nama) + (g.panggilan ? ' (' + esc(g.panggilan) + ')' : '') + '</option>').join('');
+    $('#lg-id').value = store.get('rpp_last_id', '') || '';
+    daftarMuat = true;
+  } catch (e) { banner(e.pesan || 'Daftar nama belum bisa dimuat.', { label: 'Coba lagi', fn: muatDaftar }); }
+}
+const cekNama = () => $('#lg-id').value ? '' : 'Pilih nama Anda dari daftar.';
+const cekPin = v => /^\d{4,8}$/.test(v) ? '' : 'Masukkan PIN 4 sampai 8 angka.';
+$('#lg-id').addEventListener('blur', () => setErr('lg-id', cekNama()));
+$('#lg-pin').addEventListener('blur', () => setErr('lg-pin', cekPin($('#lg-pin').value.trim())));
+['lg-id', 'lg-pin'].forEach(i => { $('#' + i).addEventListener('focus', () => setErr(i, '')); $('#' + i).addEventListener('input', () => setErr(i, '')); });
+$('#lg-show').onchange = e => { $('#lg-pin').type = e.target.checked ? 'text' : 'password'; };
+$('#frmLogin').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const id = $('#lg-id').value, pin = $('#lg-pin').value.trim(), e1 = cekNama(), e2 = cekPin(pin);
+  setErr('lg-id', e1); setErr('lg-pin', e2); banner('');
+  if (e1 || e2) { $(e1 ? '#lg-id' : '#lg-pin').focus(); return; }
+  const btn = $('#lg-btn'); btn.textContent = 'Memeriksa...'; btn.setAttribute('aria-busy', 'true');
+  try {
+    const r = await api('login', { id, pin });
+    SES.token = r.token; store.set('rpp_sesi', { token: r.token }); store.set('rpp_last_id', id);
+    $('#lg-pin').value = '';
+    await mulaiSesi();
+  } catch (e) {
+    SES.token = null;
+    if (e.kode === 'PIN_SALAH') { setErr('lg-pin', 'PIN tidak cocok. Periksa lagi, sisa ' + e.sisa + ' percobaan sebelum akun dikunci sementara.'); $('#lg-pin').focus(); $('#lg-pin').select(); }
+    else banner(e.pesan || 'Belum bisa masuk. Coba lagi sebentar lagi.', e.kode === 'JARINGAN' ? { label: 'Coba lagi', fn: () => $('#frmLogin').requestSubmit() } : null);
+  } finally { btn.textContent = 'Masuk'; btn.removeAttribute('aria-busy'); }
+});
+function keluar(pesan) {
+  SES.token = null; SES.me = null; store.del('rpp_sesi'); S = null; JURNAL = []; REKAP = null; UI = { hari: null, filter: 'Semua', pekan: 0 };
+  $('#akunMenu').hidden = true; bukaLogin(pesan);
+}
+$('#btnKeluar').onclick = () => keluar('');
+
+async function mulaiSesi() {
+  const [s, j] = await Promise.all([api('saya'), api('jurnalSaya')]);
+  Object.assign(SES, { me: s.me, kepsek: s.kepsek || {}, sekolah: s.sekolah || SES.sekolah, jam: s.jam || [], slot: s.slot || [], piket: s.piket || [], btq: s.btq || [], admin: !!s.admin, link: s.link || SES.link });
+  JURNAL = j.data || [];
+  const nm = SES.me.panggilan || SES.me.nama.split(/[ ,]/)[0];
+  $('#avatar').textContent = nm.replace(/^(Bu|Pak|Us)\s+/i, '').charAt(0).toUpperCase() || '?';
+  $('#akunNama').textContent = nm; $('#akunLengkap').textContent = SES.me.nama; $('#akunJabatan').textContent = SES.me.jabatan || '';
+  $('#tabRekap').hidden = !SES.admin;
+  $('#login').hidden = true; $('#shell').hidden = false;
+  S = null; showView('beranda');
+}
+
+/* menu akun */
+$('#akunBtn').onclick = () => { const m = $('#akunMenu'); m.hidden = !m.hidden; $('#akunBtn').setAttribute('aria-expanded', String(!m.hidden)); };
+document.addEventListener('click', e => { if (!e.target.closest('.akun')) { $('#akunMenu').hidden = true; $('#akunBtn').setAttribute('aria-expanded', 'false'); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#akunMenu').hidden) { $('#akunMenu').hidden = true; $('#akunBtn').focus(); } });
+
+/* dialog konfirmasi */
+function konfirmasi(judul, isi, ya) {
+  return new Promise(res => {
+    const d = $('#dlg'); $('#dlgJudul').textContent = judul; $('#dlgIsi').textContent = isi; $('#dlgYa').textContent = ya;
+    d.returnValue = ''; d.addEventListener('close', () => res(d.returnValue === 'ya'), { once: true }); d.showModal();
+  });
+}
+/* ganti PIN */
+$('#btnGantiPin').onclick = () => { $('#akunMenu').hidden = true; ['pn-lama', 'pn-baru', 'pn-ulang'].forEach(i => { $('#' + i).value = ''; setErr(i, ''); }); $('#dlgPin').showModal(); $('#pn-lama').focus(); };
+$('#pnBatal').onclick = () => $('#dlgPin').close();
+const cekBaru = v => /^\d{4,8}$/.test(v) ? '' : 'Masukkan PIN 4 sampai 8 angka.';
+$('#pn-lama').addEventListener('blur', () => setErr('pn-lama', $('#pn-lama').value ? '' : 'Masukkan PIN lama Anda.'));
+$('#pn-baru').addEventListener('blur', () => setErr('pn-baru', cekBaru($('#pn-baru').value)));
+$('#pn-ulang').addEventListener('blur', () => setErr('pn-ulang', $('#pn-ulang').value === $('#pn-baru').value ? '' : 'PIN belum sama dengan PIN baru.'));
+['pn-lama', 'pn-baru', 'pn-ulang'].forEach(i => { $('#' + i).addEventListener('focus', () => setErr(i, '')); $('#' + i).addEventListener('input', () => setErr(i, '')); });
+$('#frmPin').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const l = $('#pn-lama').value, b = $('#pn-baru').value, u = $('#pn-ulang').value;
+  const e = [l ? '' : 'Masukkan PIN lama Anda.', cekBaru(b), u === b ? '' : 'PIN belum sama dengan PIN baru.'];
+  ['pn-lama', 'pn-baru', 'pn-ulang'].forEach((i, k) => setErr(i, e[k]));
+  const bad = e.findIndex(Boolean); if (bad >= 0) { $('#' + ['pn-lama', 'pn-baru', 'pn-ulang'][bad]).focus(); return; }
+  const btn = $('#pnSimpan'); btn.textContent = 'Menyimpan...'; btn.setAttribute('aria-busy', 'true');
+  try { const r = await api('gantiPin', { lama: l, baru: b }); $('#dlgPin').close(); toast(r.demo ? 'Mode contoh: PIN tidak benar-benar berubah.' : 'PIN baru tersimpan.'); }
+  catch (er) { if (er.kode === 'PIN_SALAH') { setErr('pn-lama', 'PIN lama tidak cocok. Periksa lagi.'); $('#pn-lama').focus(); } else toast(er.pesan || 'PIN belum tersimpan. Coba lagi.'); }
+  finally { btn.textContent = 'Simpan PIN baru'; btn.removeAttribute('aria-busy'); }
+});
+
+/* ================= NAVIGASI ================= */
+function showView(v) {
+  if (v === 'rekap' && !SES.admin) v = 'beranda';
+  $$('.view').forEach(x => x.classList.toggle('on', x.id === 'view-' + v));
+  $$('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view === v)));
+  if (v === 'beranda') renderBeranda();
+  if (v === 'jurnal') renderJurnal();
+  if (v === 'rekap') muatRekap();
+  if (v === 'susun') { if (!S) mulaiBebas(); else { syncForm(); refresh(); } setTimeout(fitPaper, 40); }
+  window.scrollTo(0, 0);
+}
+$$('.tab').forEach(t => t.onclick = () => showView(t.dataset.view));
+setInterval(() => { if ($('#view-beranda').classList.contains('on') && SES.me) renderBeranda(true); }, 60000);
+
+/* ================= HARI INI ================= */
+function entriMap() { const m = {}; JURNAL.forEach(j => { if (j.slot) m[j.tanggal + '|' + j.slot] = j; }); return m; }
+function sapaan() { const h = new Date().getHours(); return h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam'; }
+function renderBeranda(diam) {
+  const now = new Date(), today = startOfDay(now), ws = weekStart(today), nowMin = now.getHours() * 60 + now.getMinutes();
+  if (!UI.hari) UI.hari = today.getDay() === 0 ? 'Senin' : NAMA_HARI[today.getDay()];
+  const tglSel = addDays(ws, HARI.indexOf(UI.hari)), isoSel = iso(tglSel);
+  const blok = bangunBlok(SES.slot), mapE = entriMap();
+  let tot = 0, ada = 0, done = 0;
+  blok.forEach(b => { tot++; const e = mapE[iso(addDays(ws, HARI.indexOf(b.hari))) + '|' + b.key]; if (e) { ada++; if (e.status === 'Terlaksana') done++; } });
+  const nm = SES.me.panggilan || SES.me.nama;
+  const pct = tot ? Math.round(ada / tot * 100) : 0;
+  let h = '<div class="sapa"><div><h1 class="serif">' + sapaan() + ', ' + esc(nm) + '</h1><div class="tgl">' + tglPanjang(now) + '</div></div>';
+  if (tot) h += '<div class="pekan"><div class="row"><span>Pekan ini</span><span>' + ada + ' dari ' + tot + ' sesi punya RPP</span></div><div class="bar"><i style="width:' + pct + '%"></i></div><small>' + done + ' sesi sudah terlaksana</small></div>';
+  h += '</div><div class="hari" role="group" aria-label="Pilih hari">';
+  HARI.forEach((hr, i) => {
+    const d = addDays(ws, i), n = blok.filter(b => b.hari === hr).length, lacak = blok.filter(b => b.hari === hr && !mapE[iso(d) + '|' + b.key]).length;
+    h += '<button type="button" data-hari="' + hr + '" aria-pressed="' + (hr === UI.hari) + '"' + (iso(d) === iso(today) ? ' aria-current="date"' : '') + ' aria-label="' + hr + ' ' + d.getDate() + ', ' + n + ' sesi' + (n && lacak ? ', ' + lacak + ' belum ada RPP' : '') + '"><span>' + HARI_PENDEK[i] + '</span><b>' + d.getDate() + '</b><small>' + (n ? n + ' sesi' : 'libur') + '</small></button>';
+  });
+  h += '</div>';
+  /* tugas tambahan */
+  const tugas = [];
+  const pk = SES.piket.filter(p => p.hari === UI.hari), pkSaya = pk.find(p => p.id_guru === SES.me.id);
+  if (pkSaya) { const teman = pk.find(p => p.id_guru !== SES.me.id); tugas.push('<div><b>Piket ' + esc(UI.hari) + '</b><p>' + (teman ? 'Bersama ' + esc(teman.panggilan || teman.nama) + '. ' : '') + 'Hadir sebelum 06.30 untuk menyambut siswa (senyum, salam, sapa), dan dampingi doa pagi serta shalat berjamaah.</p></div>'); }
+  const bt = SES.btq.find(b => b.hari === UI.hari && b.id_guru === SES.me.id && b.jenis === 'BTQ');
+  if (bt) tugas.push('<div><b>Pendamping BTQ kelas ' + bt.kelas + '</b><p>Catat progres di buku prestasi, lalu input hasilnya di BTQ Tracker.</p><a class="btn sec sm" href="' + esc(SES.link.btq || CONFIG.LINK_BTQ) + '" target="_blank" rel="noopener">Buka BTQ Tracker</a></div>');
+  if (tugas.length) h += '<div class="tugas">' + tugas.join('') + '</div>';
+  /* timeline */
+  const L = blok.filter(b => b.hari === UI.hari).sort((a, b) => a.mulai - b.mulai);
+  if (!L.length) {
+    h += '<div class="empty"><h2>' + (tot ? 'Tidak ada jam mengajar hari ' + esc(UI.hari) : 'Belum ada jadwal mengajar untuk akun ini') + '</h2><p>' + (tot ? 'Pilih hari lain di atas untuk menyiapkan RPP, atau susun RPP yang tidak ada di jadwal.' : 'Jadwal diambil dari lembar Jadwal di Data Induk. Anda tetap bisa menyusun RPP tanpa jadwal.') + '</p><button type="button" class="btn" data-act="bebas">Susun RPP tanpa jadwal</button></div>';
+  } else {
+    let sudahNext = false;
+    h += '<ol class="lini" aria-label="Jam mengajar ' + esc(UI.hari) + '">';
+    L.forEach((b, i) => {
+      if (i > 0 && b.mulai - L[i - 1].selesai >= 15) h += '<li class="jeda" aria-hidden="true"><span></span><span class="rail"></span><span class="tx">Jeda ' + hhmm(L[i - 1].selesai) + ' sampai ' + hhmm(b.mulai) + '</span></li>';
+      const st = tglSel < today ? 'lewat' : tglSel > today ? 'nanti' : (nowMin >= b.selesai ? 'lewat' : nowMin >= b.mulai ? 'berlangsung' : 'nanti');
+      let tandaNext = false; if (st === 'nanti' && tglSel.getTime() === today.getTime() && !sudahNext) { tandaNext = true; sudahNext = true; }
+      const e = mapE[isoSel + '|' + b.key];
+      const tag = !e ? '<span class="tag gold">Belum ada RPP</span>' : e.status === 'Terlaksana' ? '<span class="tag ok">Terlaksana</span>' : e.status === 'Ditunda' ? '<span class="tag">Ditunda</span>' : '<span class="tag ok">RPP tersimpan</span>';
+      h += '<li class="blok ' + st + (e ? ' sudah' : '') + '"><div class="t"><b>' + hhmm(b.mulai) + '</b><span>' + hhmm(b.selesai) + '</span></div><div class="rail"><i></i></div><div class="kartu"><div class="kartu-atas"><h3>' + esc(kelasLabel(b)) + ', ' + esc(b.mapel) + '</h3>' + tag + '</div><p class="meta">' + b.jp + ' JP, jam ke-' + b.jamAwal + (b.jp > 1 ? ' sampai ' + b.jamAkhir : '') + '</p>' +
+        '<div class="aksi">' + (st === 'berlangsung' ? '<span class="sedang">Sedang berlangsung</span>' : tandaNext ? '<span class="sedang">Berikutnya</span>' : '') + '<button type="button" class="btn sm' + (e ? ' sec' : '') + '" data-act="susun" data-key="' + esc(b.key) + '" data-tgl="' + isoSel + '">' + (e ? 'Buka RPP' : 'Susun RPP') + '</button></div></div></li>';
+    });
+    h += '</ol><p style="margin-top:6px"><button type="button" class="btn txt" data-act="bebas">Susun RPP tanpa jadwal</button></p>';
+  }
+  $('#berandaBody').innerHTML = h;
+}
+$('#view-beranda').addEventListener('click', e => {
+  const hb = e.target.closest('[data-hari]'); if (hb) { UI.hari = hb.dataset.hari; renderBeranda(); return; }
+  const a = e.target.closest('[data-act]'); if (!a) return;
+  if (a.dataset.act === 'bebas') { S = null; mulaiBebas(); showView('susun'); }
+  if (a.dataset.act === 'susun') mulaiDariBlok(a.dataset.key, a.dataset.tgl);
+});
+
+/* ================= SUSUN RPP ================= */
 const OPT = {
-  metode: ['Ceramah interaktif', 'Diskusi kelompok', 'Demonstrasi', 'Tanya jawab', 'Bermain peran', 'Permainan edukatif', 'Eksperimen', 'Bercerita', 'Penugasan', 'Observasi lingkungan', 'Bernyanyi / tembang'],
+  metode: ['Ceramah interaktif', 'Diskusi kelompok', 'Demonstrasi', 'Tanya jawab', 'Bermain peran', 'Permainan edukatif', 'Eksperimen', 'Bercerita', 'Penugasan', 'Observasi lingkungan', 'Bernyanyi atau tembang'],
   dpl: ['Keimanan dan Ketakwaan terhadap Tuhan YME', 'Kewargaan', 'Penalaran Kritis', 'Kreativitas', 'Kolaborasi', 'Kemandirian', 'Kesehatan', 'Komunikasi'],
   prinsip: ['Berkesadaran', 'Bermakna', 'Menggembirakan'],
-  media: ['Benda konkret', 'Gambar / kartu', 'Video pembelajaran', 'LKPD', 'Buku teks', 'Papan tulis', 'Slide / proyektor', 'Alat peraga', 'Lingkungan sekolah'],
-  asesmen: ['Observasi', 'Unjuk kerja', 'Tes lisan', 'Tes tertulis', 'Produk / karya', 'Portofolio', 'Penilaian diri / teman']
+  media: ['Benda konkret', 'Gambar atau kartu', 'Video pembelajaran', 'LKPD', 'Buku teks', 'Papan tulis', 'Slide atau proyektor', 'Alat peraga', 'Lingkungan sekolah'],
+  asesmen: ['Observasi', 'Unjuk kerja', 'Tes lisan', 'Tes tertulis', 'Produk atau karya', 'Portofolio', 'Penilaian diri atau teman']
 };
 const MODELS = {
   play: { nama: 'Belajar melalui bermain', saran: 'Cocok untuk kelas 1-2: murid belajar lewat permainan terpandu.', sintaks: [
@@ -427,401 +866,335 @@ const MODELS = {
     ['Umpan balik', 'Guru memeriksa dan memperbaiki kesalahan murid dengan ramah.'],
     ['Latihan mandiri', 'Murid berlatih sendiri untuk mencapai tujuan: {tp}.']] }
 };
-const faseOf = k => (+k <= 2 ? 'A' : +k <= 4 ? 'B' : 'C');
-const GAS = [
-"const HEAD=['id','Dikirim','Tanggal','Guru','NIP','Sekolah','Kelas','Fase','Semester','Mapel','Elemen','Materi','Tujuan','Model','JP','Menit/JP','Status','Catatan'];",
-"function doPost(e){",
-"  const d=JSON.parse(e.postData.contents);",
-"  const ss=SpreadsheetApp.getActiveSpreadsheet();",
-"  let sh=ss.getSheetByName('Jurnal');",
-"  if(!sh){sh=ss.insertSheet('Jurnal');sh.appendRow(HEAD);sh.setFrozenRows(1);}",
-"  const row=[d.id,new Date(),d.tanggal,d.guru,d.nip,d.sekolah,d.kelas,d.fase,d.semester,d.mapel,d.elemen,d.materi,d.tujuan,d.model,d.jp,d.menit,d.status,d.catatan];",
-"  const ids=sh.getRange(1,1,sh.getLastRow(),1).getValues().flat();",
-"  const i=ids.indexOf(d.id);",
-"  if(i>0) sh.getRange(i+1,1,1,row.length).setValues([row]); else sh.appendRow(row);",
-"  return ContentService.createTextOutput('ok');",
-"}",
-"function doGet(){return ContentService.createTextOutput('RPP Cepat siap');}"
-].join('\n');
-
-/* ---------- state ---------- */
 const KUR = DATA.kurikulum_sd;
+const kelasObj = k => KUR.find(x => String(x.kelas) === String(k));
+const mapelList = k => (kelasObj(k) || { mata_pelajaran: [] }).mata_pelajaran;
 const blank = () => ({
-  id: null,
-  kelas: '1', semester: '1', mapel: '', mapelLain: '', ta: '2026/2027', tanggal: todayStr(), jp: '2', menit: '35', pertemuan: '1',
+  id: null, sumber: 'bebas', slot: '', blok: null, kelasGabung: [],
+  kelas: '1', semester: semesterOf(new Date()), mapel: '', mapelLain: '', ta: tahunAjar(new Date()), tanggal: iso(new Date()), jp: '2', menit: '35', pertemuan: '1',
   unit: '-1', elemen: '', cp: '', tpList: [], tpSel: [], atpList: [], atpSel: [], materi: '', tujuan: '',
   model: '', metode: [], dpl: [], prinsip: [], media: [], asesmen: [], kemitraan: '', lingkungan: 'Ruang kelas dan lingkungan sekolah', digital: '',
   awal: '', inti: '', penutup: '', status: 'Direncanakan', catatan: '',
   dirty: { tujuan: false, awal: false, inti: false, penutup: false }
 });
-let profile = Object.assign({ guru: '', nip: '', sekolah: 'SD Muhammadiyah 2 Pekajangan', kota: 'Pekalongan', kepsek: '', nipKepsek: '' }, store.get('rpp_profile', {}));
-let S = Object.assign(blank(), profile, store.get('rpp_draft', {}));
-S.dirty = Object.assign({ tujuan: false, awal: false, inti: false, penutup: false }, S.dirty || {});
-let jurnal = store.get('rpp_jurnal', []);
-let sheetUrl = store.get('rpp_sheet', '');
-
-const kelasObj = k => KUR.find(x => String(x.kelas) === String(k));
-const mapelList = k => (kelasObj(k) || { mata_pelajaran: [] }).mata_pelajaran;
+function profil() {
+  return { guru: SES.me.nama, nip: SES.me.nbm || '', sekolah: SES.sekolah.nama, kota: SES.sekolah.kota, kepsek: SES.kepsek.nama || '', nipKepsek: SES.kepsek.nbm || '' };
+}
+function hydrate(state, id) {
+  const x = Object.assign(blank(), state || {}, profil(), { id });
+  x.dirty = Object.assign({ tujuan: false, awal: false, inti: false, penutup: false }, x.dirty || {});
+  return x;
+}
+const draftKey = () => 'rpp_draft_' + SES.me.id + '_' + ((S && S.id) || 'bebas');
+function persist() { if (S && SES.me) store.set(draftKey(), S); }
+function mapelBoleh() {
+  if (!SES.me || SES.me.peran !== 'guru' || !(SES.me.mapel || []).length) return null;
+  return new Set(SES.me.mapel.map(dinas).filter(Boolean));
+}
 const mapelName = () => S.mapel === '__lain' ? (S.mapelLain || '') : S.mapel;
-function units() {
-  const m = mapelList(S.kelas).find(x => x.nama === S.mapel);
-  return m ? m.pemetaan.filter(p => String(p.semester) === String(S.semester)) : [];
-}
-const shortMateri = () => {
-  const p = String(S.materi || '').split(/[,;.]/).map(x => x.trim()).filter(Boolean).slice(0, 2).join(', ');
-  return (p || 'materi hari ini').toLowerCase();
-};
-function times() {
-  const total = (+S.jp || 0) * (+S.menit || 0) || 70;
-  const a = Math.max(5, Math.round(total * 0.15 / 5) * 5);
-  return { total, a, p: a, i: Math.max(5, total - 2 * a) };
-}
-function persist() { store.set('rpp_draft', S); }
-function persistProfile() {
-  profile = { guru: S.guru, nip: S.nip, sekolah: S.sekolah, kota: S.kota, kepsek: S.kepsek, nipKepsek: S.nipKepsek };
-  store.set('rpp_profile', profile);
-}
+function units() { const m = mapelList(S.kelas).find(x => x.nama === S.mapel); return m ? m.pemetaan.filter(p => String(p.semester) === String(S.semester)) : []; }
+const kelasTeks = () => (S.kelasGabung && S.kelasGabung.length) ? S.kelas + ' dan ' + S.kelasGabung.join(' dan ') + ' (digabung)' : S.kelas;
 
-/* ---------- aksi data ---------- */
+function mulaiBebas() {
+  const d = store.get('rpp_draft_' + SES.me.id + '_bebas', null);
+  S = d ? hydrate(d, null) : Object.assign(blank(), profil());
+  if (!S.mapel) { const ok = mapelBoleh(); const first = mapelList(S.kelas).map(m => m.nama).find(n => !ok || ok.has(n)); S.mapel = first || '__lain'; }
+  syncForm(); refresh(); openStep(d ? 2 : 1, true);
+}
+function mulaiDariBlok(key, tanggal) {
+  const b = bangunBlok(SES.slot).find(x => x.key === key); if (!b) return;
+  const id = tanggal + '|' + SES.me.id + '|' + key, ada = JURNAL.find(j => j.id === id), draf = store.get('rpp_draft_' + SES.me.id + '_' + id, null);
+  if (draf) S = hydrate(draf, id);
+  else if (ada && ada.state && ada.state.kelas) S = hydrate(ada.state, id);
+  else {
+    S = Object.assign(blank(), profil(), { id });
+    const d = fromIso(tanggal), dn = dinas(b.mapel);
+    Object.assign(S, { kelas: String(b.kelas[0]), kelasGabung: b.kelas.slice(1), semester: semesterOf(d), ta: tahunAjar(d), tanggal, jp: String(b.jp), menit: String(menitJp(b)),
+      pertemuan: String(JURNAL.filter(j => j.state && j.state.mapel && String(j.mapel) === String(b.mapel) && String(j.kelas).indexOf(String(b.kelas[0])) === 0).length + 1) });
+    if (dn && mapelList(S.kelas).some(m => m.nama === dn)) S.mapel = dn; else { S.mapel = '__lain'; S.mapelLain = b.mapel; }
+  }
+  S.sumber = 'jadwal'; S.slot = key; S.blok = { hari: b.hari, jamAwal: b.jamAwal, jamAkhir: b.jamAkhir, jp: b.jp, mapel: b.mapel, kelas: b.kelas };
+  showView('susun'); openStep(2, true);
+}
+function renderKonteks() {
+  const k = $('#konteks');
+  if (S.blok) {
+    const b = S.blok;
+    k.innerHTML = '<div><b>' + esc(tglPanjang(fromIso(S.tanggal))) + '</b><span>' + esc((b.kelas.length > 1 ? 'Kelas ' + b.kelas.join(' dan ') : 'Kelas ' + b.kelas[0]) + ', ' + b.mapel + ', jam ke-' + b.jamAwal + (b.jp > 1 ? ' sampai ' + b.jamAkhir : '')) + '</span></div><button type="button" class="btn sec sm" data-nav="beranda">Pilih sesi lain</button>';
+  } else k.innerHTML = '<div><b>RPP tanpa jadwal</b><span>Tidak terhubung ke sesi mana pun di jadwal.</span></div><button type="button" class="btn sec sm" data-nav="beranda">Pilih dari jadwal</button>';
+  $('#h-tanggal').hidden = !S.blok; $('#f-tanggal').readOnly = !!S.blok;
+}
+$('#konteks').addEventListener('click', e => { if (e.target.closest('[data-nav]')) showView('beranda'); });
+
 function setUnit(idx) {
-  const u = units()[idx];
-  S.unit = String(idx);
+  const u = units()[idx]; S.unit = String(idx);
   if (!u) { S.elemen = ''; return; }
-  S.elemen = u.elemen; S.cp = u.cp;
-  S.tpList = splitList(u.tp); S.tpSel = S.tpList.map((_, i) => i);
-  S.atpList = splitList(u.atp); S.atpSel = S.atpList.map((_, i) => i);
-  S.materi = u.materi_pokok;
-  S.dirty.tujuan = false; syncTujuan();
+  S.elemen = u.elemen; S.cp = u.cp; S.tpList = splitList(u.tp); S.tpSel = S.tpList.map((_, i) => i);
+  S.atpList = splitList(u.atp); S.atpSel = S.atpList.map((_, i) => i); S.materi = u.materi_pokok; S.dirty.tujuan = false; syncTujuan();
 }
-function syncTujuan() {
-  if (S.dirty.tujuan) return;
-  S.tujuan = S.tpSel.slice().sort((a, b) => a - b).map(i => S.tpList[i]).join('\n');
-}
+function syncTujuan() { if (!S.dirty.tujuan) S.tujuan = S.tpSel.slice().sort((a, b) => a - b).map(i => S.tpList[i]).join('\n'); }
+function times() { const total = (+S.jp || 0) * (+S.menit || 0) || 70, a = Math.max(5, Math.round(total * 0.15 / 5) * 5); return { total, a, p: a, i: Math.max(5, total - 2 * a) }; }
+const shortMateri = () => (String(S.materi || '').split(/[,;.]/).map(x => x.trim()).filter(Boolean).slice(0, 2).join(', ') || 'materi hari ini').toLowerCase();
 function genKegiatan() {
-  const m = shortMateri(), t = times();
-  const tp0 = (S.tpSel.length ? S.tpList[S.tpSel[0]] : '') || 'tujuan pembelajaran';
-  const tp = tp0.charAt(0).toLowerCase() + tp0.slice(1);
-  const mod = MODELS[S.model];
-  S.awal = ['Murid dan guru memberi salam, berdoa bersama, dan guru memeriksa kehadiran.',
-    'Guru menciptakan suasana gembira melalui tepuk semangat atau permainan singkat.',
-    'Apersepsi: guru mengaitkan pengalaman murid dengan ' + m + '.',
-    'Guru menyampaikan tujuan pembelajaran dan cara belajar hari ini.'].map((x, i) => (i + 1) + '. ' + x).join('\n');
+  const m = shortMateri(), t = times(), tp0 = (S.tpSel.length ? S.tpList[S.tpSel[0]] : '') || 'tujuan pembelajaran', tp = tp0.charAt(0).toLowerCase() + tp0.slice(1), mod = MODELS[S.model];
+  S.awal = ['Murid dan guru memberi salam, berdoa bersama, dan guru memeriksa kehadiran.', 'Guru menciptakan suasana gembira melalui tepuk semangat atau permainan singkat.', 'Apersepsi: guru mengaitkan pengalaman murid dengan ' + m + '.', 'Guru menyampaikan tujuan pembelajaran dan cara belajar hari ini.'].map((x, i) => (i + 1) + '. ' + x).join('\n');
   S.inti = mod ? mod.sintaks.map((s, i) => (i + 1) + '. ' + s[0] + ': ' + s[1].replace(/\{m\}/g, m).replace(/\{tp\}/g, tp)).join('\n') : '';
-  S.penutup = ['Murid dan guru menyimpulkan pembelajaran bersama.',
-    'Refleksi: murid menyampaikan hal yang dipelajari dan perasaannya hari ini.',
-    'Guru memberi asesmen singkat untuk melihat ketercapaian tujuan.',
-    'Guru menyampaikan tindak lanjut dan rencana pembelajaran berikutnya.',
-    'Berdoa dan salam penutup.'].map((x, i) => (i + 1) + '. ' + x).join('\n');
+  S.penutup = ['Murid dan guru menyimpulkan pembelajaran bersama.', 'Refleksi: murid menyampaikan hal yang dipelajari dan perasaannya hari ini.', 'Guru memberi asesmen singkat untuk melihat ketercapaian tujuan.', 'Guru menyampaikan tindak lanjut dan rencana pembelajaran berikutnya.', 'Berdoa dan salam penutup.'].map((x, i) => (i + 1) + '. ' + x).join('\n');
   S.dirty.awal = S.dirty.inti = S.dirty.penutup = false;
 }
 
-/* ---------- render form ---------- */
+/* form */
 function renderMapel() {
-  const list = mapelList(S.kelas).map(m => m.nama);
-  if (S.mapel !== '__lain' && !list.includes(S.mapel)) S.mapel = list[0] || '__lain';
-  $('#f-mapel').innerHTML = list.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('') + '<option value="__lain">Mapel lain (isi manual)</option>';
-  $('#f-mapel').value = S.mapel;
-  $('#mapelLainBox').hidden = S.mapel !== '__lain';
+  const ok = mapelBoleh(); let list = mapelList(S.kelas).map(m => m.nama).filter(n => !ok || ok.has(n));
+  if (S.mapel !== '__lain' && !list.includes(S.mapel)) { if (S.mapel) list.unshift(S.mapel); else S.mapel = list[0] || '__lain'; }
+  $('#f-mapel').innerHTML = list.map(n => '<option value="' + esc(n) + '">' + esc(n) + '</option>').join('') + '<option value="__lain">Mapel lain (isi manual)</option>';
+  $('#f-mapel').value = S.mapel; $('#mapelLainBox').hidden = S.mapel !== '__lain';
 }
 function renderUnit() {
   const us = units();
-  $('#f-unit').innerHTML = '<option value="-1">Pilih bahasan...</option>' + us.map((u, i) => `<option value="${i}">${esc(u.elemen)}: ${esc(String(u.materi_pokok).slice(0, 60))}</option>`).join('');
+  $('#f-unit').innerHTML = '<option value="-1">Pilih bahasan...</option>' + us.map((u, i) => '<option value="' + i + '">' + esc(u.elemen) + ': ' + esc(String(u.materi_pokok).slice(0, 60)) + '</option>').join('');
   if (+S.unit >= us.length) S.unit = '-1';
   $('#f-unit').value = S.unit;
-  $('#unitHint').textContent = S.mapel === '__lain' ? 'Mapel manual: tulis CP dan tambahkan TP sendiri.' : (us.length ? us.length + ' bahasan tersedia untuk semester ini.' : 'Belum ada data untuk pilihan ini.');
+  $('#unitHint').textContent = S.mapel === '__lain' ? 'Mapel ini belum ada di pemetaan dinas. Tulis CP lalu tambahkan TP sendiri.' : (us.length ? us.length + ' bahasan tersedia untuk semester ini.' : 'Belum ada bahasan untuk kelas dan semester ini.');
 }
-function renderChecks(box, listKey, selKey) {
-  const el = $(box);
-  el.innerHTML = S[listKey].length ? S[listKey].map((t, i) => `<label class="check"><input type="checkbox" data-list="${selKey}" value="${i}" ${S[selKey].includes(i) ? 'checked' : ''}><span>${esc(t)}</span></label>`).join('') : '<span class="hint">Belum ada. Pilih bahasan di atas atau tambah sendiri.</span>';
+function renderChecks(box, lk, sk) {
+  $(box).innerHTML = S[lk].length ? S[lk].map((t, i) => '<label class="check"><input type="checkbox" data-list="' + sk + '" value="' + i + '"' + (S[sk].includes(i) ? ' checked' : '') + '><span>' + esc(t) + '</span></label>').join('') : '<span class="hint">Belum ada. Pilih bahasan di atas atau tulis sendiri.</span>';
 }
-function renderChips(id, key) {
-  $(id).innerHTML = OPT[key].map(o => `<button type="button" class="chip" aria-pressed="${S[key].includes(o)}" data-chip="${key}" data-v="${esc(o)}">${esc(o)}</button>`).join('');
-}
+const renderChips = (id, key) => { $(id).innerHTML = OPT[key].map(o => '<button type="button" class="chip" aria-pressed="' + S[key].includes(o) + '" data-chip="' + key + '" data-v="' + esc(o) + '">' + esc(o) + '</button>').join(''); };
 function renderModel() {
-  $('#f-model').innerHTML = '<option value="">Pilih model...</option>' + Object.entries(MODELS).map(([k, v]) => `<option value="${k}">${esc(v.nama)}</option>`).join('');
+  $('#f-model').innerHTML = '<option value="">Pilih model...</option>' + Object.entries(MODELS).map(([k, v]) => '<option value="' + k + '">' + esc(v.nama) + '</option>').join('');
   $('#f-model').value = S.model;
   $('#modelHint').textContent = S.model ? MODELS[S.model].saran : (+S.kelas <= 2 ? 'Saran untuk kelas awal: Belajar melalui bermain.' : '');
 }
+function updateLabels() { const t = times(); $('#lAwal').textContent = 'Kegiatan awal (sekitar ' + t.a + ' menit)'; $('#lInti').textContent = 'Kegiatan inti (sekitar ' + t.i + ' menit)'; $('#lPenutup').textContent = 'Kegiatan penutup (sekitar ' + t.p + ' menit)'; }
 function syncForm() {
-  $$('[data-k]').forEach(el => { const v = S[el.dataset.k]; if (v !== undefined && document.activeElement !== el) el.value = v; });
-  renderMapel(); renderUnit();
-  renderChecks('#tpList', 'tpList', 'tpSel'); renderChecks('#atpList', 'atpList', 'atpSel');
+  if (!S) return;
+  $$('#formCol [data-k]').forEach(el => { const v = S[el.dataset.k]; if (v !== undefined && document.activeElement !== el) el.value = v; });
+  renderMapel(); renderUnit(); renderChecks('#tpList', 'tpList', 'tpSel'); renderChecks('#atpList', 'atpList', 'atpSel');
   ['metode', 'dpl', 'prinsip', 'media', 'asesmen'].forEach(k => renderChips('#c-' + k, k));
-  renderModel(); updateLabels();
-}
-function updateLabels() {
-  const t = times();
-  $('#lAwal').textContent = 'Kegiatan awal (sekitar ' + t.a + ' menit)';
-  $('#lInti').textContent = 'Kegiatan inti (sekitar ' + t.i + ' menit)';
-  $('#lPenutup').textContent = 'Kegiatan penutup (sekitar ' + t.p + ' menit)';
+  renderModel(); updateLabels(); renderKonteks();
+  $('#profilRo').innerHTML = 'Guru: <b>' + esc(S.guru) + '</b>' + (S.nip ? ' (NBM ' + esc(S.nip) + ')' : '') + '<br>Kepala sekolah: <b>' + esc(S.kepsek || '-') + '</b><br><span class="hint">Diambil dari Data Induk. Ubah di Google Sheets bila keliru.</span>';
 }
 
-/* ---------- pratinjau ---------- */
+/* pratinjau */
 function renderPaper() {
-  const PH = '<span class="ph">....................</span>';
-  const V = x => (x && String(x).trim()) ? esc(x) : PH;
-  const lines = x => { const a = String(x || '').split('\n').map(l => l.trim()).filter(Boolean); return a.length ? a.map(l => `<p>${esc(l)}</p>`).join('') : PH; };
-  const ol = a => a.length ? `<ol>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : PH;
-  const ul = a => a.length ? `<ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : PH;
-  const sorted = arr => arr.slice().sort((a, b) => a - b);
-  const tps = sorted(S.tpSel).map(i => S.tpList[i]).filter(Boolean);
-  const atps = sorted(S.atpSel).map(i => S.atpList[i]).filter(Boolean);
-  const tujuan = String(S.tujuan || '').split('\n').map(x => x.trim()).filter(Boolean);
-  const t = times(), mod = MODELS[S.model];
-  const tgl = S.tanggal ? new Date(S.tanggal + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
-  const rub = tps.length ? `<table class="bd"><tr><th style="width:40%">Tujuan pembelajaran</th><th>Perlu bimbingan</th><th>Berkembang</th><th>Sesuai harapan</th></tr>${tps.map(x => `<tr><td>${esc(x)}</td><td>Belum mampu meski dibantu</td><td>Mampu dengan bantuan guru atau teman</td><td>Mampu secara mandiri</td></tr>`).join('')}</table>` : PH;
-  $('#paper').innerHTML = `
-  <p class="school">${V(S.sekolah)}</p>
-  <h1>MODUL AJAR / RENCANA PEMBELAJARAN</h1>
-  <p class="sub">Pembelajaran Mendalam &middot; Tahun Pelajaran ${V(S.ta)}</p>
-  <hr class="dbl">
-  <h2 style="margin-top:0">A. Identitas</h2>
-  <table class="idt">
-    <tr><td>Mata pelajaran</td><td>: ${V(mapelName())}</td><td>Kelas / Fase</td><td>: ${esc(S.kelas)} / ${faseOf(S.kelas)}</td></tr>
-    <tr><td>Nama guru</td><td>: ${V(S.guru)}</td><td>Semester</td><td>: ${esc(S.semester)}</td></tr>
-    <tr><td>NIP</td><td>: ${S.nip ? esc(S.nip) : '-'}</td><td>Alokasi waktu</td><td>: ${esc(S.jp)} JP x ${esc(S.menit)} menit</td></tr>
-    <tr><td>Elemen</td><td>: ${V(S.elemen)}</td><td>Pertemuan / tanggal</td><td>: ke-${esc(S.pertemuan)}${tgl ? ', ' + esc(tgl) : ''}</td></tr>
-  </table>
-  <h2>B. Capaian dan tujuan pembelajaran</h2>
-  <h3>Capaian Pembelajaran (CP)</h3>${lines(S.cp)}
-  <h3>Tujuan Pembelajaran (TP)</h3>${S.model ? `<p>Melalui model ${esc(mod.nama)}, murid mampu:</p>` : ''}${ol(tujuan)}
-  <h3>Alur Tujuan Pembelajaran (ATP)</h3>${ol(atps)}
-  <h3>Materi pokok</h3>${lines(S.materi)}
-  <h2>C. Desain pembelajaran</h2>
-  <table class="idt">
-    <tr><td>Dimensi Profil Lulusan</td><td>: ${S.dpl.length ? esc(S.dpl.join(', ')) : PH}</td></tr>
-    <tr><td>Prinsip</td><td>: ${S.prinsip.length ? esc(S.prinsip.join(', ')) : PH}</td></tr>
-    <tr><td>Model pembelajaran</td><td>: ${S.model ? esc(mod.nama) : PH}</td></tr>
-    <tr><td>Metode</td><td>: ${S.metode.length ? esc(S.metode.join(', ')) : PH}</td></tr>
-    <tr><td>Media dan sumber</td><td>: ${S.media.length ? esc(S.media.join(', ')) : PH}</td></tr>
-    <tr><td>Kemitraan</td><td>: ${V(S.kemitraan)}</td></tr>
-    <tr><td>Lingkungan belajar</td><td>: ${V(S.lingkungan)}</td></tr>
-    <tr><td>Pemanfaatan digital</td><td>: ${V(S.digital)}</td></tr>
-  </table>
-  <h2>D. Pengalaman belajar</h2>
-  <h3>Kegiatan awal <span class="tm">(${t.a} menit)</span></h3>${lines(S.awal)}
-  <h3>Kegiatan inti <span class="tm">(${t.i} menit)</span></h3>${lines(S.inti)}
-  <h3>Kegiatan penutup <span class="tm">(${t.p} menit)</span></h3>${lines(S.penutup)}
-  <h2>E. Asesmen</h2>
-  <p><b>Teknik:</b> ${S.asesmen.length ? esc(S.asesmen.join(', ')) : PH}</p>
-  ${rub}
-  <h2>F. Refleksi</h2>
-  <p><b>Refleksi murid:</b></p>
-  <ul class="refl"><li>Apa yang paling kamu pahami hari ini?</li><li>Bagian mana yang masih sulit?</li><li>Bagaimana perasaanmu saat belajar?</li></ul>
-  <p><b>Refleksi guru:</b></p>
-  <ul class="refl"><li>Apakah tujuan pembelajaran tercapai?</li><li>Bagian mana yang perlu diperbaiki?</li><li>Murid mana yang perlu pendampingan lanjutan?</li></ul>
-  <table class="sign"><tr><td>Mengetahui,<br>Kepala Sekolah<div class="gap"></div><b><u>${V(S.kepsek)}</u></b><br>${S.nipKepsek ? 'NIP ' + esc(S.nipKepsek) : '&nbsp;'}</td>
-  <td>${esc(S.kota || '')}${tgl ? ', ' + esc(tgl) : ''}<br>Guru<div class="gap"></div><b><u>${V(S.guru)}</u></b><br>${S.nip ? 'NIP ' + esc(S.nip) : '&nbsp;'}</td></tr></table>`;
+  const PH = '<span class="ph">....................</span>', V = x => (x && String(x).trim()) ? esc(x) : PH;
+  const lines = x => { const a = String(x || '').split('\n').map(l => l.trim()).filter(Boolean); return a.length ? a.map(l => '<p>' + esc(l) + '</p>').join('') : PH; };
+  const ol = a => a.length ? '<ol>' + a.map(x => '<li>' + esc(x) + '</li>').join('') + '</ol>' : PH;
+  const sorted = a => a.slice().sort((x, y) => x - y);
+  const tps = sorted(S.tpSel).map(i => S.tpList[i]).filter(Boolean), atps = sorted(S.atpSel).map(i => S.atpList[i]).filter(Boolean);
+  const tujuan = String(S.tujuan || '').split('\n').map(x => x.trim()).filter(Boolean), t = times(), mod = MODELS[S.model];
+  const tgl = S.tanggal ? tglPanjang(fromIso(S.tanggal)) : '', tglTtd = S.tanggal ? fromIso(S.tanggal).getDate() + ' ' + BULAN[fromIso(S.tanggal).getMonth()] + ' ' + fromIso(S.tanggal).getFullYear() : '';
+  const rub = tps.length ? '<table class="bd"><tr><th style="width:40%">Tujuan pembelajaran</th><th>Perlu bimbingan</th><th>Berkembang</th><th>Sesuai harapan</th></tr>' + tps.map(x => '<tr><td>' + esc(x) + '</td><td>Belum mampu meski dibantu</td><td>Mampu dengan bantuan guru atau teman</td><td>Mampu secara mandiri</td></tr>').join('') + '</table>' : PH;
+  const fl = (a) => a.length ? esc(a.join(', ')) : PH;
+  $('#paper').innerHTML = '<p class="school">' + V(S.sekolah) + '</p><h1>MODUL AJAR / RENCANA PEMBELAJARAN</h1><p class="sub">Pembelajaran Mendalam, Tahun Pelajaran ' + V(S.ta) + '</p><hr class="dbl">' +
+  '<h2 style="margin-top:0">A. Identitas</h2><table class="idt">' +
+  '<tr><td>Mata pelajaran</td><td>: ' + V(mapelName()) + '</td><td>Kelas / Fase</td><td>: ' + esc(kelasTeks()) + ' / ' + faseOf(S.kelas) + '</td></tr>' +
+  '<tr><td>Nama guru</td><td>: ' + V(S.guru) + '</td><td>Semester</td><td>: ' + esc(S.semester) + '</td></tr>' +
+  '<tr><td>NBM</td><td>: ' + (S.nip ? esc(S.nip) : '-') + '</td><td>Alokasi waktu</td><td>: ' + esc(S.jp) + ' JP x ' + esc(S.menit) + ' menit</td></tr>' +
+  '<tr><td>Elemen</td><td>: ' + V(S.elemen) + '</td><td>Pertemuan / tanggal</td><td>: ke-' + esc(S.pertemuan) + (tgl ? ', ' + esc(tgl) : '') + '</td></tr></table>' +
+  '<h2>B. Capaian dan tujuan pembelajaran</h2><h3>Capaian Pembelajaran (CP)</h3>' + lines(S.cp) + '<h3>Tujuan Pembelajaran (TP)</h3>' + (S.model ? '<p>Melalui model ' + esc(mod.nama) + ', murid mampu:</p>' : '') + ol(tujuan) +
+  '<h3>Alur Tujuan Pembelajaran (ATP)</h3>' + ol(atps) + '<h3>Materi pokok</h3>' + lines(S.materi) +
+  '<h2>C. Desain pembelajaran</h2><table class="idt"><tr><td>Dimensi Profil Lulusan</td><td>: ' + fl(S.dpl) + '</td></tr><tr><td>Prinsip</td><td>: ' + fl(S.prinsip) + '</td></tr><tr><td>Model pembelajaran</td><td>: ' + (S.model ? esc(mod.nama) : PH) + '</td></tr><tr><td>Metode</td><td>: ' + fl(S.metode) + '</td></tr><tr><td>Media dan sumber</td><td>: ' + fl(S.media) + '</td></tr><tr><td>Kemitraan</td><td>: ' + V(S.kemitraan) + '</td></tr><tr><td>Lingkungan belajar</td><td>: ' + V(S.lingkungan) + '</td></tr><tr><td>Pemanfaatan digital</td><td>: ' + V(S.digital) + '</td></tr></table>' +
+  '<h2>D. Pengalaman belajar</h2><h3>Kegiatan awal <span class="tm">(' + t.a + ' menit)</span></h3>' + lines(S.awal) + '<h3>Kegiatan inti <span class="tm">(' + t.i + ' menit)</span></h3>' + lines(S.inti) + '<h3>Kegiatan penutup <span class="tm">(' + t.p + ' menit)</span></h3>' + lines(S.penutup) +
+  '<h2>E. Asesmen</h2><p><b>Teknik:</b> ' + fl(S.asesmen) + '</p>' + rub +
+  '<h2>F. Refleksi</h2><p><b>Refleksi murid:</b></p><ul><li>Apa yang paling kamu pahami hari ini?</li><li>Bagian mana yang masih sulit?</li><li>Bagaimana perasaanmu saat belajar?</li></ul><p><b>Refleksi guru:</b></p><ul><li>Apakah tujuan pembelajaran tercapai?</li><li>Bagian mana yang perlu diperbaiki?</li><li>Murid mana yang perlu pendampingan lanjutan?</li></ul>' +
+  '<table class="sign"><tr><td>Mengetahui,<br>Kepala Sekolah<div class="gap"></div><b><u>' + V(S.kepsek) + '</u></b><br>' + (S.nipKepsek ? 'NBM ' + esc(S.nipKepsek) : '&nbsp;') + '</td><td>' + esc(S.kota || '') + (tglTtd ? ', ' + esc(tglTtd) : '') + '<br>Guru<div class="gap"></div><b><u>' + V(S.guru) + '</u></b><br>' + (S.nip ? 'NBM ' + esc(S.nip) : '&nbsp;') + '</td></tr></table>';
   fitPaper();
 }
-function fitPaper() {
-  const p = $('#paper'), box = $('#previewScroll');
-  if (!box.clientWidth) return;
-  const z = Math.min(1, (box.clientWidth - 24) / (p.offsetWidth || 794));
-  p.style.zoom = z;
-}
-
-/* ---------- kelengkapan ---------- */
+function fitPaper() { const p = $('#paper'), box = $('#previewScroll'); if (!box.clientWidth) return; p.style.zoom = Math.min(1, (box.clientWidth - 16) / 794); }
 function updateMeter() {
-  const checks = [
-    ['nama guru', !!S.guru.trim()], ['mata pelajaran', !!mapelName().trim()], ['bahasan', S.unit !== '-1' || S.tpList.length > 0],
-    ['tujuan', S.tujuan.trim().length > 0], ['model', !!S.model], ['dimensi profil', S.dpl.length > 0],
-    ['kegiatan inti', S.inti.trim().length > 0], ['asesmen', S.asesmen.length > 0]
-  ];
-  const done = checks.filter(c => c[1]).length, pct = Math.round(done / checks.length * 100);
+  const c = [['nama mapel', !!mapelName().trim()], ['bahasan', S.unit !== '-1' || S.tpList.length > 0], ['tujuan', S.tujuan.trim().length > 0], ['model', !!S.model], ['dimensi profil', S.dpl.length > 0], ['kegiatan inti', S.inti.trim().length > 0], ['asesmen', S.asesmen.length > 0]];
+  const done = c.filter(x => x[1]).length, pct = Math.round(done / c.length * 100), miss = c.filter(x => !x[1]).map(x => x[0]);
   $('#pct').textContent = pct + '%'; $('#pctBar').style.width = pct + '%';
-  const miss = checks.filter(c => !c[1]).map(c => c[0]);
   $('#pctHint').textContent = miss.length ? 'Belum: ' + miss.slice(0, 3).join(', ') + (miss.length > 3 ? ' dan ' + (miss.length - 3) + ' lainnya' : '') : 'RPP siap dicetak.';
-  const s1 = checks[0][1] && checks[1][1], s2 = checks[2][1] && checks[3][1], s3 = checks[4][1] && checks[5][1] && checks[6][1] && checks[7][1];
-  $('[data-step="1"]').classList.toggle('done', s1); $('[data-step="2"]').classList.toggle('done', s2); $('[data-step="3"]').classList.toggle('done', s3);
-  $('#s1sum').textContent = S.guru ? S.guru + ', kelas ' + S.kelas + (mapelName() ? ', ' + mapelName() : '') : 'Guru, kelas, mapel, waktu';
-  $('#s2sum').textContent = S.elemen ? S.elemen : 'Pilih bahasan, CP, TP, ATP';
+  $('[data-step="1"]').classList.toggle('done', c[0][1]); $('[data-step="2"]').classList.toggle('done', c[1][1] && c[2][1]); $('[data-step="3"]').classList.toggle('done', c[3][1] && c[4][1] && c[5][1] && c[6][1]);
+  $('#s1sum').textContent = 'Kelas ' + kelasTeks() + (mapelName() ? ', ' + mapelName() : '') + ', ' + S.jp + ' JP';
+  $('#s2sum').textContent = S.elemen || 'Pilih bahasan, CP, TP, ATP';
   $('#s3sum').textContent = S.model ? MODELS[S.model].nama : 'Model, metode, profil, asesmen';
 }
-function refresh() { renderPaper(); updateMeter(); updateLabels(); persist(); }
+function refresh() { if (!S) return; renderPaper(); updateMeter(); updateLabels(); persist(); }
 
-/* ---------- events: form ---------- */
+/* validasi: kosongkan pesan saat fokus, periksa saat keluar kolom */
+const RULES = {
+  jp: v => (+v >= 1 && +v <= 12) ? '' : 'Isi jumlah JP antara 1 dan 12.',
+  menit: v => (+v >= 20 && +v <= 60) ? '' : 'Isi menit per JP antara 20 dan 60.',
+  pertemuan: v => (+v >= 1 && +v <= 60) ? '' : 'Isi pertemuan ke antara 1 dan 60.',
+  tanggal: v => v ? '' : 'Pilih tanggal mengajar.',
+  ta: v => /^\d{4}\/\d{4}$/.test(v) ? '' : 'Tulis tahun pelajaran seperti 2026/2027.',
+  mapelLain: v => (S.mapel === '__lain' && !String(v).trim()) ? 'Tulis nama mata pelajaran.' : ''
+};
+function errField(k, msg) { const e = $('#e-' + k), f = $('#f-' + k); if (e) { e.textContent = msg; e.hidden = !msg; } if (f) f.setAttribute('aria-invalid', msg ? 'true' : 'false'); }
+$('#formCol').addEventListener('focusout', e => { const k = e.target.dataset && e.target.dataset.k; if (k && RULES[k]) errField(k, RULES[k](e.target.value)); });
+$('#formCol').addEventListener('focusin', e => { const k = e.target.dataset && e.target.dataset.k; if (k && RULES[k]) errField(k, ''); });
+function validasiLangkah1() { let first = null; Object.keys(RULES).forEach(k => { const m = RULES[k](S[k] ?? ''); errField(k, m); if (m && !first) first = k; }); return first; }
+
+/* event form */
 const HOOKS = {
-  kelas() { S.unit = '-1'; clearUnit(); S.mapel = ''; renderMapel(); renderUnit(); if (!S.model && +S.kelas <= 2) { /* saran saja */ } renderModel(); },
+  kelas() { S.unit = '-1'; clearUnit(); const ok = mapelBoleh(); if (S.mapel !== '__lain') { const l = mapelList(S.kelas).map(m => m.nama).filter(n => !ok || ok.has(n)); if (!l.includes(S.mapel)) S.mapel = l[0] || '__lain'; } renderMapel(); renderUnit(); renderModel(); },
   semester() { S.unit = '-1'; clearUnit(); renderUnit(); },
   mapel() { S.unit = '-1'; clearUnit(); $('#mapelLainBox').hidden = S.mapel !== '__lain'; renderUnit(); },
   unit() { setUnit(+S.unit); syncForm(); },
-  model() { renderModel(); if (S.model) { genKegiatan(); syncForm(); } },
-  jp() { },
-  menit() { }
+  model() { renderModel(); if (S.model) { genKegiatan(); syncForm(); } }
 };
 function clearUnit() { S.elemen = ''; S.cp = ''; S.tpList = []; S.tpSel = []; S.atpList = []; S.atpSel = []; S.materi = ''; S.dirty.tujuan = false; S.tujuan = ''; syncForm(); }
 $('#formCol').addEventListener('input', e => {
-  const k = e.target.dataset && e.target.dataset.k;
-  if (!k) return;
-  S[k] = e.target.value;
-  if (S.dirty.hasOwnProperty(k)) S.dirty[k] = true;
-  if (['guru', 'nip', 'sekolah', 'kota', 'kepsek', 'nipKepsek'].includes(k)) persistProfile();
-  if (HOOKS[k]) HOOKS[k]();
-  refresh();
+  const k = e.target.dataset && e.target.dataset.k; if (!k) return;
+  S[k] = e.target.value; if (S.dirty.hasOwnProperty(k)) S.dirty[k] = true;
+  if (HOOKS[k]) HOOKS[k](); refresh();
 });
 $('#formCol').addEventListener('change', e => {
   const t = e.target;
   if (t.dataset && t.dataset.list) {
     const key = t.dataset.list, i = +t.value;
     S[key] = t.checked ? [...new Set([...S[key], i])] : S[key].filter(x => x !== i);
-    if (key === 'tpSel') { S.dirty.tujuan = false; syncTujuan(); $('#f-tujuan').value = S.tujuan; }
+    if (key === 'tpSel') { S.dirty.tujuan = false; syncTujuan(); $('#f-tujuan').value = S.tujuan; $('#e-tp').hidden = true; }
     refresh();
   }
 });
 $('#formCol').addEventListener('click', e => {
   const chip = e.target.closest('[data-chip]');
-  if (chip) {
-    const key = chip.dataset.chip, v = chip.dataset.v;
-    S[key] = S[key].includes(v) ? S[key].filter(x => x !== v) : [...S[key], v];
-    chip.setAttribute('aria-pressed', S[key].includes(v)); refresh(); return;
-  }
-  const head = e.target.closest('.step-head');
-  if (head) { toggleStep(head.parentElement); return; }
-  const go = e.target.closest('[data-go]');
-  if (go) { openStep(go.dataset.go); }
+  if (chip) { const key = chip.dataset.chip, v = chip.dataset.v; S[key] = S[key].includes(v) ? S[key].filter(x => x !== v) : [...S[key], v]; chip.setAttribute('aria-pressed', String(S[key].includes(v))); refresh(); return; }
+  const head = e.target.closest('.step-head'); if (head) { toggleStep(head.parentElement); return; }
+  const go = e.target.closest('[data-go]'); if (go) openStep(go.dataset.go, true);
 });
-function toggleStep(step, force) {
-  const open = force === undefined ? !step.classList.contains('open') : force;
-  step.classList.toggle('open', open);
-  step.querySelector('.step-head').setAttribute('aria-expanded', open);
-}
-function openStep(n) {
-  $$('.step').forEach(s => toggleStep(s, s.dataset.step === String(n)));
-  const el = $('[data-step="' + n + '"]'); el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-function addCustom(inputId, listKey, selKey) {
-  const el = $(inputId), v = el.value.trim();
-  if (!v) return;
-  S[listKey].push(v); S[selKey].push(S[listKey].length - 1); el.value = '';
-  if (selKey === 'tpSel') { S.dirty.tujuan = false; syncTujuan(); }
+function toggleStep(step, force) { const open = force === undefined ? !step.classList.contains('open') : force; step.classList.toggle('open', open); step.querySelector('.step-head').setAttribute('aria-expanded', String(open)); }
+function openStep(n, scroll) { $$('.step').forEach(s => toggleStep(s, s.dataset.step === String(n))); if (scroll) { const el = $('[data-step="' + n + '"]'); setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 30); } }
+function addCustom(inputId, lk, sk) {
+  const el = $(inputId), v = el.value.trim(); if (!v) return;
+  S[lk].push(v); S[sk].push(S[lk].length - 1); el.value = '';
+  if (sk === 'tpSel') { S.dirty.tujuan = false; syncTujuan(); $('#e-tp').hidden = true; }
   syncForm(); refresh();
 }
-$('#tpAdd').onclick = () => addCustom('#tpNew', 'tpList', 'tpSel');
-$('#atpAdd').onclick = () => addCustom('#atpNew', 'atpList', 'atpSel');
+$('#tpAdd').onclick = () => addCustom('#tpNew', 'tpList', 'tpSel'); $('#atpAdd').onclick = () => addCustom('#atpNew', 'atpList', 'atpSel');
 $('#tpNew').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('#tpAdd').click(); } });
 $('#atpNew').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('#atpAdd').click(); } });
-$('#genBtn').onclick = () => {
-  if (!S.model) { toast('Pilih model pembelajaran dulu.'); $('#f-model').focus(); return; }
-  genKegiatan(); syncForm(); refresh(); toast('Kegiatan disusun. Silakan sunting bila perlu.');
-};
+$('#genBtn').onclick = () => { if (!S.model) { toast('Pilih model pembelajaran dulu.'); $('#f-model').focus(); return; } genKegiatan(); syncForm(); refresh(); toast('Kegiatan disusun. Silakan sunting bila perlu.'); };
 
-/* ---------- cetak ---------- */
+/* cetak */
 const PAGES = { A4: '@page{size:A4;margin:15mm}', F4: '@page{size:215mm 330mm;margin:15mm}', Letter: '@page{size:letter;margin:15mm}' };
-function doPrint() {
-  $('#pageSize').textContent = PAGES[$('#f-kertas').value] || PAGES.A4;
-  const prevView = document.querySelector('.view.on').id;
-  if (prevView !== 'view-susun') showView('susun');
-  const d = document.title; document.title = 'RPP ' + (mapelName() || '') + ' Kelas ' + S.kelas + ' ' + (S.elemen || '');
-  window.print(); setTimeout(() => document.title = d, 500);
-}
+function doPrint() { $('#pageSize').textContent = PAGES[$('#f-kertas').value] || PAGES.A4; const d = document.title; document.title = 'RPP ' + mapelName() + ' Kelas ' + S.kelas + ' ' + (S.elemen || ''); window.print(); setTimeout(() => { document.title = d; }, 600); }
 $('#btnPrint').onclick = doPrint; $('#btnPrint2').onclick = doPrint;
 $('#f-kertas').onchange = () => { $('#pageSize').textContent = PAGES[$('#f-kertas').value]; };
 
-/* ---------- jurnal ---------- */
-function snapshot() { return JSON.parse(JSON.stringify(S)); }
-function saveEntry() {
-  if (!mapelName() || S.tpSel.length === 0) { toast('Lengkapi mapel dan TP sebelum menyimpan.'); return null; }
-  if (!S.id) S.id = Date.now();
-  const i = jurnal.findIndex(j => j.id === S.id), e = { id: S.id, saved: new Date().toISOString(), sent: i >= 0 ? jurnal[i].sent : false, data: snapshot() };
-  if (i >= 0) jurnal[i] = e; else jurnal.unshift(e);
-  store.set('rpp_jurnal', jurnal); persist(); renderJurnal();
-  return e;
+/* simpan ke jurnal */
+function entriDari(st) {
+  const nm = st.mapel === '__lain' ? st.mapelLain : st.mapel, sorted = (a) => a.slice().sort((x, y) => x - y);
+  return { id: st.id, tanggal: st.tanggal, slot: st.slot || '', status: st.status, catatan: st.catatan || '',
+    kelas: (st.kelasGabung && st.kelasGabung.length) ? st.kelas + ',' + st.kelasGabung.join(',') : String(st.kelas), fase: faseOf(st.kelas), semester: st.semester, mapel: nm, elemen: st.elemen, materi: st.materi,
+    tujuan: String(st.tujuan || '').split('\n').filter(Boolean).join(' | '), model: st.model ? MODELS[st.model].nama : '', jp: st.jp, menit: st.menit, state: st };
 }
-function rowOf(e) {
-  const d = e.data, nm = d.mapel === '__lain' ? d.mapelLain : d.mapel;
-  return { id: e.id, tanggal: d.tanggal, guru: d.guru, nip: d.nip, sekolah: d.sekolah, kelas: d.kelas, fase: faseOf(d.kelas), semester: d.semester, mapel: nm, elemen: d.elemen, materi: d.materi,
-    tujuan: String(d.tujuan || '').split('\n').filter(Boolean).join(' | '), model: d.model ? MODELS[d.model].nama : '', jp: d.jp, menit: d.menit, status: d.status, catatan: d.catatan };
-}
-async function sendEntry(e) {
-  if (!sheetUrl) { toast('Hubungkan Google Sheets di Pengaturan dulu.'); return false; }
+async function simpanJurnal() {
+  const bad = validasiLangkah1();
+  if (bad) { openStep(1, true); const f = $('#f-' + bad); if (f) setTimeout(() => f.focus(), 350); return; }
+  if (!S.tpSel.length) { const e = $('#e-tp'); e.textContent = 'Pilih atau tulis minimal satu tujuan pembelajaran.'; e.hidden = false; openStep(2, true); setTimeout(() => $('#tpField').scrollIntoView({ block: 'center' }), 350); return; }
+  const lama = draftKey(); if (!S.id) S.id = 'bebas|' + SES.me.id + '|' + Date.now();
+  const btn = $('#btnSimpan'); btn.textContent = 'Menyimpan...'; btn.setAttribute('aria-busy', 'true');
   try {
-    await fetch(sheetUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(rowOf(e)) });
-    e.sent = true; e.sentAt = new Date().toISOString(); store.set('rpp_jurnal', jurnal); renderJurnal();
-    toast('Permintaan terkirim ke Google Sheets. Cek lembar "Jurnal".'); return true;
-  } catch (err) { toast('Gagal mengirim. Periksa sambungan internet dan alamat Apps Script.'); return false; }
+    const snap = JSON.parse(JSON.stringify(S)); delete snap.blok; const en = entriDari(snap);
+    const r = await api('simpan', { entry: en });
+    const row = { id: en.id, tanggal: en.tanggal, slot: en.slot, status: en.status, catatan: en.catatan, kelas: en.kelas, mapel: en.mapel, saved: r.saved, state: snap };
+    const i = JURNAL.findIndex(j => j.id === en.id); if (i >= 0) JURNAL[i] = row; else JURNAL.unshift(row);
+    store.del(lama); store.del(draftKey());
+    $('#simpanInfo').textContent = 'Tersimpan di jurnal pukul ' + (String(r.saved).split(' ')[1] || '');
+    toast('Tersimpan di jurnal.');
+  } catch (e) { persist(); toast(e.pesan || 'RPP belum tersimpan. Draf tetap ada di perangkat ini.', { label: 'Coba lagi', fn: simpanJurnal }); }
+  finally { btn.textContent = 'Simpan ke jurnal'; btn.removeAttribute('aria-busy'); }
 }
-$('#btnSave').onclick = () => { if (saveEntry()) toast('Tersimpan di jurnal.'); };
-$('#btnSend').onclick = async () => { const e = saveEntry(); if (e) await sendEntry(e); };
-$('#btnReset').onclick = () => {
-  if (!confirm('Mulai RPP baru? Isian yang belum disimpan akan hilang.')) return;
-  S = Object.assign(blank(), profile); syncForm(); refresh(); openStep(1); toast('Formulir dikosongkan.');
+$('#btnSimpan').onclick = simpanJurnal;
+$('#btnReset').onclick = async () => {
+  if (!await konfirmasi('Kosongkan formulir?', 'Isian RPP ini dihapus dari layar. RPP yang sudah tersimpan di jurnal tidak ikut terhapus.', 'Kosongkan')) return;
+  store.del(draftKey()); const keep = S.sumber === 'jadwal' ? { id: S.id, sumber: S.sumber, slot: S.slot, blok: S.blok, kelas: S.kelas, kelasGabung: S.kelasGabung, tanggal: S.tanggal, semester: S.semester, ta: S.ta, jp: S.jp, menit: S.menit, pertemuan: S.pertemuan } : {};
+  S = Object.assign(blank(), profil(), keep); const ok = mapelBoleh(); S.mapel = mapelList(S.kelas).map(m => m.nama).find(n => !ok || ok.has(n)) || '__lain';
+  syncForm(); refresh(); openStep(1, true);
 };
+$$('[data-seg]').forEach(b => b.onclick = () => { $('#layout').classList.toggle('show-preview', b.dataset.seg === 'preview'); $$('[data-seg]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); setTimeout(fitPaper, 30); window.scrollTo(0, 0); });
+new ResizeObserver(fitPaper).observe($('#previewScroll')); window.addEventListener('resize', fitPaper);
+
+/* ================= JURNAL ================= */
+const STATUS = ['Direncanakan', 'Terlaksana', 'Ditunda'];
 function renderJurnal() {
-  $('#jCount').textContent = jurnal.length; $('#jCount').style.display = jurnal.length ? '' : 'none';
-  $('#stTotal').textContent = jurnal.length;
-  $('#stDone').textContent = jurnal.filter(j => j.data.status === 'Terlaksana').length;
-  $('#stSent').textContent = jurnal.filter(j => j.sent).length;
-  const box = $('#jList');
-  if (!jurnal.length) { box.innerHTML = '<div class="empty"><b>Jurnal masih kosong</b>Simpan RPP dari halaman Susun RPP, dan barisnya muncul di sini.</div>'; return; }
-  box.innerHTML = jurnal.map(j => {
-    const d = j.data, nm = d.mapel === '__lain' ? d.mapelLain : d.mapel;
-    const tgl = d.tanggal ? new Date(d.tanggal + 'T00:00:00').toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : '';
-    return `<div class="entry" data-id="${j.id}">
-      <div><h4>${esc(nm)}, Kelas ${esc(d.kelas)}</h4>
-        <div class="meta">${esc(tgl)} &middot; ${esc(d.elemen || 'Tanpa elemen')} &middot; ${d.model ? esc(MODELS[d.model].nama) : 'Model belum dipilih'}</div>
-        <div style="margin-top:6px"><span class="tag ${j.sent ? 'ok' : ''}">${j.sent ? 'Terkirim ke Sheets' : 'Belum dikirim'}</span></div></div>
-      <div class="btns"><button class="btn sm sec" data-a="open">Buka</button><button class="btn sm" data-a="send">${j.sent ? 'Kirim ulang' : 'Kirim'}</button><button class="btn sm danger" data-a="del">Hapus</button></div>
-      <div class="row"><select data-a="status" aria-label="Status">${['Direncanakan', 'Terlaksana', 'Ditunda'].map(s => `<option ${d.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select>
-      <input type="text" data-a="note" value="${esc(d.catatan)}" placeholder="Catatan jurnal" aria-label="Catatan jurnal"></div></div>`;
+  const J = JURNAL.slice().sort((a, b) => String(b.tanggal).localeCompare(String(a.tanggal)));
+  $('#jStat').innerHTML = '<div><b>' + J.length + '</b><span>RPP tersimpan</span></div><div><b>' + J.filter(j => j.status === 'Terlaksana').length + '</b><span>Sudah terlaksana</span></div><div><b>' + J.filter(j => j.status === 'Direncanakan').length + '</b><span>Masih direncanakan</span></div>';
+  $('#jFilter').innerHTML = ['Semua'].concat(STATUS).map(s => '<button type="button" class="chip" aria-pressed="' + (UI.filter === s) + '" data-f="' + s + '">' + s + '</button>').join('');
+  const L = UI.filter === 'Semua' ? J : J.filter(j => j.status === UI.filter), box = $('#jList');
+  if (!J.length) { box.innerHTML = '<div class="empty"><h2>Jurnal masih kosong</h2><p>Simpan RPP dari tab Hari ini, dan barisnya muncul di sini serta di Google Sheets.</p><button type="button" class="btn" data-j="beranda">Buka jadwal hari ini</button></div>'; return; }
+  if (!L.length) { box.innerHTML = '<div class="empty"><h2>Tidak ada RPP berstatus ' + esc(UI.filter) + '</h2><p>Tampilkan semua status untuk melihat RPP lainnya.</p><button type="button" class="btn" data-f="Semua">Tampilkan semua</button></div>'; return; }
+  box.innerHTML = L.map(j => {
+    const d = j.tanggal ? tglPanjang(fromIso(j.tanggal)) : '', el = j.state && j.state.elemen;
+    return '<div class="entry" data-id="' + esc(j.id) + '"><div><h3>' + esc(j.mapel) + ', kelas ' + esc(String(j.kelas).replace(/,/g, ' dan ')) + '</h3><div class="meta">' + esc(d) + (el ? ', ' + esc(el) : '') + '</div></div>' +
+      '<div class="btns"><button type="button" class="btn sm sec" data-a="buka">Buka RPP</button><button type="button" class="btn sm danger" data-a="hapus">Hapus RPP</button></div>' +
+      '<div class="row"><select data-a="status" aria-label="Status RPP">' + STATUS.map(s => '<option' + (j.status === s ? ' selected' : '') + '>' + s + '</option>').join('') + '</select><input type="text" data-a="catatan" value="' + esc(j.catatan) + '" placeholder="Catatan jurnal" aria-label="Catatan jurnal"></div></div>';
   }).join('');
 }
-$('#jList').addEventListener('click', async e => {
+$('#view-jurnal').addEventListener('click', async e => {
+  const f = e.target.closest('[data-f]'); if (f) { UI.filter = f.dataset.f; renderJurnal(); return; }
+  if (e.target.closest('[data-j="beranda"]')) { showView('beranda'); return; }
   const b = e.target.closest('[data-a]'); if (!b || b.tagName === 'SELECT' || b.tagName === 'INPUT') return;
-  const id = +b.closest('.entry').dataset.id, j = jurnal.find(x => x.id === id); if (!j) return;
-  if (b.dataset.a === 'open') { S = Object.assign(blank(), j.data, { id: j.id }); syncForm(); refresh(); showView('susun'); openStep(1); }
-  if (b.dataset.a === 'send') await sendEntry(j);
-  if (b.dataset.a === 'del') { if (confirm('Hapus entri jurnal ini dari perangkat? Baris di Google Sheets tidak ikut terhapus.')) { jurnal = jurnal.filter(x => x.id !== id); store.set('rpp_jurnal', jurnal); renderJurnal(); } }
+  const id = b.closest('.entry').dataset.id, j = JURNAL.find(x => x.id === id); if (!j) return;
+  if (b.dataset.a === 'buka') {
+    if (j.slot && /^\d{4}-/.test(j.id)) { UI.hari = HARI.includes(j.slot.split('|')[0]) ? UI.hari : UI.hari; mulaiDariBlok(j.slot, j.tanggal); if (S && S.id === j.id) return; }
+    S = hydrate(j.state, j.id); S.sumber = j.slot ? 'jadwal' : 'bebas'; showView('susun'); openStep(2, true);
+  }
+  if (b.dataset.a === 'hapus') {
+    if (!await konfirmasi('Hapus RPP ini?', (j.mapel + ', kelas ' + String(j.kelas).replace(/,/g, ' dan ') + ', ' + (j.tanggal ? tglPanjang(fromIso(j.tanggal)) : '')) + '. Barisnya juga dihapus dari Google Sheets.', 'Hapus RPP')) return;
+    try { await api('hapus', { id }); JURNAL = JURNAL.filter(x => x.id !== id); store.del('rpp_draft_' + SES.me.id + '_' + id); renderJurnal(); toast('RPP dihapus.'); }
+    catch (er) { toast(er.pesan || 'RPP belum terhapus. Coba lagi.', { label: 'Coba lagi', fn: () => b.click() }); }
+  }
 });
-$('#jList').addEventListener('change', e => {
-  const a = e.target.dataset.a; if (!a) return;
-  const j = jurnal.find(x => x.id === +e.target.closest('.entry').dataset.id); if (!j) return;
-  if (a === 'status') j.data.status = e.target.value;
-  if (a === 'note') j.data.catatan = e.target.value;
-  j.sent = false; store.set('rpp_jurnal', jurnal); renderJurnal();
-  if (S.id === j.id) { S.status = j.data.status; S.catatan = j.data.catatan; syncForm(); persist(); }
+$('#view-jurnal').addEventListener('change', async e => {
+  const a = e.target.dataset.a; if (a !== 'status' && a !== 'catatan') return;
+  const j = JURNAL.find(x => x.id === e.target.closest('.entry').dataset.id); if (!j) return;
+  const st = Object.assign(blank(), j.state || {}, profil(), { id: j.id }); if (a === 'status') st.status = e.target.value; else st.catatan = e.target.value; st.tanggal = j.tanggal; st.slot = j.slot || st.slot;
+  const prev = { status: j.status, catatan: j.catatan };
+  try { const en = entriDari(st); delete st.blok; await api('simpan', { entry: en }); j.status = st.status; j.catatan = st.catatan; j.state = st; renderJurnal(); toast('Perubahan tersimpan.'); }
+  catch (er) { j.status = prev.status; j.catatan = prev.catatan; renderJurnal(); toast(er.pesan || 'Perubahan belum tersimpan.'); }
 });
 
-/* ---------- pengaturan ---------- */
-$('#gas').textContent = GAS;
-$('#f-url').value = sheetUrl;
-$('#saveUrl').onclick = () => { sheetUrl = $('#f-url').value.trim(); store.set('rpp_sheet', sheetUrl); toast(sheetUrl ? 'Alamat disimpan.' : 'Alamat dihapus.'); };
-$('#testUrl').onclick = async () => {
-  const u = $('#f-url').value.trim(); if (!u) { toast('Isi alamat dulu.'); return; }
-  try { await fetch(u, { mode: 'no-cors' }); toast('Alamat dapat dijangkau. Kirim satu RPP untuk memastikan data masuk.'); } catch (e) { toast('Alamat tidak dapat dijangkau.'); }
-};
-$('#copyGas').onclick = async () => { try { await navigator.clipboard.writeText(GAS); toast('Kode disalin.'); } catch (e) { toast('Salin manual dari kotak kode.'); } };
-$('#exportJ').onclick = () => {
-  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ profile, jurnal }, null, 1)], { type: 'application/json' }));
-  a.download = 'rpp-cepat-cadangan-' + todayStr() + '.json'; a.click(); URL.revokeObjectURL(a.href);
-};
-$('#importJ').onchange = e => {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = () => { try { const o = JSON.parse(r.result); if (Array.isArray(o.jurnal)) { jurnal = o.jurnal; store.set('rpp_jurnal', jurnal); renderJurnal(); toast('Cadangan dipulihkan.'); } else throw 0; } catch (x) { toast('Berkas cadangan tidak valid.'); } };
-  r.readAsText(f);
-};
-
-/* ---------- navigasi ---------- */
-function showView(v) {
-  $$('.view').forEach(x => x.classList.toggle('on', x.id === 'view-' + v));
-  $$('.tab').forEach(t => t.setAttribute('aria-selected', t.dataset.view === v));
-  if (v === 'susun') setTimeout(fitPaper, 30);
-  window.scrollTo(0, 0);
+/* ================= REKAP ================= */
+async function muatRekap() {
+  const ws0 = weekStart(new Date()), body = $('#rekapBody');
+  body.innerHTML = '<p class="hint">Memuat rekap...</p>';
+  try { REKAP = await api('rekap', { dari: iso(addDays(ws0, -28)) }); renderRekap(); }
+  catch (e) { body.innerHTML = '<div class="empty"><h2>Rekap belum bisa dimuat</h2><p>' + esc(e.pesan || 'Coba lagi sebentar lagi.') + '</p><button type="button" class="btn" id="rkUlang">Coba lagi</button></div>'; const u = $('#rkUlang'); if (u) u.onclick = muatRekap; }
 }
-$$('.tab').forEach(t => t.onclick = () => showView(t.dataset.view));
-$$('[data-seg]').forEach(b => b.onclick = () => {
-  const p = b.dataset.seg === 'preview';
-  $('#layout').classList.toggle('show-preview', p);
-  $$('[data-seg]').forEach(x => x.setAttribute('aria-pressed', x === b));
-  setTimeout(fitPaper, 30); window.scrollTo(0, 0);
-});
-new ResizeObserver(fitPaper).observe($('#previewScroll'));
-window.addEventListener('resize', fitPaper);
+function renderRekap() {
+  if (!REKAP) return;
+  const now = new Date(), today = startOfDay(now), nowMin = now.getHours() * 60 + now.getMinutes(), ws = addDays(weekStart(today), -7 * UI.pekan);
+  $('#rekapPekan').textContent = 'Pekan ' + tglSingkat(ws) + ' sampai ' + tglSingkat(addDays(ws, 5)) + ' ' + addDays(ws, 5).getFullYear();
+  $('#rkPrev').disabled = UI.pekan >= 3; $('#rkNow').disabled = UI.pekan === 0;
+  const mapE = {}; REKAP.jurnal.forEach(j => { mapE[j.id_guru + '|' + j.tanggal + '|' + j.slot] = j; });
+  const R = REKAP.guru.map(g => {
+    const bl = bangunBlok(REKAP.slot.filter(s => s.id_guru === g.id)); let tot = 0, ada = 0, done = 0; const kurang = [];
+    bl.forEach(b => { const d = addDays(ws, HARI.indexOf(b.hari)), e = mapE[g.id + '|' + iso(d) + '|' + b.key]; tot++; if (e) { ada++; if (e.status === 'Terlaksana') done++; } else if (d < today || (d.getTime() === today.getTime() && b.selesai <= nowMin)) kurang.push({ d, b }); });
+    kurang.sort((x, y) => x.d - y.d || x.b.mulai - y.b.mulai);
+    return { g, tot, ada, done, telat: kurang.length, kurang };
+  }).filter(x => x.tot > 0).sort((a, b) => b.telat - a.telat || a.g.nama.localeCompare(b.g.nama));
+  if (!R.length) { $('#rekapBody').innerHTML = '<div class="empty"><h2>Belum ada data jadwal guru</h2><p>Isi lembar Jadwal di Data Induk, lalu muat ulang halaman ini.</p></div>'; return; }
+  const T = R.reduce((a, x) => ({ tot: a.tot + x.tot, ada: a.ada + x.ada, done: a.done + x.done, telat: a.telat + (x.telat > 0 ? 1 : 0) }), { tot: 0, ada: 0, done: 0, telat: 0 });
+  let h = '<div class="ubin"><div><b>' + Math.round(T.ada / T.tot * 100) + '%</b><span>sesi punya RPP (' + T.ada + ' dari ' + T.tot + ')</span></div><div><b>' + T.done + '</b><span>sesi sudah terlaksana</span></div><div><b>' + T.telat + '</b><span>guru punya sesi lewat tanpa RPP</span></div></div><div class="rek">';
+  R.forEach(x => {
+    const p = Math.round(x.ada / x.tot * 100);
+    h += '<div><div class="top"><div><h3>' + esc(x.g.panggilan || x.g.nama) + '</h3><small>' + esc(x.g.nama) + '</small></div>' + (x.telat ? '<span class="tag red">' + x.telat + ' sesi belum ada RPP</span>' : '<span class="tag ok">Lengkap sampai hari ini</span>') + '</div><div class="bar" role="img" aria-label="' + p + ' persen sesi punya RPP"><i style="width:' + p + '%"></i></div><div class="angka"><span><b>' + x.ada + '</b> dari ' + x.tot + ' sesi punya RPP</span><span><b>' + x.done + '</b> terlaksana</span></div>';
+    if (x.kurang.length) h += '<details><summary>Lihat sesi yang belum ada RPP</summary><ul>' + x.kurang.map(k => '<li>' + esc(HARI_PENDEK[HARI.indexOf(k.b.hari)] + ' ' + tglSingkat(k.d) + ', ' + kelasLabel(k.b) + ', ' + k.b.mapel) + '</li>').join('') + '</ul></details>';
+    h += '</div>';
+  });
+  $('#rekapBody').innerHTML = h + '</div>';
+}
+$('#rkPrev').onclick = () => { UI.pekan = Math.min(3, UI.pekan + 1); renderRekap(); };
+$('#rkNow').onclick = () => { UI.pekan = 0; renderRekap(); };
 
-/* ---------- mulai ---------- */
-if (!S.mapel) renderMapel();
-syncForm(); renderJurnal(); refresh();
+/* ================= MULAI ================= */
+(async function boot() {
+  if (DEMO_MODE && !DEMO) { document.body.innerHTML = '<p style="padding:24px">Data contoh tidak ada dan SCRIPT_URL masih kosong. Isi CONFIG.SCRIPT_URL.</p>'; return; }
+  const sesi = store.get('rpp_sesi', null);
+  if (sesi && sesi.token && (tokenData(sesi.token).exp || 0) > Date.now()) {
+    SES.token = sesi.token;
+    try { await mulaiSesi(); return; }
+    catch (e) { SES.token = null; if (e.kode === 'JARINGAN') { await bukaLogin(); banner(e.pesan, { label: 'Coba lagi', fn: () => location.reload() }); return; } store.del('rpp_sesi'); }
+  }
+  await bukaLogin();
+})();
 </script>
 </body>
 </html>
