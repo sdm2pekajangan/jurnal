@@ -77,16 +77,17 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:var(--red);backg
 .empty p{margin:0 auto 14px;color:var(--muted);max-width:46ch}
 
 /* ---------- masuk ---------- */
-.auth{min-height:100vh;display:grid;place-items:center;padding:24px 16px;background:linear-gradient(180deg,#fff 0,var(--bg) 60%)}
-.auth-card{width:100%;max-width:400px}
-.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+dialog.auth{border:0;border-radius:14px;padding:22px;width:min(420px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto}
+.auth-card{width:100%}
+.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .logo{width:40px;height:40px;border-radius:10px;background:var(--green);position:relative;flex:none}
 .logo::after{content:"";position:absolute;left:11px;top:9px;width:18px;height:22px;border-radius:3px;background:#fff;box-shadow:inset 0 6px 0 -2px var(--gold)}
 .auth-brand b{display:block;font-size:17px;color:var(--green-d)}
 .auth-brand span{color:var(--muted);font-size:13px}
-.auth h1{font-size:26px;margin-bottom:4px}
-.auth form{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:16px}
-.auth .btn{width:100%;margin-top:18px}
+.auth-brand .tutup{margin-left:auto}
+.auth h1{font-size:24px;margin-bottom:4px}
+.auth form{margin-top:12px}
+.auth .btn.blok{width:100%;margin-top:18px}
 .show-pin{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;min-height:44px}
 .show-pin input{width:18px;height:18px;accent-color:var(--green)}
 
@@ -94,6 +95,8 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:var(--red);backg
 .topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 0 var(--gold-l)}
 .topbar-in{width:100%;padding:0 16px;display:flex;align-items:center;gap:16px;min-height:60px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;color:var(--green-d)}
+.brand .sekolah{font-weight:500;color:var(--muted);font-size:13px;margin-left:2px}
+@media (max-width:767.98px){.brand .sekolah{display:none}}
 .brand .logo{width:28px;height:28px;border-radius:7px}
 .brand .logo::after{left:7px;top:6px;width:12px;height:15px;border-radius:2px;box-shadow:inset 0 4px 0 -1px var(--gold)}
 .tabs{display:flex;gap:4px;margin-left:auto}
@@ -122,6 +125,82 @@ input[aria-invalid=true],select[aria-invalid=true]{border-color:var(--red);backg
   .topbar-in{justify-content:space-between}
   .page{padding-bottom:96px}
 }
+
+/* ---------- dasbor kelas ---------- */
+.dash-bar{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;margin-bottom:14px}
+.dash-bar .field{margin:0;min-width:200px}
+.dash-bar select{min-height:44px;font-weight:600;font-size:16px}
+.dash-nav{display:flex;gap:6px;align-items:center;margin-left:auto;flex-wrap:wrap}
+.dash-nav .rentang{font-weight:600;min-width:128px;text-align:center;font-variant-numeric:tabular-nums}
+.dash-judul{margin-bottom:12px}
+.dash-judul h1{font-size:28px;letter-spacing:-.01em}
+.dash-judul p{margin:2px 0 0;color:var(--muted)}
+.dash-ringkas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:12px;margin-bottom:16px}
+.dash-ringkas>div{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.dash-ringkas h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px;font-weight:700}
+.dash-ringkas .angka{font-size:26px;font-weight:700;line-height:1.1}
+.dash-ringkas .angka small{font-size:14px;font-weight:500;color:var(--muted)}
+.dash-ringkas .bar{margin:8px 0 6px}
+.dash-ringkas .sub{color:var(--muted);font-size:13px}
+.pengampu{display:flex;flex-wrap:wrap;gap:6px}
+.pengampu li{list-style:none;background:var(--bg);border-radius:8px;padding:4px 10px;font-size:13px}
+.pengampu li b{font-weight:600}
+.pengampu li span{color:var(--muted)}
+.pengampu li.wali{background:var(--gold-l);color:#4A3A0E}
+.pengampu li.wali span{color:var(--gold-d)}
+ul.pengampu{margin:0;padding:0}
+.dgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;align-items:start}
+.dcol{min-width:0}
+.dcol-head{padding:8px 10px;border-radius:var(--r) var(--r) 0 0;background:#fff;border:1px solid var(--line);border-bottom:0}
+.dcol-head b{display:block;font-size:15px}
+.dcol-head .tg{color:var(--muted);font-size:12.5px}
+.dcol.hariini .dcol-head{border-color:var(--gold);box-shadow:inset 0 3px 0 var(--gold)}
+.dcol-tugas{background:#FBFCFA;border:1px solid var(--line);border-top:0;padding:6px 10px;font-size:12px;color:var(--muted);display:grid;gap:2px}
+.dcol-tugas b{color:var(--ink);font-weight:600}
+.dcol-isi{display:grid;gap:8px;margin-top:8px}
+.dcard{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-left:4px solid #C5CEC6;border-radius:var(--r);padding:8px 10px;cursor:pointer;min-height:44px}
+.dcard:hover{border-color:#9DB3A4;border-left-color:inherit}
+.dcard .wkt{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.dcard h3{font-size:14.5px;margin:1px 0 2px}
+.dcard .gr{font-size:12.5px;color:var(--muted)}
+.dcard .tag{margin-top:6px}
+.dcard.st-ok{border-left-color:var(--green)}
+.dcard.st-rencana{border-left-color:#7FA48D}
+.dcard.st-kosong{border-left-color:var(--gold)}
+.dcard.st-tunda{border-left-color:#B7B7B7}
+.dcard.sekarang{box-shadow:0 0 0 3px var(--gold-l);border-color:var(--gold)}
+.dcol-kosong{color:var(--muted);font-size:13px;padding:10px;text-align:center;border:1px dashed var(--line);border-radius:var(--r);background:#fff}
+.dterbaru{margin-top:18px}
+.dterbaru h2{font-size:16px;margin-bottom:8px}
+.dterbaru ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.dterbaru li{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:2px 12px}
+.dterbaru li .w{color:var(--muted);font-size:13px}
+.dterbaru li b{font-weight:600}
+.dterbaru li p{margin:0;color:var(--muted);font-size:13px;grid-column:2}
+.dtotal{margin-top:12px}
+.det dl{display:grid;grid-template-columns:90px minmax(0,1fr);gap:6px 12px;margin:12px 0 0}
+.det dt{color:var(--muted);font-size:13px}
+.det dd{margin:0}
+.det .rinci{white-space:pre-line}
+.pub-top .masuk{margin-left:auto}
+.dash .hari{display:none}
+@media (max-width:999.98px){
+  .dash .hari{display:grid}
+  .dgrid{grid-template-columns:1fr}
+  .dcol{display:none}
+  .dcol.sel{display:block}
+  .dcol-head{display:none}
+  .dash{display:flex;flex-direction:column}
+  .dash .hari{order:1}.dash .dgrid{order:2}.dash-ringkas{order:3;margin-top:18px}.dterbaru{order:4}
+  .dash-ringkas{grid-template-columns:1fr}
+  .dash-nav .rentang{min-width:0;flex:1;font-size:13px}
+  .dash-nav .btn.txt{order:5}
+  .dash-nav{margin-left:0;width:100%;justify-content:space-between}
+  .dash-bar .field{flex:1 1 100%}
+  .dterbaru li{grid-template-columns:1fr}
+  .dterbaru li p{grid-column:1}
+}
+@media (max-width:767.98px){.pub-top .masuk .tx{display:inline}}
 
 /* ---------- hari ini ---------- */
 .sapa{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
@@ -273,7 +352,7 @@ dialog p{margin:0 0 4px;color:var(--muted)}
 
 @media print{
   html,body{background:#fff}
-  .topbar,.form-col,.seg,.preview-bar,.toast,#login,dialog,.konteks{display:none!important}
+  .topbar,.form-col,.seg,.preview-bar,.toast,#login,#pub,dialog,.konteks{display:none!important}
   #shell,#view-susun,.layout{display:block!important}
   .page{padding:0;max-width:none}
   .preview-col{display:block!important;position:static;height:auto}
@@ -285,12 +364,23 @@ dialog p{margin:0 0 4px;color:var(--muted)}
 </head>
 <body>
 
+<!-- ================= BERANDA PUBLIK ================= -->
+<div id="pub" hidden>
+  <header class="topbar pub-top">
+    <div class="topbar-in">
+      <div class="brand"><span class="logo"></span><span>RPP Cepat</span><small class="sekolah" id="pubSekolah"></small></div>
+      <button type="button" class="btn masuk" id="btnMasuk"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l-4 4 4 4M6 12h10" transform="translate(0 0)"/></svg>Masuk</button>
+    </div>
+  </header>
+  <main class="page"><div class="dash" id="pubBody"></div></main>
+</div>
+
 <!-- ================= MASUK ================= -->
-<section class="auth" id="login" hidden>
+<dialog class="auth" id="login" aria-labelledby="lg-judul">
   <div class="auth-card">
-    <div class="auth-brand"><span class="logo"></span><div><b>RPP Cepat</b><span id="lg-sekolah">SD Muhammadiyah 2 Pekajangan</span></div></div>
-    <h1 class="serif">Masuk</h1>
-    <p class="hint" style="margin:0">Pilih nama Anda, lalu isi PIN.</p>
+    <div class="auth-brand"><span class="logo"></span><div><b>RPP Cepat</b><span id="lg-sekolah">SD Muhammadiyah 2 Pekajangan</span></div><button type="button" class="btn txt tutup" id="lg-tutup" aria-label="Tutup">Tutup</button></div>
+    <h1 class="serif" id="lg-judul">Masuk</h1>
+    <p class="hint" style="margin:0">Pilih nama Anda, lalu isi PIN untuk membuat jurnal dan RPP.</p>
     <div class="banner info" id="lg-demo" style="margin-top:14px" hidden>Mode contoh: jadwal asli sekolah, tetapi RPP hanya tersimpan di perangkat ini. PIN semua akun adalah 1234.</div>
     <div class="banner err-b" id="lg-banner" role="alert" style="margin-top:14px" hidden></div>
     <form id="frmLogin" novalidate>
@@ -301,11 +391,11 @@ dialog p{margin:0 0 4px;color:var(--muted)}
         <input type="password" id="lg-pin" inputmode="numeric" autocomplete="current-password" maxlength="8" aria-describedby="err-lg-pin">
         <span class="err" id="err-lg-pin" role="alert" hidden></span></div>
       <label class="show-pin"><input type="checkbox" id="lg-show"> Tampilkan PIN</label>
-      <button class="btn" type="submit" id="lg-btn">Masuk</button>
+      <button class="btn blok" type="submit" id="lg-btn">Masuk</button>
       <p class="hint" style="margin:12px 0 0">Lupa PIN? Minta admin mengatur ulang PIN Anda.</p>
     </form>
   </div>
-</section>
+</dialog>
 
 <!-- ================= RANGKA ================= -->
 <div id="shell" hidden>
@@ -313,6 +403,7 @@ dialog p{margin:0 0 4px;color:var(--muted)}
     <div class="topbar-in">
       <div class="brand"><span class="logo"></span><span>RPP Cepat</span></div>
       <nav class="tabs" id="nav" aria-label="Menu utama">
+        <button class="tab" data-view="dash" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11M15 9v11"/></svg><span>Jadwal kelas</span></button>
         <button class="tab" data-view="beranda" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Hari ini</span></button>
         <button class="tab" data-view="susun" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h4"/></svg><span>Susun RPP</span></button>
         <button class="tab" data-view="jurnal" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M5 18a2 2 0 0 1 2-2h12"/></svg><span>Jurnal</span></button>
@@ -328,6 +419,9 @@ dialog p{margin:0 0 4px;color:var(--muted)}
       </div>
     </div>
   </header>
+
+  <!-- JADWAL KELAS -->
+  <main id="view-dash" class="view page"><div class="dash" id="dashShell"></div></main>
 
   <!-- HARI INI -->
   <main id="view-beranda" class="view on page"><div id="berandaBody"></div></main>
@@ -460,6 +554,8 @@ dialog p{margin:0 0 4px;color:var(--muted)}
   <div class="dlg-aksi"><button type="button" class="btn sec" id="pnBatal">Batal</button><button type="submit" class="btn" id="pnSimpan">Simpan PIN baru</button></div>
 </form></dialog>
 
+<dialog id="dlgDash" class="det" aria-labelledby="dtJudul"><div id="dtIsi"></div><div class="dlg-aksi" id="dtAksi"><button type="button" class="btn sec" id="dtTutup">Tutup</button></div></dialog>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -524,7 +620,7 @@ const dinas = n => MAPEL_MAP[n] || null;
 /* ---------- blok jadwal ---------- */
 function waktu(s) {
   let a = mnt(s.mulai), b = mnt(s.selesai);
-  if (isNaN(a)) { const j = (SES.jam.find(x => x[0] === s.hari && +x[1] === +s.jam) || []); a = mnt(j[2]); b = mnt(j[3]); }
+  if (isNaN(a)) { const j = ((SES.jam.length ? SES.jam : DASH.jam).find(x => x[0] === s.hari && +x[1] === +s.jam) || []); a = mnt(j[2]); b = mnt(j[3]); }
   if (isNaN(a)) a = 0;
   if (!(b > a)) b = a + 35;
   return [a, b];
@@ -532,8 +628,8 @@ function waktu(s) {
 function bangunBlok(slots) {
   const unit = new Map();
   slots.forEach(s => {
-    const [a, b] = waktu(s), k = s.hari + '|' + s.jam + '|' + s.mapel;
-    if (!unit.has(k)) unit.set(k, { hari: s.hari, jam: +s.jam, mapel: s.mapel, kelas: [], a, b });
+    const [a, b] = waktu(s), k = s.hari + '|' + s.jam + '|' + s.mapel + '|' + (s.id_guru || '');
+    if (!unit.has(k)) unit.set(k, { hari: s.hari, jam: +s.jam, mapel: s.mapel, guru: s.id_guru || '', kelas: [], a, b });
     unit.get(k).kelas.push(+s.kelas);
   });
   const per = {};
@@ -544,8 +640,8 @@ function bangunBlok(slots) {
     per[h].sort((x, y) => x.jam - y.jam).forEach(u => {
       u.kelas.sort((x, y) => x - y);
       const ks = u.kelas.join(',');
-      if (cur && cur.mapel === u.mapel && cur.kelasKey === ks && u.jam === cur.jamAkhir + 1 && u.a - cur.selesai <= 5) { cur.jamAkhir = u.jam; cur.selesai = u.b; cur.jp++; }
-      else { cur = { hari: h, jamAwal: u.jam, jamAkhir: u.jam, jp: 1, mapel: u.mapel, kelas: u.kelas, kelasKey: ks, mulai: u.a, selesai: u.b, key: h + '|' + u.jam }; out.push(cur); }
+      if (cur && cur.mapel === u.mapel && cur.guru === u.guru && cur.kelasKey === ks && u.jam === cur.jamAkhir + 1 && u.a - cur.selesai <= 5) { cur.jamAkhir = u.jam; cur.selesai = u.b; cur.jp++; }
+      else { cur = { hari: h, jamAwal: u.jam, jamAkhir: u.jam, jp: 1, mapel: u.mapel, guru: u.guru, kelas: u.kelas, kelasKey: ks, mulai: u.a, selesai: u.b, key: h + '|' + u.jam }; out.push(cur); }
     });
   });
   return out;
@@ -555,12 +651,13 @@ const menitJp = b => Math.max(20, Math.round((b.selesai - b.mulai) / b.jp));
 
 /* ---------- sesi dan API ---------- */
 const SES = { token: null, me: null, kepsek: {}, sekolah: { nama: CONFIG.SEKOLAH, kota: CONFIG.KOTA }, jam: [], slot: [], piket: [], btq: [], admin: false, link: { btq: CONFIG.LINK_BTQ } };
+let DASH = { jam: [], guru: [], wali: {}, slot: [], piket: [], btq: [], jurnal: [], rinci: true, ok: false };
 let JURNAL = [], S = null, UI = { hari: null, filter: 'Semua', pekan: 0 }, REKAP = null;
 
 function tokenData(t) { try { return JSON.parse(atob(String(t).split('.')[0].replace(/-/g, '+').replace(/_/g, '/'))); } catch (e) { return {}; } }
 async function api(aksi, data) {
   const body = Object.assign({ aksi }, data || {});
-  if (SES.token && aksi !== 'daftar' && aksi !== 'login') body.token = SES.token;
+  if (SES.token && aksi !== 'daftar' && aksi !== 'login' && aksi !== 'publik') body.token = SES.token;
   let res;
   if (DEMO_MODE) res = await demoApi(aksi, body);
   else {
@@ -581,14 +678,17 @@ let demoSalah = {}, demoKunci = {};
 const demoJam = () => { const o = []; HARI.forEach(h => { const n = (h === 'Jumat' || h === 'Sabtu') ? 4 : 8; for (let j = 1; j <= n; j++) o.push([h, j, DEMO.jam[j][0], DEMO.jam[j][1]]); }); return o; };
 const demoSlot = s => ({ hari: s[0], jam: s[1], kelas: s[2], id_guru: s[3], mapel: s[4], ket: s[5] || '', mulai: DEMO.jam[s[1]][0], selesai: DEMO.jam[s[1]][1] });
 function demoJurnal() {
-  let j = store.get('rpp_demo_jurnal2', null);
+  let j = store.get('rpp_demo_jurnal3', null);
   if (j) return j;
-  j = []; const today = startOfDay(new Date()), ws = weekStart(today);
-  const plan = { G02: 100, G03: 50, G06: 35, G07: 60 };
-  Object.keys(plan).forEach(id => {
+  j = []; const today = startOfDay(new Date());
+  const plan = { G02: 100, G03: 50, G06: 35, G07: 60, G15: 0 };
+  const ids = [...new Set(DEMO.slot.map(s => s[3]))];
+  ids.forEach(id => { if (!(id in plan)) plan[id] = 75; });
+  ids.forEach(id => [0, 1, 2].forEach(w => {
+    const ws = addDays(weekStart(today), -7 * w);
     bangunBlok(DEMO.slot.filter(s => s[3] === id).map(demoSlot)).forEach(b => {
       const d = addDays(ws, HARI.indexOf(b.hari)); if (d >= today) return;
-      let h = 0; for (const c of id + b.key) h = (h * 31 + c.charCodeAt(0)) % 100;
+      let h = 0; for (const c of id + b.key + iso(d)) h = (h * 31 + c.charCodeAt(0)) % 100;
       if (h >= plan[id]) return;
       const t = iso(d), kl = String(b.kelas[0]), dn = dinas(b.mapel), mp = dn && mapelList(kl).find(m => m.nama === dn);
       let isi = { mapel: '__lain', mapelLain: b.mapel };
@@ -600,14 +700,23 @@ function demoJurnal() {
       j.push({ id: t + '|' + id + '|' + b.key, id_guru: id, tanggal: t, slot: b.key, status: 'Terlaksana', catatan: '', kelas: kl, mapel: b.mapel, saved: t + ' 07:00',
         state: Object.assign({ tanggal: t, kelas: kl, jp: String(b.jp), menit: String(menitJp(b)), status: 'Terlaksana', slot: b.key, sumber: 'jadwal' }, isi) });
     });
-  });
-  store.set('rpp_demo_jurnal2', j); return j;
+  }));
+  store.set('rpp_demo_jurnal3', j); return j;
 }
 async function demoApi(aksi, req) {
   await new Promise(r => setTimeout(r, 140));
   const G = id => DEMO.guru.find(g => g.id === id);
   const sah = () => { const d = tokenData(req.token); if (!d.id || !G(d.id)) return null; return d.id; };
   const galat = (kode, pesan, x) => Object.assign({ ok: false, kode, pesan }, x || {});
+  if (aksi === 'publik') {
+    const nm = x => x.panggilan || String(x.nama).split(/[ ,]/)[0], wali = {};
+    DEMO.guru.filter(x => x.jabatan === 'Guru Kelas').sort((a, b) => a.id < b.id ? -1 : 1).forEach((x, i) => { wali[i + 1] = x.id; });
+    return { ok: true, sekolah: { nama: CONFIG.SEKOLAH, kota: CONFIG.KOTA }, link: { btq: CONFIG.LINK_BTQ }, rinci: true, jam: demoJam(),
+      guru: DEMO.guru.map(x => ({ id: x.id, panggilan: nm(x), jabatan: x.jabatan })), wali, slot: DEMO.slot.map(demoSlot),
+      piket: DEMO.piket.map(p => ({ hari: p[0], urut: p[1], id_guru: p[2], panggilan: nm(G(p[2]) || {}) })),
+      btq: DEMO.btq.map(b => ({ hari: b[0], kelas: b[1], jenis: b[2], id_guru: b[3], panggilan: b[3] ? nm(G(b[3]) || {}) : '' })),
+      jurnal: demoJurnal().map(j => ({ id_guru: j.id_guru, tanggal: j.tanggal, slot: j.slot, status: j.status, kelas: j.kelas, mapel: j.mapel, elemen: (j.state && j.state.elemen) || '', materi: String((j.state && j.state.materi) || '').slice(0, 200), tujuan: String((j.state && j.state.tujuan) || '').slice(0, 240) })) };
+  }
   if (aksi === 'daftar') return { ok: true, sekolah: { nama: CONFIG.SEKOLAH, kota: CONFIG.KOTA }, guru: DEMO.guru.filter(g => g.login).map(g => ({ id: g.id, nama: g.nama, panggilan: g.panggilan, jabatan: g.jabatan })) };
   if (aksi === 'login') {
     const id = req.id;
@@ -634,9 +743,9 @@ async function demoApi(aksi, req) {
     if (i >= 0 && all[i].id_guru !== id) return galat('DITOLAK', 'RPP ini milik guru lain.');
     const row = { id: e.id, id_guru: id, tanggal: e.tanggal, slot: e.slot || '', status: e.status, catatan: e.catatan || '', kelas: e.kelas, mapel: e.mapel, saved: iso(t) + ' ' + pad(t.getHours()) + ':' + pad(t.getMinutes()), state: e.state };
     if (i >= 0) all[i] = row; else all.unshift(row);
-    store.set('rpp_demo_jurnal2', all); return { ok: true, id: e.id, saved: row.saved };
+    store.set('rpp_demo_jurnal3', all); dashT = 0; return { ok: true, id: e.id, saved: row.saved };
   }
-  if (aksi === 'hapus') { const all = demoJurnal(), i = all.findIndex(j => j.id === req.id && j.id_guru === id); if (i >= 0) all.splice(i, 1); store.set('rpp_demo_jurnal2', all); return { ok: true }; }
+  if (aksi === 'hapus') { const all = demoJurnal(), i = all.findIndex(j => j.id === req.id && j.id_guru === id); if (i >= 0) all.splice(i, 1); store.set('rpp_demo_jurnal3', all); return { ok: true }; }
   if (aksi === 'gantiPin') return req.lama === '1234' ? { ok: true, demo: true } : galat('PIN_SALAH', 'PIN lama tidak cocok.');
   if (aksi === 'rekap') {
     if (!(g.peran === 'admin' || g.peran === 'kepsek')) return galat('DITOLAK', 'Rekap hanya untuk admin dan kepala sekolah.');
@@ -655,7 +764,8 @@ function banner(msg, act) {
 }
 let daftarMuat = false;
 async function bukaLogin(pesan) {
-  $('#shell').hidden = true; $('#login').hidden = false; $('#lg-demo').hidden = !DEMO_MODE;
+  if (!$('#login').open) $('#login').showModal();
+  $('#lg-demo').hidden = !DEMO_MODE;
   banner(pesan || '');
   if (!daftarMuat) await muatDaftar();
   setTimeout(() => ($('#lg-id').value ? $('#lg-pin') : $('#lg-id')).focus(), 50);
@@ -675,6 +785,8 @@ const cekPin = v => /^\d{4,8}$/.test(v) ? '' : 'Masukkan PIN 4 sampai 8 angka.';
 $('#lg-id').addEventListener('blur', () => setErr('lg-id', cekNama()));
 $('#lg-pin').addEventListener('blur', () => setErr('lg-pin', cekPin($('#lg-pin').value.trim())));
 ['lg-id', 'lg-pin'].forEach(i => { $('#' + i).addEventListener('focus', () => setErr(i, '')); $('#' + i).addEventListener('input', () => setErr(i, '')); });
+$('#lg-tutup').onclick = () => $('#login').close();
+$('#btnMasuk').onclick = () => bukaLogin();
 $('#lg-show').onchange = e => { $('#lg-pin').type = e.target.checked ? 'text' : 'password'; };
 $('#frmLogin').addEventListener('submit', async ev => {
   ev.preventDefault();
@@ -695,7 +807,8 @@ $('#frmLogin').addEventListener('submit', async ev => {
 });
 function keluar(pesan) {
   SES.token = null; SES.me = null; store.del('rpp_sesi'); S = null; JURNAL = []; REKAP = null; UI = { hari: null, filter: 'Semua', pekan: 0 };
-  $('#akunMenu').hidden = true; bukaLogin(pesan);
+  $('#akunMenu').hidden = true; $('#shell').hidden = true; $('#pub').hidden = false; renderDash();
+  if (pesan) bukaLogin(pesan);
 }
 $('#btnKeluar').onclick = () => keluar('');
 
@@ -707,7 +820,8 @@ async function mulaiSesi() {
   $('#avatar').textContent = nm.replace(/^(Bu|Pak|Us)\s+/i, '').charAt(0).toUpperCase() || '?';
   $('#akunNama').textContent = nm; $('#akunLengkap').textContent = SES.me.nama; $('#akunJabatan').textContent = SES.me.jabatan || '';
   $('#tabRekap').hidden = !SES.admin;
-  $('#login').hidden = true; $('#shell').hidden = false;
+  if ($('#login').open) $('#login').close();
+  $('#pub').hidden = true; $('#shell').hidden = false;
   S = null; showView('beranda');
 }
 
@@ -748,6 +862,7 @@ function showView(v) {
   if (v === 'rekap' && !SES.admin) v = 'beranda';
   $$('.view').forEach(x => x.classList.toggle('on', x.id === 'view-' + v));
   $$('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view === v)));
+  if (v === 'dash') { renderDash(); muatDash(); }
   if (v === 'beranda') renderBeranda();
   if (v === 'jurnal') renderJurnal();
   if (v === 'rekap') muatRekap();
@@ -756,6 +871,100 @@ function showView(v) {
 }
 $$('.tab').forEach(t => t.onclick = () => showView(t.dataset.view));
 setInterval(() => { if ($('#view-beranda').classList.contains('on') && SES.me) renderBeranda(true); }, 60000);
+
+/* ================= DASBOR KELAS (publik) ================= */
+const DK = { kelas: store.get('rpp_dash_kelas', null), hari: null, pekan: 0, buka: [] };
+let dashT = 0;
+async function muatDash(diam) {
+  if (Date.now() - dashT < 15000 && DASH.ok && diam !== false) return;
+  try {
+    const d = await api('publik');
+    DASH = Object.assign({ rinci: true }, d, { ok: true }); dashT = Date.now();
+    if (!SES.jam.length) SES.jam = DASH.jam;
+    $('#pubSekolah').textContent = d.sekolah ? d.sekolah.nama : '';
+    renderDash();
+  } catch (e) { if (!DASH.ok) $$('.dash').forEach(r => { r.innerHTML = '<div class="empty"><h2>Jadwal belum bisa dimuat</h2><p>' + esc(e.pesan || 'Coba lagi sebentar lagi.') + '</p><button type="button" class="btn" data-dnav="muat">Coba lagi</button></div>'; }); }
+}
+const guruNama = id => (DASH.guru.find(g => g.id === id) || {}).panggilan || '';
+const kelasDash = () => [...new Set(DASH.slot.map(s => +s.kelas))].filter(Boolean).sort((a, b) => a - b);
+function blokKelas(k) { return bangunBlok(DASH.slot.filter(s => +s.kelas === +k)); }
+function peta() { const m = {}; DASH.jurnal.forEach(j => { m[j.tanggal + '|' + j.id_guru + '|' + j.slot] = j; }); return m; }
+function renderDash() {
+  const roots = $$('.dash'); if (!roots.length) return;
+  if (!DASH.ok) { roots.forEach(r => { r.innerHTML = '<div class="empty"><h2>Memuat jadwal...</h2></div>'; }); return; }
+  const ks = kelasDash();
+  if (!ks.length) { roots.forEach(r => { r.innerHTML = '<div class="empty"><h2>Belum ada jadwal</h2><p>Lembar Jadwal di Data Induk masih kosong.</p></div>'; }); return; }
+  if (!ks.includes(+DK.kelas)) DK.kelas = SES.me && SES.slot.length ? +SES.slot[0].kelas : ks[0];
+  const now = new Date(), today = startOfDay(now), nowMin = now.getHours() * 60 + now.getMinutes();
+  const ws = addDays(weekStart(today), 7 * DK.pekan), we = addDays(ws, 5);
+  if (!DK.hari || !HARI.includes(DK.hari)) DK.hari = DK.pekan === 0 && today.getDay() !== 0 ? NAMA_HARI[today.getDay()] : 'Senin';
+  const blok = blokKelas(DK.kelas), pj = peta(), k = +DK.kelas;
+  DK.buka = [];
+  /* ringkasan pekan */
+  let lewat = 0, ada = 0, rencana = 0;
+  blok.forEach(b => { const d = addDays(ws, HARI.indexOf(b.hari)); if (d > today) return; lewat++; const e = pj[iso(d) + '|' + b.guru + '|' + b.key]; if (e) ada++; });
+  blok.forEach(b => { const d = addDays(ws, HARI.indexOf(b.hari)); if (d > today && pj[iso(d) + '|' + b.guru + '|' + b.key]) rencana++; });
+  const pct = lewat ? Math.round(ada / lewat * 100) : 0;
+  /* pengampu */
+  const per = {}; blok.forEach(b => { const k2 = b.mapel + '|' + b.guru; per[k2] = per[k2] || { mapel: b.mapel, guru: b.guru }; });
+  const wid = DASH.wali && DASH.wali[k];
+  const rentang = ws.getDate() + (ws.getMonth() !== we.getMonth() ? ' ' + BULAN[ws.getMonth()].slice(0, 3) : '') + ' sampai ' + we.getDate() + ' ' + BULAN[we.getMonth()].slice(0, 3) + ' ' + we.getFullYear();
+  let h = '<div class="dash-bar"><div class="field"><label for="dk-kelas-' + roots.length + '">Pilih kelas</label><select class="dk-kelas" id="dk-kelas-' + roots.length + '">' + ks.map(x => '<option value="' + x + '"' + (x === k ? ' selected' : '') + '>Kelas ' + x + '</option>').join('') + '</select></div>' +
+    '<div class="dash-nav" role="group" aria-label="Pilih pekan"><button type="button" class="btn sec sm" data-dnav="prev" aria-label="Pekan sebelumnya">Sebelumnya</button><span class="rentang" aria-live="polite">' + rentang + '</span><button type="button" class="btn sec sm" data-dnav="next" aria-label="Pekan berikutnya">Berikutnya</button>' + (DK.pekan ? '<button type="button" class="btn txt sm" data-dnav="now">Pekan ini</button>' : '') + '</div></div>';
+  h += '<div class="dash-judul"><h1 class="serif">Jadwal Kelas ' + k + '</h1><p>' + (DK.pekan === 0 ? 'Pekan ini, ' : '') + esc(rentang) + '</p></div>';
+  h += '<div class="dash-ringkas"><div><h2>Jurnal pekan ini</h2>' + (lewat ? '<div class="angka">' + ada + '<small> dari ' + lewat + ' sesi sudah dijurnal</small></div><div class="bar" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100" aria-label="Sesi yang sudah dijurnal"><i style="width:' + pct + '%"></i></div>' : '<div class="angka"><small>Belum ada sesi yang lewat</small></div>') + '<div class="sub">' + (rencana ? rencana + ' sesi mendatang sudah punya RPP. ' : '') + blok.length + ' sesi dalam sepekan.</div></div>' +
+    '<div><h2>Guru pengampu</h2><ul class="pengampu">' + (wid ? '<li class="wali"><b>' + esc(guruNama(wid)) + '</b> <span>wali kelas</span></li>' : '') + Object.values(per).sort((a, b) => a.mapel < b.mapel ? -1 : 1).map(x => '<li><b>' + esc(x.mapel) + '</b> <span>' + esc(guruNama(x.guru)) + '</span></li>').join('') + '</ul></div></div>';
+  h += '<div class="hari" role="group" aria-label="Pilih hari">' + HARI.map((hr, i) => { const d = addDays(ws, i), n = blok.filter(b => b.hari === hr).length; return '<button type="button" data-dhari="' + hr + '" aria-pressed="' + (hr === DK.hari) + '"' + (iso(d) === iso(today) ? ' aria-current="date"' : '') + ' aria-label="' + hr + ' ' + d.getDate() + ', ' + n + ' sesi"><span>' + HARI_PENDEK[i] + '</span><b>' + d.getDate() + '</b><small>' + (n ? n + ' sesi' : 'libur') + '</small></button>'; }).join('') + '</div>';
+  h += '<div class="dgrid">';
+  HARI.forEach((hr, i) => {
+    const d = addDays(ws, i), tg = iso(d), L = blok.filter(b => b.hari === hr).sort((a, b) => a.mulai - b.mulai);
+    const pk = DASH.piket.filter(p => p.hari === hr).sort((a, b) => a.urut - b.urut).map(p => p.panggilan).filter(Boolean);
+    const bt = DASH.btq.filter(b => b.hari === hr && +b.kelas === k)[0];
+    h += '<section class="dcol' + (hr === DK.hari ? ' sel' : '') + (tg === iso(today) ? ' hariini' : '') + '" aria-label="' + hr + '"><div class="dcol-head"><b>' + hr + '</b><span class="tg">' + tglSingkat(d) + '</span></div>';
+    h += '<div class="dcol-tugas"><span><b>Piket</b> ' + (pk.length ? esc(pk.join(', ')) : '-') + '</span>' + (bt ? '<span><b>' + esc(bt.jenis === 'Dhuha' ? 'Shalat Dhuha' : 'Pendamping BTQ') + '</b> ' + esc(bt.panggilan || (bt.jenis === 'Dhuha' ? 'kelas berjamaah' : '-')) + '</span>' : '') + '</div>';
+    h += '<div class="dcol-isi">';
+    if (!L.length) h += '<div class="dcol-kosong">Tidak ada pelajaran</div>';
+    L.forEach(b => {
+      const e = pj[tg + '|' + b.guru + '|' + b.key], idx = DK.buka.push({ b, tg, e }) - 1;
+      const sekarang = tg === iso(today) && nowMin >= b.mulai && nowMin < b.selesai, lalu = d < today || (tg === iso(today) && nowMin >= b.selesai);
+      const st = e ? (e.status === 'Terlaksana' ? 'ok' : e.status === 'Ditunda' ? 'tunda' : 'rencana') : (lalu ? 'kosong' : '');
+      const tag = e ? '<span class="tag ' + (e.status === 'Ditunda' ? '' : 'ok') + '">' + esc(e.status === 'Direncanakan' ? 'RPP siap' : e.status) + '</span>' : lalu ? '<span class="tag gold">Belum ada jurnal</span>' : '';
+      h += '<button type="button" class="dcard' + (st ? ' st-' + st : '') + (sekarang ? ' sekarang' : '') + '" data-dblok="' + idx + '"><span class="wkt">' + hhmm(b.mulai) + ' sampai ' + hhmm(b.selesai) + (b.jp > 1 ? ' (' + b.jp + ' JP)' : '') + (sekarang ? ' · sedang berlangsung' : '') + '</span><h3>' + esc(b.mapel) + '</h3><span class="gr">' + esc(guruNama(b.guru)) + (b.kelas.length > 1 ? ' · gabung kelas ' + b.kelas.join(' dan ') : '') + '</span>' + (tag ? '<div>' + tag + '</div>' : '') + '</button>';
+    });
+    h += '</div></section>';
+  });
+  h += '</div>';
+  /* jurnal terbaru */
+  const kunci = new Set(blok.map(b => b.guru + '|' + b.key));
+  const baru = DASH.jurnal.filter(j => kunci.has(j.id_guru + '|' + j.slot) && j.tanggal <= iso(today)).sort((a, b) => a.tanggal < b.tanggal ? 1 : a.tanggal > b.tanggal ? -1 : 0).slice(0, 6);
+  h += '<div class="dterbaru"><h2>Jurnal terbaru kelas ' + k + '</h2>' + (baru.length ? '<ol>' + baru.map(j => '<li><span class="w">' + esc(tglSingkat(fromIso(j.tanggal))) + '</span><span><b>' + esc(j.mapel) + '</b> oleh ' + esc(guruNama(j.id_guru)) + ' <span class="tag ' + (j.status === 'Ditunda' ? '' : 'ok') + '" style="margin-left:6px">' + esc(j.status) + '</span></span>' + (DASH.rinci && (j.materi || j.elemen) ? '<p>' + esc(j.materi || j.elemen) + '</p>' : '') + '</li>').join('') + '</ol>' : '<div class="empty" style="padding:18px"><p style="margin:0">Belum ada jurnal untuk kelas ini dalam beberapa pekan terakhir.</p></div>') + '</div>';
+  roots.forEach(r => { r.innerHTML = h.replace(/id="dk-kelas-\d+"/g, 'id="dk-kelas-' + (r.id || 'x') + '"').replace(/for="dk-kelas-\d+"/g, 'for="dk-kelas-' + (r.id || 'x') + '"'); });
+}
+function dashEvent(e) {
+  const root = e.target.closest('.dash'); if (!root) return;
+  if (e.type === 'change' && e.target.classList.contains('dk-kelas')) { DK.kelas = +e.target.value; store.set('rpp_dash_kelas', DK.kelas); renderDash(); const sel = root.querySelector('.dk-kelas'); if (sel) sel.focus(); return; }
+  if (e.type !== 'click') return;
+  const n = e.target.closest('[data-dnav]'), hb = e.target.closest('[data-dhari]'), cb = e.target.closest('[data-dblok]');
+  if (n) { const v = n.dataset.dnav; if (v === 'muat') { dashT = 0; muatDash(); return; } DK.pekan = v === 'prev' ? DK.pekan - 1 : v === 'next' ? DK.pekan + 1 : 0; DK.hari = null; renderDash(); return; }
+  if (hb) { DK.hari = hb.dataset.dhari; renderDash(); return; }
+  if (cb) bukaDetail(+cb.dataset.dblok);
+}
+$$('.dash').forEach(r => { r.addEventListener('click', dashEvent); r.addEventListener('change', dashEvent); });
+function bukaDetail(i) {
+  const x = DK.buka[i]; if (!x) return; const { b, tg, e } = x, d = fromIso(tg), milik = SES.me && SES.me.id === b.guru;
+  const wk = hhmm(b.mulai) + ' sampai ' + hhmm(b.selesai) + ' (' + b.jp + ' JP, jam ke-' + b.jamAwal + (b.jp > 1 ? ' sampai ' + b.jamAkhir : '') + ')';
+  let h = '<h2 id="dtJudul">' + esc(b.mapel) + ', kelas ' + esc(b.kelas.join(' dan ')) + '</h2><p>' + esc(tglPanjang(d)) + '</p><dl><dt>Waktu</dt><dd>' + esc(wk) + '</dd><dt>Guru</dt><dd>' + esc(guruNama(b.guru)) + '</dd><dt>Jurnal</dt><dd>' +
+    (e ? '<span class="tag ' + (e.status === 'Ditunda' ? '' : 'ok') + '">' + esc(e.status) + '</span>' : (d <= startOfDay(new Date()) ? '<span class="tag gold">Belum ada jurnal</span>' : '<span class="tag">Belum ada RPP</span>')) + '</dd>';
+  if (e && DASH.rinci) { if (e.elemen) h += '<dt>Elemen</dt><dd>' + esc(e.elemen) + '</dd>'; if (e.materi) h += '<dt>Materi</dt><dd>' + esc(e.materi) + '</dd>'; if (e.tujuan) h += '<dt>Tujuan</dt><dd class="rinci">' + esc(e.tujuan) + '</dd>'; }
+  h += '</dl>';
+  $('#dtIsi').innerHTML = h;
+  const aksi = $('#dtAksi'); aksi.innerHTML = '<button type="button" class="btn sec" id="dtTutup">Tutup</button>';
+  if (milik) { const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'btn'; bt.textContent = e ? 'Buka RPP saya' : 'Susun RPP untuk sesi ini'; bt.onclick = () => { $('#dlgDash').close(); mulaiDariBlok(b.key, tg); }; aksi.appendChild(bt); }
+  else if (!SES.me) { const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'btn'; bt.textContent = 'Masuk untuk membuat jurnal'; bt.onclick = () => { $('#dlgDash').close(); bukaLogin(); }; aksi.appendChild(bt); }
+  $('#dtTutup').onclick = () => $('#dlgDash').close();
+  $('#dlgDash').showModal();
+}
+setInterval(() => { if (document.hidden) return; const lihat = !$('#pub').hidden || $('#view-dash').classList.contains('on'); if (lihat) { renderDash(); if (Date.now() - dashT > 300000) muatDash(false); } }, 60000);
 
 /* ================= HARI INI ================= */
 function entriMap() { const m = {}; JURNAL.forEach(j => { if (j.slot) m[j.tanggal + '|' + j.slot] = j; }); return m; }
@@ -1188,12 +1397,13 @@ $('#rkNow').onclick = () => { UI.pekan = 0; renderRekap(); };
 (async function boot() {
   if (DEMO_MODE && !DEMO) { document.body.innerHTML = '<p style="padding:24px">Data contoh tidak ada dan SCRIPT_URL masih kosong. Isi CONFIG.SCRIPT_URL.</p>'; return; }
   const sesi = store.get('rpp_sesi', null);
-  if (sesi && sesi.token && (tokenData(sesi.token).exp || 0) > Date.now()) {
+  const adaSesi = sesi && sesi.token && (tokenData(sesi.token).exp || 0) > Date.now();
+  if (adaSesi) {
     SES.token = sesi.token;
-    try { await mulaiSesi(); return; }
-    catch (e) { SES.token = null; if (e.kode === 'JARINGAN') { await bukaLogin(); banner(e.pesan, { label: 'Coba lagi', fn: () => location.reload() }); return; } store.del('rpp_sesi'); }
+    try { await mulaiSesi(); muatDash(); return; }
+    catch (e) { SES.token = null; if (e.kode !== 'JARINGAN') store.del('rpp_sesi'); }
   }
-  await bukaLogin();
+  $('#pub').hidden = false; renderDash(); await muatDash();
 })();
 </script>
 </body>
